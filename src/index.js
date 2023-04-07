@@ -4,6 +4,8 @@ import './stylesheets/all.scss';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import { HashRouter } from 'react-router-dom';
+import axios from 'axios';
+axios.defaults.baseURL = process.env.REACT_APP_API_URL;
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
