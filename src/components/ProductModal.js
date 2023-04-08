@@ -1,7 +1,7 @@
 import axios from "axios";
-import { useState } from "react"
+import { useEffect, useState } from "react"
 
-function ProductModal({ closeProductModal, getProducts }) {
+function ProductModal({ closeProductModal, getProducts, type, tempProduct }) {
     const [tempData, setTempData] = useState({
         title: "",
         category: "",
@@ -15,17 +15,39 @@ function ProductModal({ closeProductModal, getProducts }) {
 
     });
 
+    useEffect(() => {
+        if (type === 'create') {
+            setTempData({
+                title: "",
+                category: "",
+                origin_price: 100,
+                price: 300,
+                unit: "",
+                description: "",
+                content: "",
+                is_enabled: 1,
+                imageUrl: "",
+            })
+
+        } else if (type === 'edit') {
+            setTempData(tempProduct)
+
+        }
+        console.log(type, tempProduct)
+
+    }, [type, tempProduct])
+
     const handleChange = (e) => {
         console.log(e)
-        const {name, value} = e.target
+        const { name, value } = e.target
 
-        if(['price', 'origin_price'].includes(name)) {
+        if (['price', 'origin_price'].includes(name)) {
             setTempData({
                 ...tempData,
                 [name]: Number(value),
             })
-            
-        } else if(name === 'is_enabled') {
+
+        } else if (name === 'is_enabled') {
             setTempData({
                 ...tempData,
                 [name]: +e.target.checked,
@@ -36,17 +58,24 @@ function ProductModal({ closeProductModal, getProducts }) {
                 ...tempData,
                 [name]: value,
             })
-        } 
+        }
     }
     const submit = async () => {
         try {
-            const res = await axios.post(`/v2/api/${process.env.REACT_APP_API_PATH}/admin/product`, {
+            let api = `/v2/api/${process.env.REACT_APP_API_PATH}/admin/product`
+            let method = 'post'
+            if(type === 'edit') {
+                api = `/v2/api/${process.env.REACT_APP_API_PATH}/admin/product/${tempProduct.id}`
+                method = 'put' 
+            }
+            const res = await axios[method](api, {
                 data: tempData
-            }) 
+            })
+            console.log(res)
             closeProductModal()
             getProducts()
-           
-            
+
+
         } catch (error) {
             console.log(error)
         }
@@ -57,7 +86,9 @@ function ProductModal({ closeProductModal, getProducts }) {
         <div className="modal-dialog modal-lg">
             <div className="modal-content">
                 <div className="modal-header">
-                    <h5 className="modal-title" id="exampleModalLabel">建立新商品</h5>
+                    <h5 className="modal-title" id="exampleModalLabel">
+                        {type === 'create' ? '建立新商品' : `編輯 ${tempProduct.title}`}
+                        </h5>
                     <button type="button" className="btn-close" data-bs-dismiss="modal" onClick={closeProductModal}></button>
                 </div>
                 <div className="modal-body">
@@ -207,7 +238,7 @@ function ProductModal({ closeProductModal, getProducts }) {
                                                 placeholder='請輸入產品說明內容'
                                                 className='form-check-input'
                                                 onChange={handleChange}
-                                                value={tempData.is_enabled}
+                                                checked={!!tempData.is_enabled}
                                             />
                                         </label>
                                     </div>

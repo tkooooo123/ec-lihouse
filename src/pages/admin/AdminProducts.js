@@ -8,6 +8,10 @@ import { Modal } from "bootstrap";
 function AdminProducts() {
     const [products, setProducts] = useState([]);
     const [pagination, setPagination] = useState({})
+    //決定modal用途
+    const [type, setType] = useState('create')
+    const [tempProduct, setTempProduct] = useState({})
+
     
     const productModal = useRef(null)
     useEffect(() => {
@@ -26,7 +30,10 @@ function AdminProducts() {
 
     }
 
-    const openProductModal = () => {
+    const openProductModal = (type, product) => {
+        setType(type);
+        setTempProduct(product);
+
         productModal.current.show();
     }
     const closeProductModal = () => {
@@ -37,12 +44,15 @@ function AdminProducts() {
 
     return (
         <div className='p-3'>
-            <ProductModal closeProductModal={closeProductModal} getProducts={getProducts}/>
+            <ProductModal closeProductModal={closeProductModal} getProducts={getProducts}
+            tempProduct={tempProduct}
+            type={type}
+            />
             <h3>產品列表</h3>
             <hr />
             <div className='text-end'>
                 <button type='button' className='btn btn-primary btn-sm'
-                onClick={openProductModal}>
+                onClick={() => openProductModal('create',{})}>
                     建立新商品
                 </button>
             </div>
@@ -65,9 +75,11 @@ function AdminProducts() {
                                     {product.title}
                                 </td>
                                 <td>{product.price}</td>
-                                <td>{product.is_enable ? '啟用' : '未啟用'}</td>
+                                <td>{product.is_enabled ? '啟用' : '未啟用'}</td>
                                 <td>
-                                    <button type='button' className='btn btn-primary btn-sm'>
+                                    <button type='button' className='btn btn-primary btn-sm'
+                                    onClick={() => openProductModal('edit', product)}
+                                    >
                                         編輯
                                     </button>
                                     <button
