@@ -1,9 +1,10 @@
-import { useEffect, useRef, useState } from "react";
+import { useContext, useEffect, useRef, useState } from "react";
 import axios from "axios";
 import CouponModal from "../../components/CoupontModal";
 import DeleteModal from "../../components/DeleteModal";
 import Pagination from "../../components/Pagination";
 import { Modal } from "bootstrap";
+import { MessageContext, handleErrorMessage, handleSuccessMessage } from "../../store/messageStore";
 
 
 
@@ -17,6 +18,7 @@ function AdminCoupons() {
     
     const couponModal = useRef(null)
     const deleteModal = useRef(null)
+    const [, dispatch] = useContext(MessageContext)
 
 
     useEffect(() => {
@@ -65,9 +67,11 @@ function AdminCoupons() {
             if(res.data.success) {
                 getCoupons();
                 deleteModal.current.hide();
+                handleSuccessMessage(dispatch, res)
             }
         } catch (error) {
             console.log(error)
+            handleErrorMessage(dispatch, error)
         }
     }
 

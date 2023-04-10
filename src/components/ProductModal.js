@@ -1,5 +1,7 @@
 import axios from "axios";
-import { useEffect, useState } from "react"
+import { useContext, useEffect, useState } from "react"
+import { MessageContext } from "../store/messageStore";
+import { handleSuccessMessage, handleErrorMessage } from "../store/messageStore";
 
 function ProductModal({ closeProductModal, getProducts, type, tempProduct }) {
     const [tempData, setTempData] = useState({
@@ -14,6 +16,8 @@ function ProductModal({ closeProductModal, getProducts, type, tempProduct }) {
         imageUrl: "",
 
     });
+
+    const [, dispatch] = useContext(MessageContext)
 
     useEffect(() => {
         if (type === 'create') {
@@ -64,20 +68,22 @@ function ProductModal({ closeProductModal, getProducts, type, tempProduct }) {
         try {
             let api = `/v2/api/${process.env.REACT_APP_API_PATH}/admin/product`
             let method = 'post'
-            if(type === 'edit') {
+            if (type === 'edit') {
                 api = `/v2/api/${process.env.REACT_APP_API_PATH}/admin/product/${tempProduct.id}`
-                method = 'put' 
+                method = 'put'
             }
             const res = await axios[method](api, {
                 data: tempData
             })
             console.log(res)
+            handleSuccessMessage(dispatch, res);
             closeProductModal()
             getProducts()
 
 
         } catch (error) {
             console.log(error)
+            handleErrorMessage(dispatch, error);
         }
     }
 
@@ -88,7 +94,7 @@ function ProductModal({ closeProductModal, getProducts, type, tempProduct }) {
                 <div className="modal-header">
                     <h5 className="modal-title" id="exampleModalLabel">
                         {type === 'create' ? '建立新商品' : `編輯 ${tempProduct.title}`}
-                        </h5>
+                    </h5>
                     <button type="button" className="btn-close" data-bs-dismiss="modal" onClick={closeProductModal}></button>
                 </div>
                 <div className="modal-body">
@@ -257,3 +263,7 @@ function ProductModal({ closeProductModal, getProducts, type, tempProduct }) {
 }
 
 export default ProductModal
+
+
+
+
