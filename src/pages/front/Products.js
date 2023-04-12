@@ -1,5 +1,6 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 import Pagination from "../../components/Pagination";
 
 function Products() {
@@ -28,9 +29,12 @@ function Products() {
                                         className="card-img-top rounded-0"
                                         alt="..." />
                                         <div className="card-body">
+                                            <Link to={`/product/${product.id}`}>
                                             <h4 className="">
                                                 {product.title}
                                             </h4>
+                                            </Link>
+                                           
                                             <p>NT$ {product.price}</p>
                                         </div>
                                 </div>

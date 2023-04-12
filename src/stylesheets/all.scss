@@ -105,8 +105,42 @@
 }
 
 .products-container {
+    width: 100%;
+
     img {
         object-fit: cover;
         height: 250px;
+    }
+}
+
+.product-container {
+    display: block;
+
+    @media (min-width:768px) {
+        display: flex;
+        justify-content: space-around;
+
+    }
+
+
+    .product-img {
+        width: 100%;
+
+        @media (min-width:768px) {
+            width: 50%;
+
+        }
+
+
+    }
+
+    .product-info {
+        width: 100%;
+
+        @media (min-width:768px) {
+            width: 40%;
+
+
+        }
     }
 }
