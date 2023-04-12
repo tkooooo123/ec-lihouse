@@ -28,13 +28,13 @@ const closeCollapse = () => {
                   <NavLink className="nav-link" to="/">首頁</NavLink>
                 </li>
                 <li className="nav-item">
-                  <NavLink className="nav-link" to="/admin/products">本店商品</NavLink>
+                  <NavLink className="nav-link" to="/products">本店商品</NavLink>
                 </li>
               </ul>
               <div className="expand-bottom" onClick={closeCollapse}></div>
             </div>
             <div className="d-flex nav-icons">
-              <NavLink className="nav-link" to="/login"><i class="bi bi-person-circle"></i></NavLink>
+              <NavLink className="nav-link" to="/login"><i className="bi bi-person-circle"></i></NavLink>
               <NavLink className="nav-link" to="/cart"><i className="bi bi-bag-fill"></i></NavLink>
             </div>
           </nav>
