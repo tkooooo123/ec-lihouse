@@ -1,13 +1,13 @@
 import { NavLink } from "react-router-dom"
 import { Collapse } from "bootstrap";
 
-function Navbar() {
-  
-const closeCollapse = () => {
-  let navCollapse = new Collapse('#navbarNav')
-  navCollapse.hide()
-  
-}
+function Navbar({cartData}) {
+
+  const closeCollapse = () => {
+    let navCollapse = new Collapse('#navbarNav')
+    navCollapse.hide()
+
+  }
 
   return (
     <>
@@ -35,7 +35,12 @@ const closeCollapse = () => {
             </div>
             <div className="d-flex nav-icons">
               <NavLink className="nav-link" to="/login"><i className="bi bi-person-circle"></i></NavLink>
-              <NavLink className="nav-link" to="/cart"><i className="bi bi-bag-fill"></i></NavLink>
+              <NavLink className="nav-link position-relative" to="/cart"><i className="bi bi-bag-fill"></i>
+                <span className="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+                  {cartData?.carts?.length}
+ 
+                </span>
+              </NavLink>
             </div>
           </nav>
         </div>
