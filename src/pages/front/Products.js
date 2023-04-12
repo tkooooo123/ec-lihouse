@@ -34,7 +34,7 @@ function Products() {
                                                 {product.title}
                                             </h4>
                                             </Link>
-                                           
+
                                             <p>NT$ {product.price}</p>
                                         </div>
                                 </div>
