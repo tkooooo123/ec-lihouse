@@ -2,3 +2,104 @@
 @import './variables';
 
 @import 'bootstrap/scss/bootstrap';
+
+
+.nav-container {
+    margin: auto;
+    position: relative;
+
+    .navbar-brand {
+        margin: auto;
+    }
+
+    .navbar-collapse {
+        width: 0;
+        height: 100%;
+        position: fixed;
+        top: 0;
+        left: 0;
+        transition: all 0.15s ease-out;
+
+        @media (min-width: 992px) {
+            position: static;
+            display: flex;
+        }
+
+        .navbar-nav {
+            width: 100%;
+            height: 100%;
+            padding-top: 50px;
+            position: relative;
+            z-index: 999;
+            background-color: #fff;
+
+            @media (min-width: 992px) {
+                padding-top: 0;
+                height: 48px;
+                width: 150px;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                font-weight: 600;
+
+            }
+
+            .nav-item {
+                display: none;
+
+                @media (min-width: 992px) {
+                    display: flex;
+                    justify-content: center;
+
+                }
+            }
+
+            .close-btn {
+                position: absolute;
+                top: 5px;
+                right: 5px;
+                width: 40px;
+                text-align: center;
+
+                @media (min-width: 992px) {
+                    display: none;
+                }
+
+                .close-icon:hover {
+                    color: red;
+                }
+            }
+        }
+
+        .expand-bottom {
+            position: fixed;
+            top: 0;
+            right: 0;
+            width: 100%;
+            height: 100%;
+            background: #747373;
+            opacity: 0.5;
+
+            @media (min-width: 992px) {
+                display: none;
+            }
+        }
+    }
+
+    .navbar-collapse.show {
+        width: 40%;
+
+        .nav-item {
+            display: flex;
+            justify-content: center;
+        }
+    }
+
+    .nav-icons {
+        width: 80px;
+        height: 50px;
+        justify-content: space-around;
+        align-items: center;
+        font-size: 24px;
+    }
+}
