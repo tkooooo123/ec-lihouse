@@ -5,11 +5,21 @@ import { Link, useOutletContext } from "react-router-dom";
 
 function Cart() {
     const { cartData, getCart } = useOutletContext();
-    const [loadingItems, setLoadingItem] = useState([])
+    const [loadingItems, setLoadingItem] = useState([]);
+    const [couponCode, setCouponCode] = useState('')
     console.log(cartData)
     const removeCartItem = async (id) => {
         try {
             const res = await axios.delete(`/v2/api/${process.env.REACT_APP_API_PATH}/cart/${id}`,);
+            console.log(res)
+            getCart();
+        } catch (error) {
+            console.log(error)
+        }
+    }
+    const removeCart = async (id) => {
+        try {
+            const res = await axios.delete(`/v2/api/${process.env.REACT_APP_API_PATH}/carts`,);
             console.log(res)
             getCart();
         } catch (error) {
@@ -36,6 +46,21 @@ function Cart() {
             console.log(error)
         }
     }
+    const applyCoupon = async() => {
+        try {
+            const data = {
+                data: {
+                    code: couponCode,
+                }
+            }
+            const res = await axios.post(`/v2/api/${process.env.REACT_APP_API_PATH}/coupon`, 
+            data);
+            getCart();
+            console.log(res)
+        } catch (error) {
+            console.log(error)
+        }
+    }
 
     return (
 
@@ -45,7 +70,9 @@ function Cart() {
             </div>
             <div className="row cart-wrapper p-3 mt-3">
                 <div className="d-flex justify-content-end mt-2">
-                    <button type="button" className="btn btn-outline-dark remove-all">刪除全部</button>
+                    <button type="button" className="btn btn-outline-dark remove-all"
+                    onClick={() => removeCart()}
+                    >刪除全部</button>
                 </div>
 
                 <table className="table mt-3">
@@ -98,7 +125,9 @@ function Cart() {
 
                                     </td>
                                     <td className="align-middle">
-                                        <button type="button" className="btn btn-outline-dark"><i className="bi bi-trash fs-4"></i></button></td>
+                                        <button type="button" className="btn btn-outline-dark" 
+                                        onClick={() => removeCartItem(item.id)}
+                                        ><i className="bi bi-trash fs-4"></i></button></td>
                                 </tr>
                             )
                         })}
@@ -106,9 +135,14 @@ function Cart() {
                     </tbody>
                 </table>
                 <div className="d-flex mt-2">
-                    <input type="text" />
+                    <input type="text" value={couponCode} onChange={(e) => {
+                        console.log('123', e.target.value)
+                        setCouponCode(e.target.value)
+                    }}/>
                     <div>
-                        <button type="button" className="btn btn-primary mx-3"><i className="bi bi-gift"></i> 優惠碼</button>
+                        <button type="button" className="btn btn-primary mx-3"
+                        onClick={() => applyCoupon()}
+                        ><i className="bi bi-gift"></i> 優惠碼</button>
                     </div>
                 </div>
             </div>
@@ -117,7 +151,7 @@ function Cart() {
                     小計： NT$  {cartData.total}
                 </div>
                 <div className="mb-4">
-                    折扣： NT$  0
+                    折扣： NT$  {cartData.total - cartData.final_total}
                 </div>
                 <div className="mb-4 fw-bold">
                     總計： NT$ {cartData.final_total}
