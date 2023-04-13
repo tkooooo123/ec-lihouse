@@ -1,6 +1,6 @@
 import axios from "axios";
 import { useState } from "react";
-import { useOutletContext } from "react-router-dom";
+import { Link ,useOutletContext } from "react-router-dom";
 
 
 function Cart() {
@@ -91,7 +91,10 @@ function Cart() {
                 })}
                 <div className="total-price d-flex aligm-items-center justify-content-between mt-3" ><h4>總金額</h4>
                     <div>NT$ {cartData.final_total}</div></div>
-                <button type="button" className="btn btn-dark mb-2">確認</button>
+                 <Link to="/checkout">
+                 <button type="button" className="btn btn-dark mb-2">確認結帳</button>
+                 </Link>   
+                
 
             </div>
 
