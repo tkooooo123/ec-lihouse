@@ -1,6 +1,6 @@
 import { useForm } from "react-hook-form";
 import { Link, useOutletContext } from "react-router-dom";
-import { Input, } from "../../components/FormElements";
+import { Input, Textarea } from "../../components/FormElements";
 import axios from "axios";
 function Checkout() {
     const {cartData} = useOutletContext()
@@ -13,7 +13,7 @@ function Checkout() {
     });
 
     const onSubmit = async(data) => {
-      const { name, email, tel, address } = data
+      const { name, email, tel, address, message } = data
       const form ={
         data: {
           user: {
@@ -21,7 +21,8 @@ function Checkout() {
             email,
             tel,
             address,
-          }
+          },
+          message: message
         }
       }
         console.log(errors);
@@ -35,7 +36,7 @@ return (
       <div className='row justify-content-center flex-md-row flex-column-reverse'>
         <form className='col-md-6' onSubmit={handleSubmit(onSubmit)}>
           <div className='bg-white p-4'>
-            <h4 className='fw-bold'>購買資訊</h4>
+            <h4 className='fw-bold'>購買人資訊</h4>
             <div className='mb-2'>
             <Input
               id='email'
@@ -101,14 +102,26 @@ return (
               >
               </Input>
             </div>
+            <div className='mb-2'>
+            <Textarea
+              id='message'
+              type='textarea'
+              rows='3'
+              errors={errors}
+              labelText='留言'
+              register={register}
+             
+              >
+              </Textarea>
+            </div>
           </div>
-          <div className='d-flex flex-column-reverse flex-md-row mt-4 justify-content-between align-items-md-center align-items-end w-100'>
+          <div className='d-flex px-3 my-4 justify-content-between align-items-md-center w-100'>
             <Link className='text-dark mt-md-0 mt-3' to='/cart'>
               <i className='bi bi-chevron-left me-2'></i> 上一步
             </Link>
             <button
               type='submit'
-              className='btn btn-dark py-3 px-7 rounded-0'
+              className='btn btn-dark py-3 px-7 '
             >
               確定購買
             </button>
@@ -119,7 +132,7 @@ return (
             <h4 className='mb-4'>購買內容</h4>
             {cartData?.carts?.map((item) => {
               return (
-                <div className='d-flex' key="item.id">
+                <div className='d-flex py-2 border-bottom' key="item.id">
                   <img
                     src={item.product.imageUrl}
                     alt=''
@@ -135,19 +148,23 @@ return (
                       <p className='text-muted mb-0'>
                         <small>NT$ {item.product.price}</small>
                       </p>
-                      <p className='mb-0'>NT$ {item.final_total}</p>
+                      <p className='mb-0'>NT$ {item.total}</p>
                     </div>
                   </div>
                 </div>
               )
             })}
-            <div className="d-flex justify-content-between mt-4">
-              <p className='mb-0 h4 fw-bold'>折扣</p>
-              <p className='mb-0 h4 fw-bold'>-  NT$</p>
+            <div className="d-flex justify-content-between border-bottom py-3">
+              <p className='mb-0 h5 fw-bold'>小計</p>
+              <p className='mb-0 h5 fw-bold'>NT$ {cartData.total}</p>
             </div>
-            <div className='d-flex justify-content-between mt-4'>
-              <p className='mb-0 h4 fw-bold'>總計</p>
-              <p className='mb-0 h4 fw-bold'>NT$ {cartData.final_total}</p>
+            <div className="d-flex justify-content-between border-bottom py-3">
+              <p className='mb-0 h5 fw-bold'>折扣</p>
+              <p className='mb-0 h5 fw-bold'>NT$ {cartData.total - cartData.final_total}</p>
+            </div>
+            <div className='d-flex justify-content-between py-3'>
+              <p className='mb-0 h5 fw-bold'>總計</p>
+              <p className='mb-0 h5 fw-bold'>NT$ {cartData.final_total}</p>
             </div>
           </div>
         </div>
