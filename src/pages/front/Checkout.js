@@ -1,9 +1,10 @@
 import { useForm } from "react-hook-form";
-import { Link, useOutletContext } from "react-router-dom";
+import { Link, useNavigate, useOutletContext } from "react-router-dom";
 import { Input, Textarea } from "../../components/FormElements";
 import axios from "axios";
 function Checkout() {
     const {cartData} = useOutletContext()
+    const navigate = useNavigate()
     const {
         register,
         handleSubmit,
@@ -29,6 +30,7 @@ function Checkout() {
         console.log(data);
         const res = await axios.post(`/v2/api/${process.env.REACT_APP_API_PATH}/order`, form)
         console.log(res)
+        navigate(`/success/${res.data.orderId}`)
     }
 return (
     <div className='bg-light pt-5 pb-7'>
