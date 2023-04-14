@@ -1,17 +1,33 @@
 import axios from "axios";
-import { useEffect, useState } from "react";
-import { Link, useParams } from "react-router-dom";
+import { useEffect, useState, useContext } from "react";
+import { useParams } from "react-router-dom";
+import { MessageContext, handleErrorMessage, handleSuccessMessage } from "../../store/messageStore";
 
 function Success() {
     const { orderId } = useParams();
     const [orderData, setOrderData] = useState({});
+    const [, dispatch] = useContext(MessageContext)
     const getOrder = async (orderId) => {
         console.log(orderId)
         const res = await axios.get(`/v2/api/${process.env.REACT_APP_API_PATH}/order/${orderId}`)
         console.log('orders', res);
         setOrderData(res.data.order);
 
-
+    }
+    const payOrder = async(orderId) => {
+        try {
+            const data = {
+                order: orderData,
+            }
+            const res = await axios.post(`/v2/api/${process.env.REACT_APP_API_PATH}/pay/${orderId}`, data);
+            console.log('pay', res);
+            handleSuccessMessage(dispatch, res);
+            getOrder(orderId);
+            
+        } catch (error) {
+            console.log(error)
+            handleErrorMessage(dispatch, error)
+        }
     }
     useEffect(() => {
         getOrder(orderId);
@@ -105,7 +121,9 @@ function Success() {
 
                     </div>
                     <div className="my-4 text-end">
-                        <button type="button" className="btn btn-dark rounded-0 py-3 px-5" >付款</button>
+                        <button type="button" className="btn btn-dark rounded-0 py-3 px-5" 
+                        onClick={() => payOrder(orderId)}
+                        >付款</button>
                     </div>
                 </div>
             </div>

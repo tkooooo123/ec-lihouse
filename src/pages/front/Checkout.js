@@ -2,9 +2,12 @@ import { useForm } from "react-hook-form";
 import { Link, useNavigate, useOutletContext } from "react-router-dom";
 import { Input, Textarea } from "../../components/FormElements";
 import axios from "axios";
+import { MessageContext, handleErrorMessage } from "../../store/messageStore";
+import { useContext } from "react";
 function Checkout() {
     const {cartData} = useOutletContext()
     const navigate = useNavigate()
+    const [, dispatch] = useContext(MessageContext)
     const {
         register,
         handleSubmit,
@@ -14,7 +17,8 @@ function Checkout() {
     });
 
     const onSubmit = async(data) => {
-      const { name, email, tel, address, message } = data
+      try {
+        const { name, email, tel, address, message } = data
       const form ={
         data: {
           user: {
@@ -31,6 +35,12 @@ function Checkout() {
         const res = await axios.post(`/v2/api/${process.env.REACT_APP_API_PATH}/order`, form)
         console.log(res)
         navigate(`/success/${res.data.orderId}`)
+        
+      } catch (error) {
+        console.log(error)
+        handleErrorMessage(dispatch, error);
+      }
+      
     }
 return (
     <div className='bg-light pt-5 pb-7'>

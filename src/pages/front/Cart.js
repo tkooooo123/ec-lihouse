@@ -1,12 +1,13 @@
 import axios from "axios";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { Link, useOutletContext } from "react-router-dom";
-
+import { MessageContext, handleErrorMessage, handleSuccessMessage } from "../../store/messageStore";
 
 function Cart() {
     const { cartData, getCart } = useOutletContext();
     const [loadingItems, setLoadingItem] = useState([]);
-    const [couponCode, setCouponCode] = useState('')
+    const [couponCode, setCouponCode] = useState('');
+    const [, dispatch] = useContext(MessageContext);
     console.log(cartData)
     const removeCartItem = async (id) => {
         try {
@@ -14,6 +15,7 @@ function Cart() {
             console.log(res)
             getCart();
         } catch (error) {
+            handleErrorMessage(dispatch, error);
             console.log(error)
         }
     }
@@ -23,6 +25,7 @@ function Cart() {
             console.log(res)
             getCart();
         } catch (error) {
+            handleErrorMessage(dispatch, error);
             console.log(error)
         }
     }
@@ -43,6 +46,7 @@ function Cart() {
             );
             getCart();
         } catch (error) {
+            handleErrorMessage(dispatch, error);
             console.log(error)
         }
     }
@@ -55,9 +59,11 @@ function Cart() {
             }
             const res = await axios.post(`/v2/api/${process.env.REACT_APP_API_PATH}/coupon`, 
             data);
+            handleSuccessMessage(dispatch, res);
             getCart();
             console.log(res)
         } catch (error) {
+            handleErrorMessage(dispatch, error);
             console.log(error)
         }
     }
