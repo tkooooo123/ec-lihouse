@@ -106,11 +106,45 @@
 
 .products-container {
     width: 100%;
-
-    img {
-        object-fit: cover;
-        height: 250px;
+    .card {
+        transition: transform 0.7s;
+        .img-wrapper {
+            position: relative;
+            img {
+                object-fit: cover;
+                height: 250px;
+                opacity: 1;
+                transition: all 0.3s ease-in;
+                
+            }
+            .deatil-icon {
+                position:absolute;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+                opacity: 0;
+                transition: all 0.3s ease-in;
+                i { -webkit-text-stroke: 2px; } 
+                
+            }
+    
+        }
     }
+    
+
+    .card:hover {
+        transform: scale(1.05);
+        
+        img {
+            opacity: 0.4;
+        }
+        .deatil-icon {
+            opacity: 1;
+        }
+
+    }
+   
+    
     li:hover {
         color: $primary;
         cursor: pointer;

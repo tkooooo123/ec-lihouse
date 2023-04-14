@@ -112,9 +112,17 @@ function Products() {
                                         style={{textDecoration: 'none'}}
                                         >
                                         <div className="card mb-3">
+                                            <div className="img-wrapper">
                                             <img src={product.imageUrl}
                                                 className="card-img-top rounded-0"
                                                 alt="..." />
+                                                <div className="deatil-icon fs-5 text-primary">
+                                                <i class="bi bi-search"></i> 查看更多
+
+                                                </div>
+
+                                            </div>
+                                            
                                             <div className="card-body">
                                                     <h4 className="text-dark">
                                                         {product.title}
