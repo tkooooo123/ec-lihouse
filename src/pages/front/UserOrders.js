@@ -1,10 +1,17 @@
 import axios from "axios";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useRef, useState } from "react";
 import Pagination from "../../components/Pagination";
+import { MessageContext, handleErrorMessage } from "../../store/messageStore";
+import { Modal } from "bootstrap";
+import OrderModal from "../../components/OrderModal";
 
 function UserOrders() {
     const [orderData, setOrderData] = useState([]);
-    const [pagination, setPagination] = useState({})
+    const [pagination, setPagination] = useState({});
+    const [, dispatch] = useContext(MessageContext);
+    const [tempOrder, setTempOrder] = useState({});
+
+    const orderModal = useRef(null);
     const getOrders = async (page = 1) => {
         try {
             const res = await axios.get(`/v2/api/${process.env.REACT_APP_API_PATH}/orders?page=${page}`);
@@ -13,11 +20,25 @@ function UserOrders() {
             setPagination(res.data.pagination)
         } catch (error) {
             console.log(error)
+            handleErrorMessage(dispatch, error)
         }
     }
     useEffect(() => {
+        orderModal.current = new Modal('#orderModal', {
+            backdrop: 'static'
+        })
         getOrders()
-    }, [])
+    }, []);
+
+    const openOrderModal = (order) =>{
+        setTempOrder(order);
+        orderModal.current.show()
+    }
+    const closeOrderModal = () => {
+        orderModal.current.hide()
+    } 
+
+
     return (
         <div className="container">
             <div className="row mt-5">
@@ -30,6 +51,7 @@ function UserOrders() {
                     </ul>
                 </div>
                 <div className="col-lg-9 mt-2">
+                    <OrderModal tempOrder={tempOrder} closeOrderModal={closeOrderModal} getOrders={getOrders}/>
 
                     <table className="table">
                         <thead>
@@ -55,7 +77,9 @@ function UserOrders() {
                                         <td className="align-middle">
                                             <p className={`${order.is_paid ? 'bg-success' : 'bg-danger'} rounded fw-bold text-white py-1 mt-3`}>{order.is_paid ? '已付款' : '未付款'}</p></td>
                                         <td className="align-middle">
-                                            <button className="btn"><i className="fs-5 bi bi-file-earmark-plus"></i></button>
+                                            <button className="btn"
+                                            onClick={() => openOrderModal(order)}
+                                            ><i className="fs-5 bi bi-file-earmark-plus"></i></button>
                                         </td>
                                     </tr>
                                 )
@@ -65,10 +89,10 @@ function UserOrders() {
                         </tbody>
                     </table>
                     <div className="d-flex justify-content-center">
-                    <Pagination pagination={pagination} changePage={getOrders}/>
+                        <Pagination pagination={pagination} changePage={getOrders} />
 
                     </div>
-                    
+
 
 
                 </div>
