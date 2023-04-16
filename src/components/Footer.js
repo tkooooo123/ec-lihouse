@@ -9,7 +9,7 @@ function Footer() {
               <li><Link to="" className="text-white mx-3"><i className="bi bi-github"></i></Link></li>
               <li><Link to="" className="text-white mx-3"><i className="bi bi-facebook"></i></Link></li>
             </ul>
-            <p className="mt-3 text-center">© 2023 / 本網站僅供練習，飛實際商業用途 </p>
+            <p className="mt-3 text-center">© 2023 / 本網站僅供練習，非實際商業用途 </p>
           </div>
         </div>
     )
