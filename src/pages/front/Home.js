@@ -3,6 +3,7 @@ import { useContext, useEffect, useRef, useState } from "react";
 import axios from "axios";
 import { MessageContext, handleSuccessMessage, handleErrorMessage } from "../../store/messageStore";
 import copy from "copy-to-clipboard";
+import SwiperBanner from "../../components/SwiperBanner";
 
 function Home() {
   const [products, setProducts] = useState([]);
@@ -51,29 +52,8 @@ function Home() {
   }, [])
   return (
     <>
-      <div className="container">
-        <div className="row flex-md-row-reverse flex-column">
-          <div className="col-md-6">
-            <img
-              src="https://images.unsplash.com/photo-1526038335545-4b96864eaee7?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1867&q=80
-          alt=" className="img-fluid" alt="..." />
-          </div>
-          <div className="col-md-6 d-flex flex-column justify-content-center mt-md-0 mt-3">
-            <h2 className="fw-bold">Lorem ipsum dolor sit</h2>
-            <h5 className="font-weight-normal text-muted mt-2">
-              Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam
-              nonumy eirmod tempor
-            </h5>
-            <div className="input-group mb-0 mt-4">
-              <input type="text" className="form-control rounded-0" placeholder="" />
-              <div className="input-group-append">
-                <button className="btn btn-dark rounded-0" type="button" id="search">
-                  Lorem ipsum
-                </button>
-              </div>
-            </div>
-          </div>
-        </div>
+      <div className="container mt-3">
+      <SwiperBanner></SwiperBanner>
         <div className="row coupon">
           <div className="col-lg-6">
             <h2 className="fw-bold mt-5">歡慶開幕</h2>
@@ -158,62 +138,25 @@ function Home() {
         </div>
       </div>
       <div className="bg-light mt-7">
-        <div className="container">
-          <div id="carouselExampleControls" className="carousel slide" data-ride="carousel">
-            <div className="carousel-inner">
-              <div className="carousel-item active">
-                <div className="row justify-content-center py-7">
-                  <div className="col-md-8 d-flex">
-                    <img src="https://images.unsplash.com/photo-1490138139357-fc819d02e344?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1950&q=80" alt="" className="rounded-circle me-5" style={{ width: '160px', height: '160px', objectFit: 'cover', }} />
-                    <div className="d-flex flex-column">
-                      <p className="h5">“Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat.”</p>
-                      <p className="mt-auto text-muted">Lorem ipsum dolor sit amet.</p>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div className="carousel-item">
-                <div className="row justify-content-center py-7">
-                  <div className="col-md-8 d-flex">
-                    <img src="https://images.unsplash.com/photo-1490138139357-fc819d02e344?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1950&q=80" alt="" className="rounded-circle me-5" style={{ width: '160px', height: '160px', objectFit: 'cover', }} />
-                    <div className="d-flex flex-column">
-                      <p className="h5">“Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat.”</p>
-                      <p className="mt-auto text-muted">Lorem ipsum dolor sit amet.</p>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div className="carousel-item">
-                <div className="row justify-content-center py-7">
-                  <div className="col-md-8 d-flex">
-                    <img src="https://images.unsplash.com/photo-1490138139357-fc819d02e344?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1950&q=80" alt="" className="rounded-circle me-5" style={{ width: '160px', height: '160px', objectFit: 'cover', }} />
-                    <div className="d-flex flex-column">
-                      <p className="h5">“Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat.”</p>
-                      <p className="mt-auto text-muted">Lorem ipsum dolor sit amet.</p>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <a className="carousel-control-prev" href="#carouselExampleControls" role="button" data-slide="prev">
-              <span className="carousel-control-prev-icon" aria-hidden="true"></span>
-              <span className="sr-only">Previous</span>
-            </a>
-            <a className="carousel-control-next" href="#carouselExampleControls" role="button" data-slide="next">
-              <span className="carousel-control-next-icon" aria-hidden="true"></span>
-              <span className="sr-only">Next</span>
-            </a>
-          </div>
+        <div className="container" >
+          
         </div>
       </div>
 
       <div className="bg-light py-7">
         <div className="container">
-          <div className="row justify-content-center">
+          <img src="" alt="" />
+          <div className="row justify-content-center" style={{backgroundImage: 'url("https://images.chinatimes.com/newsphoto/2021-06-18/656/20210618001436.jpg")'}}>
             <div className="col-md-4 text-center">
-              <h3>Lorem ipsum</h3>
-              <p className="text-muted">Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod.</p>
-              <button className="btn btn-dark mt-4 rounded-0">Lorem ipsum</button>
+              <h3>Subscribe</h3>
+              <p className="text-muted">訂閱我們，隨時收到最新優惠通知！</p>
+              <div className="input-group mb-5">
+                <input className="form-control" type="email" placeholder="請輸入 Email..."/>
+                <div className="input-group-append">
+                  <button className="btn btn-primary rounded-0">訂閱</button>
+                </div>
+              </div>
+       
             </div>
           </div>
         </div>

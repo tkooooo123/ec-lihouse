@@ -14,12 +14,11 @@ function GoTopButton() {
 
             const scrollTop = $(window).scrollTop();
             if (scrollTop > height / 2) {
-                $('.go-top').css('opacity', '1');
+                $('.go-top').css('opacity', '0.9');
             } else {
                 $('.go-top').css('opacity', '0');
             }
-            console.log('123', scrollTop)
-            console.log(height, scrollTop)
+            
         });
 
     }, [])
@@ -27,7 +26,7 @@ function GoTopButton() {
 
     return (
         <h1>
-            <Link className="go-top text-primary text-center"><i className="bi bi-arrow-up-short fw-bolder" onClick={() => {
+            <Link className="go-top text-primary d-flex justify-content-center align-items-center"><i className="bi bi-arrow-up-short fw-bolder" onClick={() => {
                               goToTop();
             }}></i>
 
