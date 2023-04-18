@@ -4,6 +4,7 @@ import axios from "axios";
 import { MessageContext, handleSuccessMessage, handleErrorMessage } from "../../store/messageStore";
 import copy from "copy-to-clipboard";
 import SwiperBanner from "../../components/SwiperBanner";
+import Loading from "../../components/Loading";
 
 function Home() {
   const [products, setProducts] = useState([]);
@@ -15,13 +16,14 @@ function Home() {
   const copyRef = useRef(null);
   const getProducts = async () => {
     try {
+      setIsLoading(true)
       const res = await axios.get(`/v2/api/${process.env.REACT_APP_API_PATH}/products`);
       const resProducts = res.data.products.slice(0, 4);
-
       setProducts([...resProducts]);
-      console.log('123', resProducts, products)
+      setIsLoading(false)
     } catch (error) {
       console.log(error)
+      handleErrorMessage(dispatch, error)
     }
   }
 
@@ -46,6 +48,7 @@ function Home() {
     }
   };
   const getFeedback = () => {
+    setIsLoading(true)
     const dummyData = [
       {
         id: 1,
@@ -70,14 +73,19 @@ function Home() {
       }
     ]
     setFeedback([...dummyData]);
+    setIsLoading(false)
   }
   useEffect(() => {
     getProducts();
     getFeedback();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
   return (
     <>
       <div className="container mt-3">
+        
+        <Loading isLoading={isLoading}/>
+        
         <SwiperBanner></SwiperBanner>
         <div className="row coupon">
           <div className="col-lg-6">

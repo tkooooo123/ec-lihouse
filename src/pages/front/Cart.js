@@ -2,18 +2,23 @@ import axios from "axios";
 import { useContext, useState } from "react";
 import { Link, useOutletContext } from "react-router-dom";
 import { MessageContext, handleErrorMessage, handleSuccessMessage } from "../../store/messageStore";
+import Loading from "../../components/Loading";
+import { useEffect } from "react";
 
 function Cart() {
     const { cartData, getCart } = useOutletContext();
     const [loadingItems, setLoadingItem] = useState([]);
     const [couponCode, setCouponCode] = useState('');
+    const [isLoading, setIsLoading] = useState(true);
     const [, dispatch] = useContext(MessageContext);
-    console.log(cartData)
+
     const removeCartItem = async (id) => {
         try {
+            setIsLoading(true);
             const res = await axios.delete(`/v2/api/${process.env.REACT_APP_API_PATH}/cart/${id}`,);
             console.log(res)
-            getCart();
+            await getCart();
+            setIsLoading(false);
         } catch (error) {
             handleErrorMessage(dispatch, error);
             console.log(error)
@@ -21,16 +26,20 @@ function Cart() {
     }
     const removeCart = async (id) => {
         try {
+            setIsLoading(true);
             const res = await axios.delete(`/v2/api/${process.env.REACT_APP_API_PATH}/carts`,);
             console.log(res)
-            getCart();
+            await getCart();
+            setIsLoading(false);
         } catch (error) {
             handleErrorMessage(dispatch, error);
-            console.log(error)
+            setIsLoading(false);
+            console.log(error);
         }
     }
     const updateCartItem = async (item, quantity) => {
         try {
+            setIsLoading(true)
             const data = {
                 data: {
                     product_id: item.product_id,
@@ -44,14 +53,17 @@ function Cart() {
             setLoadingItem(
                 loadingItems.filter((loadingObject) => loadingObject !== item.id),
             );
-            getCart();
+           await getCart();
+            setIsLoading(false);
         } catch (error) {
             handleErrorMessage(dispatch, error);
-            console.log(error)
+            setIsLoading(false);
+            console.log(error);
         }
     }
     const applyCoupon = async() => {
         try {
+            setIsLoading(true);
             const data = {
                 data: {
                     code: couponCode,
@@ -61,16 +73,24 @@ function Cart() {
             data);
             handleSuccessMessage(dispatch, res);
             getCart();
-            console.log(res)
+            setIsLoading(false);
         } catch (error) {
             handleErrorMessage(dispatch, error);
-            console.log(error)
+            setIsLoading(false);
+            console.log(error);
         }
-    }
+    } 
+    
+  useEffect(()=> {
+    (async function refreshView(){
+        await getCart();
+        setIsLoading(false);
+    }())
+  },[])
 
     return (
-
         <div className="container">
+            <Loading isLoading={isLoading}/>
             <div className="bg-light p-2">
                 <h2 className="text-center">購物車</h2>
             </div>

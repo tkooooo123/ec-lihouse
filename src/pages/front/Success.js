@@ -2,38 +2,48 @@ import axios from "axios";
 import { useEffect, useState, useContext } from "react";
 import { useParams } from "react-router-dom";
 import { MessageContext, handleErrorMessage, handleSuccessMessage } from "../../store/messageStore";
+import Loading from "../../components/Loading";
 
 function Success() {
     const { orderId } = useParams();
     const [orderData, setOrderData] = useState({});
-    const [, dispatch] = useContext(MessageContext)
+    const [isLoading, setIsLoading] = useState(true);
+    const [, dispatch] = useContext(MessageContext);
     const getOrder = async (orderId) => {
-        console.log(orderId)
-        const res = await axios.get(`/v2/api/${process.env.REACT_APP_API_PATH}/order/${orderId}`)
-        console.log('orders', res);
-        setOrderData(res.data.order);
-
+        try {
+            const res = await axios.get(`/v2/api/${process.env.REACT_APP_API_PATH}/order/${orderId}`)
+            console.log('orders', res);
+            setOrderData(res.data.order);
+            setIsLoading(false);
+        } catch (error) {
+            console.log(error);
+            setIsLoading(false);
+            handleErrorMessage(dispatch, error);
+        }
     }
     const payOrder = async(orderId) => {
         try {
+            setIsLoading(true);
             const data = {
                 order: orderData,
             }
             const res = await axios.post(`/v2/api/${process.env.REACT_APP_API_PATH}/pay/${orderId}`, data);
-            console.log('pay', res);
             handleSuccessMessage(dispatch, res);
-            getOrder(orderId);
-            
+            await getOrder(orderId);
+            setIsLoading(false);
         } catch (error) {
-            console.log(error)
-            handleErrorMessage(dispatch, error)
+            console.log(error);
+            setIsLoading(false);
+            handleErrorMessage(dispatch, error);
         }
     }
+   
     useEffect(() => {
         getOrder(orderId);
     }, [orderId])
     return (
         <div className="container">
+            <Loading  isLoading={isLoading}/>
             <div className='d-flex justify-content-center align-items-center mt-3'>
                 <p className='fs-1 mx-2'>
                     <i className="bi bi-check-circle-fill text-success"></i>
@@ -120,9 +130,10 @@ function Success() {
                     </ul>
 
                     </div>
-                    <div className="my-4 text-end">
-                        <button type="button" className="btn btn-dark rounded-0 py-3 px-5" 
+                    <div className={`my-4 text-end`}>
+                        <button type="button" className={`btn btn-dark rounded-0 py-3 px-5 ${orderData.is_paid ? 'disabled' : ''}`} 
                         onClick={() => payOrder(orderId)}
+                        
                         >付款</button>
                     </div>
                 </div>

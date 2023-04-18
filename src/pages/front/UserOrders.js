@@ -4,30 +4,34 @@ import Pagination from "../../components/Pagination";
 import { MessageContext, handleErrorMessage } from "../../store/messageStore";
 import { Modal } from "bootstrap";
 import OrderModal from "../../components/OrderModal";
+import Loading from "../../components/Loading";
 
 function UserOrders() {
     const [orderData, setOrderData] = useState([]);
     const [pagination, setPagination] = useState({});
     const [, dispatch] = useContext(MessageContext);
     const [tempOrder, setTempOrder] = useState({});
+    const [isLoading, setIsLoading] = useState(true);
 
     const orderModal = useRef(null);
     const getOrders = async (page = 1) => {
         try {
+            setIsLoading(true);
             const res = await axios.get(`/v2/api/${process.env.REACT_APP_API_PATH}/orders?page=${page}`);
-            console.log(res)
-            setOrderData(res.data.orders)
-            setPagination(res.data.pagination)
+            setOrderData(res.data.orders);
+            setPagination(res.data.pagination);
+            setIsLoading(false);
         } catch (error) {
-            console.log(error)
-            handleErrorMessage(dispatch, error)
+            console.log(error);
+            setIsLoading(false);
+            handleErrorMessage(dispatch, error);
         }
     }
     useEffect(() => {
         orderModal.current = new Modal('#orderModal', {
             backdrop: 'static'
         })
-        getOrders()
+        getOrders();
     }, []);
 
     const openOrderModal = (order) =>{
@@ -41,6 +45,7 @@ function UserOrders() {
 
     return (
         <div className="container">
+            <Loading isLoading={isLoading}/>
             <div className="row mt-5">
                 <div className="col-lg-3 mt-2">
                     <h4 className="d-none d-lg-block fw-bold bg-light p-lg-3 border-start border-dark border-5">會員中心</h4>

@@ -3,6 +3,7 @@ import { useContext, useEffect, useState } from "react";
 import { Link, useOutletContext } from "react-router-dom";
 import Pagination from "../../components/Pagination";
 import { MessageContext, handleErrorMessage, handleSuccessMessage } from "../../store/messageStore";
+import Loading from "../../components/Loading";
 
 function Products() {
     const [products, setProducts] = useState([]);
@@ -15,7 +16,8 @@ function Products() {
 
 
     const getCategories = async () => {
-        const res = await axios.get(`/v2/api/${process.env.REACT_APP_API_PATH}/products/all`)
+        setIsLoading(true);
+        const res = await axios.get(`/v2/api/${process.env.REACT_APP_API_PATH}/products/all`);
         const productsAll = res.data.products;
         let categoryList = ['所有商品'];
         productsAll.map((item) => {
@@ -23,19 +25,20 @@ function Products() {
                 categoryList.push(item.category)
                 setCategories(categoryList)
             }
-        })
+        });
+        setIsLoading(false);
     }
     const getProductsAll = async (page = 1) => {
         try {
+            setIsLoading(true);
             if (currentCategory !== '所有商品') {
-                const res = await axios.get(`/v2/api/${process.env.REACT_APP_API_PATH}/products/all`)
-                const filterProducts = res.data.products.filter(item => item.category === currentCategory)
-
+                const res = await axios.get(`/v2/api/${process.env.REACT_APP_API_PATH}/products/all`);
+                const filterProducts = res.data.products.filter(item => item.category === currentCategory);
                 //分頁功能
                 const pageItem = 10;
                 const totalPage = Math.ceil(filterProducts.length / pageItem);
-                const start = (page - 1) * pageItem
-                const end = page * pageItem
+                const start = (page - 1) * pageItem;
+                const end = page * pageItem;
                 setProducts(filterProducts.slice(start, end));
                 setPagination({
                     category: '',
@@ -43,16 +46,17 @@ function Products() {
                     has_pre: page !== 1,
                     has_next: page < totalPage,
                     total_pages: totalPage
-
                 });
             } else {
                 const productRes = await axios.get(`/v2/api/${process.env.REACT_APP_API_PATH}/products?page=${page}`)
-                console.log(productRes)
                 setProducts(productRes.data.products)
                 setPagination(productRes.data.pagination)
             }
+            setIsLoading(false);
         } catch (error) {
-            console.log(error)
+            console.log(error);
+            setIsLoading(false);
+            handleErrorMessage(dispatch, error);
         }
     }
 
@@ -68,11 +72,12 @@ function Products() {
             const res = await axios.post(`/v2/api/${process.env.REACT_APP_API_PATH}/cart`,
                 data)
             console.log(res)
-            handleSuccessMessage(dispatch, res)
-            getCart()
+            await getCart()
             setIsLoading(false)
+            handleSuccessMessage(dispatch, res)
         } catch (error) {
-            console.log(error)
+            console.log(error);
+            setIsLoading(false);
             handleErrorMessage(dispatch, error)
         }
     }
@@ -87,6 +92,7 @@ function Products() {
     return (
         <>
             <div className="container products-container mt-3">
+                <Loading isLoading={isLoading}/>
                 <div className="row mt-3">
 
                     <div className="col-lg-3">
