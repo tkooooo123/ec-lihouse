@@ -4,6 +4,7 @@ import { Link, useOutletContext } from "react-router-dom";
 import { MessageContext, handleErrorMessage, handleSuccessMessage } from "../../store/messageStore";
 import Loading from "../../components/Loading";
 import { useEffect } from "react";
+import Stepper from "../../components/Stepper";
 
 function Cart() {
     const { cartData, getCart } = useOutletContext();
@@ -11,6 +12,7 @@ function Cart() {
     const [couponCode, setCouponCode] = useState('');
     const [isLoading, setIsLoading] = useState(true);
     const [, dispatch] = useContext(MessageContext);
+    const [stepper, setStepper] = useState(1);
 
     const removeCartItem = async (id) => {
         try {
@@ -53,7 +55,7 @@ function Cart() {
             setLoadingItem(
                 loadingItems.filter((loadingObject) => loadingObject !== item.id),
             );
-           await getCart();
+            await getCart();
             setIsLoading(false);
         } catch (error) {
             handleErrorMessage(dispatch, error);
@@ -61,7 +63,7 @@ function Cart() {
             console.log(error);
         }
     }
-    const applyCoupon = async() => {
+    const applyCoupon = async () => {
         try {
             setIsLoading(true);
             const data = {
@@ -69,35 +71,46 @@ function Cart() {
                     code: couponCode,
                 }
             }
-            const res = await axios.post(`/v2/api/${process.env.REACT_APP_API_PATH}/coupon`, 
-            data);
+            const res = await axios.post(`/v2/api/${process.env.REACT_APP_API_PATH}/coupon`,
+                data);
             handleSuccessMessage(dispatch, res);
-            getCart();
+            await getCart();
             setIsLoading(false);
         } catch (error) {
             handleErrorMessage(dispatch, error);
             setIsLoading(false);
             console.log(error);
         }
-    } 
-    
-  useEffect(()=> {
-    (async function refreshView(){
-        await getCart();
-        setIsLoading(false);
-    }())
-  },[])
+    }
+
+    useEffect(() => {
+        (async function refreshView() {
+            await getCart();
+            setIsLoading(false);
+        }())
+    }, [])
 
     return (
         <div className="container">
-            <Loading isLoading={isLoading}/>
-            <div className="bg-light p-2">
-                <h2 className="text-center">購物車</h2>
-            </div>
-            <div className="row cart-wrapper p-3 mt-3">
+            <Loading isLoading={isLoading} />
+            <Stepper stepper={stepper}/>
+            {!cartData?.carts?.length && (
+                <div className="cart-alert text-center mt-5"  style={{flexGrow: '1'}}>
+                    <div className="mt-5" style={{fontSize:'7rem'}}><i className="bi bi-cart-x-fill"></i></div>
+                    <h2 className="fw-bold mt-3 text-primary">您的購物車沒有商品！</h2>
+                    <Link to="/products">
+                        <button className="fw-bold btn btn-outline-dark my-3 px-3 py-2">前往購物</button>
+                        
+                    </Link>
+                </div>
+            )}
+            {!!cartData?.carts?.length && (
+
+               <>
+               <div className="row cart-wrapper p-3 mt-3">
                 <div className="d-flex justify-content-end mt-2">
                     <button type="button" className="btn btn-outline-dark remove-all"
-                    onClick={() => removeCart()}
+                        onClick={() => removeCart()}
                     >刪除全部</button>
                 </div>
 
@@ -151,8 +164,8 @@ function Cart() {
 
                                     </td>
                                     <td className="align-middle">
-                                        <button type="button" className="btn btn-outline-dark" 
-                                        onClick={() => removeCartItem(item.id)}
+                                        <button type="button" className="btn btn-outline-dark"
+                                            onClick={() => removeCartItem(item.id)}
                                         ><i className="bi bi-trash fs-4"></i></button></td>
                                 </tr>
                             )
@@ -164,10 +177,10 @@ function Cart() {
                     <input type="text" value={couponCode} onChange={(e) => {
                         console.log('123', e.target.value)
                         setCouponCode(e.target.value)
-                    }}/>
+                    }} />
                     <div>
                         <button type="button" className="btn btn-primary mx-3"
-                        onClick={() => applyCoupon()}
+                            onClick={() => applyCoupon()}
                         ><i className="bi bi-gift"></i> 優惠碼</button>
                     </div>
                 </div>
@@ -188,10 +201,14 @@ function Cart() {
                     <button type="button" className="btn btn-outline-dark mb-2">繼續購物</button>
                 </Link>
                 <Link to="/checkout">
-                    <button type="button" className="btn btn-dark mb-2">確認結帳</button>
+                    <button type="button" className="btn btn-primary mb-2">確認結帳</button>
                 </Link>
 
             </div>
+               </>
+
+            )}
+            
 
 
 

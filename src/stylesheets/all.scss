@@ -2,7 +2,7 @@
 @import './variables';
 @import './base';
 @import 'bootstrap/scss/bootstrap';
-
+@import'./helpers/stepper.scss';
 
 .nav-container {
     margin: auto;

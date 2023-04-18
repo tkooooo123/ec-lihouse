@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 
 function Footer() {
     return (
-        <div className=" bg-primary">
+        <div className="footer bg-primary">
           <div className="text-white py-4">
           <ul className="d-flex justify-content-center fs-4">
               <li><Link to="" className="text-white mx-3"><i className="bi bi-linkedin"></i></Link></li>

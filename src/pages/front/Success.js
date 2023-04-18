@@ -3,12 +3,14 @@ import { useEffect, useState, useContext } from "react";
 import { useParams } from "react-router-dom";
 import { MessageContext, handleErrorMessage, handleSuccessMessage } from "../../store/messageStore";
 import Loading from "../../components/Loading";
+import Stepper from "../../components/Stepper";
 
 function Success() {
     const { orderId } = useParams();
     const [orderData, setOrderData] = useState({});
     const [isLoading, setIsLoading] = useState(true);
     const [, dispatch] = useContext(MessageContext);
+    const [stepper, setStepper] = useState(3)
     const getOrder = async (orderId) => {
         try {
             const res = await axios.get(`/v2/api/${process.env.REACT_APP_API_PATH}/order/${orderId}`)
@@ -44,6 +46,7 @@ function Success() {
     return (
         <div className="container">
             <Loading  isLoading={isLoading}/>
+            <Stepper stepper={stepper}/>
             <div className='d-flex justify-content-center align-items-center mt-3'>
                 <p className='fs-1 mx-2'>
                     <i className="bi bi-check-circle-fill text-success"></i>

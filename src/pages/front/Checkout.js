@@ -7,12 +7,14 @@ import { useContext } from "react";
 import Loading from "../../components/Loading";
 import { useState } from "react";
 import { useEffect } from "react";
+import Stepper from "../../components/Stepper";
 
 function Checkout() {
   const { cartData } = useOutletContext();
   const navigate = useNavigate();
   const [, dispatch] = useContext(MessageContext);
   const [isLoading, setIsLoading] = useState(true);
+  const [stepper, setStepper] = useState(2);
 
   const {
     register,
@@ -60,6 +62,7 @@ function Checkout() {
   return (
     <div className='bg-light pt-5 pb-7'>
       <Loading isLoading={isLoading}/>
+      <Stepper stepper={stepper}/>
       <div className='container'>
         <div className='row justify-content-center flex-md-row flex-column-reverse'>
           <form className='col-md-6' onSubmit={handleSubmit(onSubmit)}>
