@@ -12,6 +12,7 @@ import Checkout from "./pages/front/Checkout";
 import Success from "./pages/front/Success";
 import UserOrders from "./pages/front/UserOrders";
 import AutoScrollToTop from "./components/AutoScrollToTop";
+import AdminOrders from "./pages/admin/AdminOrders";
 
 function App() {
 
@@ -34,6 +35,7 @@ function App() {
             <Route path='products' element={<AdminProducts />}></Route>
 
             <Route path='coupons' element={<AdminCoupons />}></Route>
+            <Route path="orders" element={<AdminOrders />}></Route>
           </Route>
         </Routes>
 
