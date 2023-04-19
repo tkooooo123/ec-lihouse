@@ -1,17 +1,17 @@
 {
   "files": {
-    "main.css": "/ec-lihouse/static/css/main.fcb25826.css",
-    "main.js": "/ec-lihouse/static/js/main.d7c1f089.js",
+    "main.css": "/ec-lihouse/static/css/main.9f6c7c88.css",
+    "main.js": "/ec-lihouse/static/js/main.1fcf29a0.js",
     "static/js/787.6653abfd.chunk.js": "/ec-lihouse/static/js/787.6653abfd.chunk.js",
     "static/media/bootstrap-icons.woff?": "/ec-lihouse/static/media/bootstrap-icons.4753c5ba57962b4d7bf8.woff",
     "static/media/bootstrap-icons.woff2?": "/ec-lihouse/static/media/bootstrap-icons.6d63d0501e5ed7b79dab.woff2",
     "index.html": "/ec-lihouse/index.html",
-    "main.fcb25826.css.map": "/ec-lihouse/static/css/main.fcb25826.css.map",
-    "main.d7c1f089.js.map": "/ec-lihouse/static/js/main.d7c1f089.js.map",
+    "main.9f6c7c88.css.map": "/ec-lihouse/static/css/main.9f6c7c88.css.map",
+    "main.1fcf29a0.js.map": "/ec-lihouse/static/js/main.1fcf29a0.js.map",
     "787.6653abfd.chunk.js.map": "/ec-lihouse/static/js/787.6653abfd.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.fcb25826.css",
-    "static/js/main.d7c1f089.js"
+    "static/css/main.9f6c7c88.css",
+    "static/js/main.1fcf29a0.js"
   ]
 }
