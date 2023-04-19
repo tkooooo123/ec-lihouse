@@ -1,4 +1,4 @@
-.nav-container {
+.navbar {
     margin: auto;
     position: relative;
     .navbar-toggler {
@@ -16,6 +16,34 @@
             transition: all 0.9s ease-in;
             
         }
+    }
+    .search-bar{
+        .btn {
+            width: 70px;
+        }
+    }
+    .search-collapse {
+        height: 100px;
+        width: 100%;
+        position: absolute;
+        top: 100%;
+        left: 0;
+        z-index: 99;
+        background-color: #fff;
+        opacity: 0;
+        transition: all 0.25s ease-out;
+        
+        .close-btn {
+            position: absolute;
+            top:5px;
+            right: 5px;
+            width: 40px;
+            text-align: center;
+            .close-icon:hover {
+                color: $primary;
+            }
+        }
+        
     }
 
 
@@ -82,7 +110,7 @@
                 }
 
                 .close-icon:hover {
-                    color: red;
+                    color: $primary;
                 }
             }
         }
@@ -113,10 +141,13 @@
     }
 
     .nav-icons {
-        width: 80px;
+        width: 153px;
         height: 50px;
         justify-content: space-around;
         align-items: center;
         font-size: 24px;
+        @media (min-width: 992px) {
+            width: 110px;
+        }
     }
 }

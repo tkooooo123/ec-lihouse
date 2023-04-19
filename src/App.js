@@ -13,6 +13,7 @@ import Success from "./pages/front/Success";
 import UserOrders from "./pages/front/UserOrders";
 import AutoScrollToTop from "./components/AutoScrollToTop";
 import AdminOrders from "./pages/admin/AdminOrders";
+import Search from "./pages/front/Search";
 
 function App() {
 
@@ -30,6 +31,7 @@ function App() {
             <Route path="success/:orderId" element={<Success />}></Route>
             <Route path="user/orders" element={<UserOrders />}></Route>
             <Route path="/login" element={<Login />}></Route>
+            <Route path="/search/:keyword" element={<Search />}></Route>
           </Route>
           
           <Route path="/admin" element={<Dashboard />}>
