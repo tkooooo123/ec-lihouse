@@ -24,7 +24,7 @@ function FrontLayout() {
   }, [])
   return (
     <>
-      <MessageContext.Provider value={reducer}>
+      <MessageContext.Provider value={reducer} >
         <Message />
         <Navbar cartData={cartData} />
         <Outlet context={{ getCart, cartData }} />

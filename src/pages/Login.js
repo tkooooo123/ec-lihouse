@@ -33,7 +33,11 @@ function Login() {
     return (<div className="container py-5">
         <div className="row justify-content-center">
             <div className="col-md-6">
-                <h2>登入帳號</h2>
+                <div className="bg-light text-center">
+                <i className="bi bi-person-circle" style={{fontSize:'150px'}}></i>
+                </div>
+                
+                <h2 className="text-center text-primary fw-bold mt-3">後臺管理</h2>
 
                 <div className={`alert alert-danger ${loginState.message ? 'd-block' : 'd-none'}`} role="alert">
                     錯誤訊息
@@ -50,7 +54,7 @@ function Login() {
                         <input type="password" className="form-control" name="password" id="password" placeholder="name@example.com" onChange={handleChange} />
                     </label>
                 </div>
-                <button type="button" className="btn btn-primary" onClick={submit}>登入</button>
+                <button type="button" className="btn btn-primary w-100 mt-3" onClick={submit}>登入</button>
             </div>
         </div>
     </div>)

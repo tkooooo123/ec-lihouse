@@ -114,7 +114,7 @@ function OrderModal({ tempOrder, closeOrderModal, getOrders }) {
                     </div>
                 </div>
                 <div className="modal-footer">
-                <button type="button" className="btn btn-outline-dark rounded-0 px-5"
+                <button type="button" className={`btn btn-outline-dark rounded-0 px-5 ${tempOrder.is_paid ? 'disabled' : ''}`}
                                 onClick={() => payOrder(tempOrder.id)}
                                 >付款</button>
                     <button type="button" className="btn btn-secondary" onClick={() => closeOrderModal()}>Close</button>

@@ -95,7 +95,7 @@ function Cart() {
             <Loading isLoading={isLoading} />
             <Stepper stepper={stepper}/>
             {!cartData?.carts?.length && (
-                <div className="cart-alert text-center mt-5"  style={{flexGrow: '1'}}>
+                <div className="cart-alert text-center pt-5 mt-5"  style={{flexGrow: '1'}}>
                     <div className="mt-5" style={{fontSize:'7rem'}}><i className="bi bi-cart-x-fill"></i></div>
                     <h2 className="fw-bold mt-3 text-primary">您的購物車沒有商品！</h2>
                     <Link to="/products">

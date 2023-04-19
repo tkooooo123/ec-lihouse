@@ -89,7 +89,7 @@ function Home() {
         <SwiperBanner></SwiperBanner>
         <div className="row coupon">
           <div className="col-lg-6">
-            <h2 className="fw-bold mt-5">歡慶開幕</h2>
+            <h2 className="fw-bold mt-5 border-start border-primary border-5 ps-3">歡慶開幕</h2>
             <hr />
             <div className="text-center text-lg-start">
               <p className="fs-5 fw-bold">開幕優惠，即日起輸入優惠碼
@@ -188,10 +188,7 @@ function Home() {
           </div>
         </div>
       </div>
-
-
       <div className="bg-light py-7 mt-5">
-        <div className="container">
           <img src="" alt="" />
           <div className="row justify-content-center" style={{ backgroundImage: 'url("https://images.chinatimes.com/newsphoto/2021-06-18/656/20210618001436.jpg")' }}>
             <div className="col-md-4 text-center">
@@ -203,10 +200,8 @@ function Home() {
                   <button className="btn btn-primary rounded-0">訂閱</button>
                 </div>
               </div>
-
             </div>
           </div>
-        </div>
       </div>
     </>
   )

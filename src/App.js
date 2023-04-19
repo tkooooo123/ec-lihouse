@@ -29,8 +29,9 @@ function App() {
             <Route path="checkout" element={<Checkout />}></Route>
             <Route path="success/:orderId" element={<Success />}></Route>
             <Route path="user/orders" element={<UserOrders />}></Route>
+            <Route path="/login" element={<Login />}></Route>
           </Route>
-          <Route path="/login" element={<Login />}></Route>
+          
           <Route path="/admin" element={<Dashboard />}>
             <Route path='products' element={<AdminProducts />}></Route>
 
