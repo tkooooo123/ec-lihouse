@@ -1,0 +1,33 @@
+.ticket {
+    position: relative;
+    width: 70%;
+    .ticket-dash {
+        border-left: 1px dashed white;
+    }
+    @media(min-width:992px) {
+        width: 50%;
+    }
+}
+.ticket::before {
+    content: '';
+    position:absolute;
+    top: 50%;
+    left: 0;
+    transform: translate(-50%, -50%);
+    height: 1.5rem;
+    width:1.5rem;
+    background-color: white;
+    border-radius: 50%;
+}
+.ticket::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    right: 0;
+    transform: translate(50%, -50%);
+    height: 1.5rem;
+    width:1.5rem;
+    background-color: white;
+    border-radius: 50%;
+
+}

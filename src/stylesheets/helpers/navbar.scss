@@ -1,27 +1,29 @@
 .navbar {
     margin: auto;
     position: relative;
+
     .navbar-toggler {
         border: none;
-       
 
     }
 
     .navbar-brand {
         position: absolute;
         left: 80px;
-        
+
         @media (min-width: 992px) {
             position: static;
             transition: all 0.9s ease-in;
-            
+
         }
     }
-    .search-bar{
+
+    .search-bar {
         .btn {
             width: 70px;
         }
     }
+
     .search-collapse {
         height: 100px;
         width: 100%;
@@ -32,18 +34,19 @@
         background-color: #fff;
         opacity: 0;
         transition: all 0.25s ease-out;
-        
+
         .close-btn {
             position: absolute;
-            top:5px;
+            top: 5px;
             right: 5px;
             width: 40px;
             text-align: center;
+
             .close-icon:hover {
                 color: $primary;
             }
         }
-        
+
     }
 
 
@@ -67,10 +70,16 @@
             position: relative;
             z-index: 999;
             background-color: #fff;
-            
 
             .nav-link {
                 color: #000;
+
+                @media (min-width: 992px) {
+                    &:hover {
+                        background-color: #fff;
+                    }
+                }
+
             }
 
             @media (min-width: 992px) {
@@ -82,6 +91,7 @@
                 align-items: center;
                 font-weight: 600;
                 background-color: $primary;
+
                 .nav-link {
                     color: #fff;
                 }
@@ -90,7 +100,18 @@
 
             .nav-item {
                 display: none;
-                
+
+                &:hover {
+                    background-color: $primary;
+
+                    .nav-link {
+                        color: #fff;
+
+                        @media (min-width: 992px) {
+                            color: $primary;
+                        }
+                    }
+                }
 
                 @media (min-width: 992px) {
                     display: flex;
@@ -146,6 +167,7 @@
         justify-content: space-around;
         align-items: center;
         font-size: 24px;
+
         @media (min-width: 992px) {
             width: 110px;
         }
