@@ -1,8 +1,8 @@
-##網址連結
+## 網址連結
 ```
 https://tkooooo123.github.io/ec-lihouse/#/
 ```
-##管理者帳號
+## 管理者帳號
 ```
 Email: sy810218@gmail.com
 Password: 12345678
