@@ -27,7 +27,7 @@ REACT_APP_API_PATH=sy-hex
 ```
 5. 執行專案
 ```
-npm install
+$npm start
 ```
 
 
