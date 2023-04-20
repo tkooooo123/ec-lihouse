@@ -19,8 +19,8 @@ Password: 12345678
 REACT_APP_API_URL=https://ec-course-api.hexschool.io/
 REACT_APP_API_PATH=sy-hex
 ```
-5.執行專案
+5. 執行專案
 ```
-`npm start`
+ `npm install`
 ```
 
