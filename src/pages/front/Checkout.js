@@ -191,11 +191,11 @@ function Checkout() {
               </div>
               <div className="d-flex justify-content-between border-bottom py-3">
                 <p className='mb-0 h5 fw-bold'>折扣</p>
-                <p className='mb-0 h5 fw-bold'>NT$ {cartData.total - cartData.final_total}</p>
+                <p className='mb-0 h5 fw-bold'>NT$ {cartData.total - Math.ceil(cartData.final_total)}</p>
               </div>
               <div className='d-flex justify-content-between py-3'>
                 <p className='mb-0 h5 fw-bold'>總計</p>
-                <p className='mb-0 h5 fw-bold'>NT$ {cartData.final_total}</p>
+                <p className='mb-0 h5 fw-bold'>NT$ {Math.ceil(cartData.final_total)}</p>
               </div>
             </div>
           </div>

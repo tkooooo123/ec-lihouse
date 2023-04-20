@@ -1,11 +1,17 @@
 import axios from "axios"
 import { MessageContext, handleErrorMessage } from "../store/messageStore"
-import { useContext } from "react"
+import { useContext, useEffect } from "react"
 
 
 
-function OrderModal({ tempOrder, closeOrderModal, getOrders }) {
+function OrderModal({ tempOrder, closeOrderModal, getOrders, isAdmin }) {
     const [, dispatch] =useContext(MessageContext);
+    const dummyData= [
+        '未確認',
+        '已確認',
+        '處理中',
+        '已送達'
+    ]
     
     const payOrder = async() => {
         try {
@@ -23,8 +29,10 @@ function OrderModal({ tempOrder, closeOrderModal, getOrders }) {
             console.log(error)
         }
     }
-
-
+    
+    useEffect(() => {
+        console.log(dummyData)
+    },)
     return (<div className="modal fade" id="orderModal" tabIndex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div className="modal-dialog modal-lg">
             <div className="modal-content">
@@ -110,14 +118,35 @@ function OrderModal({ tempOrder, closeOrderModal, getOrders }) {
                                     </li>
                                 </ul>
                             </div>
+                            {isAdmin && (
+                                <div className="mt-4">
+                                <h5 className="fw-bold">處理狀態</h5>
+                                <div className="bg-light py-3">
+                                <select name="select" id="" style={{width: '80px'}}
+                                >
+                                    {dummyData.map((item, i) => {
+                                        return  (
+                                            <option key={i}>{item}</option>
+                                        )
+
+                                    })}
+                                    
+                                </select>
+                                </div>
+                                
+                                
+                            </div>
+                            )}
                         </div>
                     </div>
                 </div>
                 <div className="modal-footer">
-                <button type="button" className={`btn btn-outline-dark rounded-0 px-5 ${tempOrder.is_paid ? 'disabled' : ''}`}
-                                onClick={() => payOrder(tempOrder.id)}
-                                >付款</button>
-                    <button type="button" className="btn btn-secondary" onClick={() => closeOrderModal()}>Close</button>
+                    {!isAdmin && (
+                        <button type="button" className={`btn btn-outline-dark rounded-0 px-5 ${tempOrder.is_paid ? 'disabled' : ''}`}
+                        onClick={() => payOrder(tempOrder.id)}
+                        >付款</button>
+                    )}
+                    <button type="button" className="btn btn-outline-danger" onClick={() => closeOrderModal()}>Close</button>
                 </div>
             </div>
         </div>

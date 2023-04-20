@@ -190,10 +190,10 @@ function Cart() {
                     小計： NT$  {cartData.total}
                 </div>
                 <div className="mb-4">
-                    折扣： NT$  {cartData.total - cartData.final_total}
+                    折扣： NT$  {cartData.total - Math.ceil(cartData.final_total)}
                 </div>
                 <div className="mb-4 fw-bold">
-                    總計： NT$ {cartData.final_total}
+                    總計： NT$ {Math.ceil(cartData.final_total)}
                 </div>
             </div>
             <div className="d-flex justify-content-between my-3">

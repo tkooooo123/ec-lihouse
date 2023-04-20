@@ -3,6 +3,7 @@ import axios from "axios";
 import { useEffect, useReducer } from "react";
 import Message from "../../components/Message";
 import { MessageContext, messageReducer, initState } from "../../store/messageStore";
+import Footer from "../../components/Footer";
 
 function Dashboard() {
     const navigate = useNavigate();
@@ -43,9 +44,9 @@ function Dashboard() {
         <>
             <MessageContext.Provider value={reducer}>
                 <Message />
-                <nav className='navbar navbar-expand-lg bg-dark'>
+                <nav className='navbar navbar-expand-lg bg-primary'>
                     <div className='container-fluid'>
-                        <p className='text-white mb-0'>HEX  後台管理系統</p>
+                        <p className='text-white mb-0'>後台管理系統</p>
                         <button
                             className='navbar-toggler'
                             type='button'
@@ -103,6 +104,7 @@ function Dashboard() {
 
                     </div>
                 </div>
+                <Footer />
             </MessageContext.Provider>
 
         </>

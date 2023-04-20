@@ -14,6 +14,7 @@ function AdminOrders() {
     const [isLoading, setIsLoading] = useState(false);
     const [tempOrder, setTempOrder] = useState({})
     const [, dispatch] = useContext(MessageContext);
+    const [isAdmin, setIsAdmin] = useState(true);
 
     const orderModal = useRef(null);
 
@@ -54,7 +55,7 @@ function AdminOrders() {
             <div className='p-3'>
                 <Loading isLoading={isLoading} />
                 <OrderModal closeOrderModal={closeOrderModal} getOrders={getOrders}
-                    tempOrder={tempOrder}
+                    tempOrder={tempOrder} isAdmin={isAdmin}
                 />
                 <h3>產品列表</h3>
                 <hr />

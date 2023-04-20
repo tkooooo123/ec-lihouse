@@ -100,8 +100,12 @@ function ProductModal({ closeProductModal, getProducts, type, tempProduct }) {
                 <div className="modal-body">
                     <div className='modal-body'>
                         <div className='row'>
-                            <div className='col-sm-4'>
+                            <div className='col-lg-4'>
                                 <div className='form-group mb-2'>
+                                    <div className="text-center bg-light mb-2"style={{height: '250px'}}>
+                                    <img src={tempData.imageUrl} alt="" style={{height: '250px', objectFit:'cover'}} />
+                                    </div>
+                                    
                                     <label className='w-100' htmlFor='image'>
                                         輸入圖片網址
                                         <input
@@ -127,8 +131,7 @@ function ProductModal({ closeProductModal, getProducts, type, tempProduct }) {
                                 </div>
                                 <img src='' alt='' className='img-fluid' />
                             </div>
-                            <div className='col-sm-8'>
-                                <pre>{JSON.stringify(tempData)}</pre>
+                            <div className='col-lg-8'>
                                 <div className='form-group mb-2'>
                                     <label className='w-100' htmlFor='title'>
                                         標題
@@ -256,7 +259,7 @@ function ProductModal({ closeProductModal, getProducts, type, tempProduct }) {
                     </div>
                 </div>
                 <div className="modal-footer">
-                    <button type="button" className="btn btn-secondary" onClick={closeProductModal}>Close</button>
+                    <button type="button" className="btn btn-outline-dark" onClick={closeProductModal}>Close</button>
                     <button type="button" className="btn btn-primary" onClick={submit}>儲存</button>
                 </div>
             </div>

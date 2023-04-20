@@ -71,6 +71,7 @@ function CouponModal({ closeCouponModal, getCoupons, type, tempCoupon }) {
                 data: {
                     ...tempData,
                     due_date: date.getTime(),  //轉換成 unit timestamp
+                    percent: Number(tempData.percent)
 
                 }
             })

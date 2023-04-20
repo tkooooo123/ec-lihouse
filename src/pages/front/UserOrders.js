@@ -48,7 +48,7 @@ function UserOrders() {
             <Loading isLoading={isLoading}/>
             <div className="row mt-5">
                 <div className="col-lg-3 mt-2">
-                    <h4 className="d-none d-lg-block fw-bold bg-light p-lg-3 border-start border-dark border-5">會員中心</h4>
+                    <h4 className="d-none d-lg-block fw-bold bg-light p-lg-3 border-start border-primary border-5">會員中心</h4>
                     <ul className="mt-3">
                         <li className="fw-bold">
                             訂單紀錄
