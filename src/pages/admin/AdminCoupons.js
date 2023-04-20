@@ -147,10 +147,12 @@ function AdminCoupons() {
 
                 </tbody>
             </table>
+            <div className="d-flex justify-content-center">
             <Pagination
                 pagination={pagination}
                 changePage={getCoupons}
-            />
+            /> 
+            </div>
         </div>
     );
 }

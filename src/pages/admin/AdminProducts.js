@@ -140,10 +140,12 @@ function AdminProducts() {
 
                 </tbody>
             </table>
+            <div className="d-flex justify-content-center">
             <Pagination
                 pagination={pagination}
                 changePage={getProducts}
-            />
+            /> 
+            </div>
         </div>
     );
 }

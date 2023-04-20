@@ -14,7 +14,6 @@ function Success() {
     const getOrder = async (orderId) => {
         try {
             const res = await axios.get(`/v2/api/${process.env.REACT_APP_API_PATH}/order/${orderId}`)
-            console.log('orders', res);
             setOrderData(res.data.order);
             setIsLoading(false);
         } catch (error) {

@@ -11,15 +11,12 @@ function Login() {
     const [loginState, setLoginState] = useState({});
     const handleChange = (e) => {
         const { name, value } = e.target
-        console.log(name, value)
         setData({ ...data, [name]: value })
-        console.log(data)
     }
     const submit = async (e) => {
         try {
             const res = await axios.post('/v2/admin/signin', data);
             const { token, expired } = res.data;
-            console.log(res.data);
             document.cookie = `hexToken=${token}; expires=${new Date(expired)};`;
             // 儲存 Token
             if (res.data.success) {

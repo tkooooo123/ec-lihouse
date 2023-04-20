@@ -71,7 +71,6 @@ function Products() {
             setIsLoading(true)
             const res = await axios.post(`/v2/api/${process.env.REACT_APP_API_PATH}/cart`,
                 data)
-            console.log(res)
             await getCart()
             setIsLoading(false)
             handleSuccessMessage(dispatch, res)
