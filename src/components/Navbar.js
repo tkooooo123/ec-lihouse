@@ -16,9 +16,11 @@ function Navbar({ cartData }) {
   }
   const openSearchCollapse = () => {
     searchCollapse.style.opacity = 0.9;
+    searchCollapse.style.display = 'block'
   }
   const closeSearchCollapse = () => {
     searchCollapse.style.opacity = 0;
+    searchCollapse.style.display = 'none'
   }
 
   //搜尋欄Enter功能
