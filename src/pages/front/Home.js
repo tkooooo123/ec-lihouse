@@ -187,10 +187,9 @@ function Home() {
           </div>
         </div>
       </div>
-      <div className="bg-light py-7 mt-5">
-          <img src="" alt="" />
-          <div className="row justify-content-center" style={{ backgroundImage: 'url("https://images.chinatimes.com/newsphoto/2021-06-18/656/20210618001436.jpg")' }}>
-            <div className="col-md-4 text-center">
+      <div className="bg-light py-7 mt-5 ">  
+          <div className="d-flex justify-content-center" style={{ backgroundImage: 'url("https://images.chinatimes.com/newsphoto/2021-06-18/656/20210618001436.jpg")', backgroundPosition: '100%', backgroundSize: 'cover' }}>
+            <div className=" text-center">
               <h3>Subscribe</h3>
               <p className="text-muted">訂閱我們，隨時收到最新優惠通知！</p>
               <div className="input-group mb-5">
@@ -202,6 +201,8 @@ function Home() {
             </div>
           </div>
       </div>
+    
+      
     </>
   )
 }
