@@ -36,6 +36,7 @@ function Navbar({ cartData }) {
   //清空input欄位
   useEffect(() => {
     setKeyword('');
+    closeSearchCollapse();
   }, [path])
 
 

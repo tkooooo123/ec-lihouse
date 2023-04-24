@@ -187,11 +187,11 @@ function Home() {
           </div>
         </div>
       </div>
-      <div className="bg-light py-7 mt-5 ">  
-          <div className="d-flex justify-content-center" style={{ backgroundImage: 'url("https://images.chinatimes.com/newsphoto/2021-06-18/656/20210618001436.jpg")', backgroundPosition: '100%', backgroundSize: 'cover' }}>
-            <div className=" text-center">
+      <div className=" py-7 mt-5 ">  
+          <div className="d-flex justify-content-center" style={{ backgroundImage: 'url("https://images.chinatimes.com/newsphoto/2021-06-18/656/20210618001436.jpg")', backgroundPosition: '50%', backgroundSize: 'cover' }}>
+            <div className="text-center mt-3">
               <h3>Subscribe</h3>
-              <p className="text-muted">訂閱我們，隨時收到最新優惠通知！</p>
+              <p className="text-muted fw-bold">訂閱我們，隨時收到最新優惠通知！</p>
               <div className="input-group mb-5">
                 <input className="form-control" type="email" placeholder="請輸入 Email..." />
                 <div className="input-group-append">

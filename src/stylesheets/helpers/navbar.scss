@@ -168,6 +168,7 @@
         justify-content: space-around;
         align-items: center;
         font-size: 24px;
+        z-index: 1;
 
         @media (min-width: 992px) {
             width: 110px;

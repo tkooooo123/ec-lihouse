@@ -3,7 +3,7 @@ import OrderModal from "../../components/OrderModal";
 import Pagination from "../../components/Pagination";
 import Loading from "../../components/Loading";
 import axios from "axios";
-import { MessageContext, handleErrorMessage } from "../../store/messageStore";
+import { MessageContext, handleErrorMessage, handleSuccessMessage } from "../../store/messageStore";
 import { Modal } from "bootstrap";
 import { useContext, useRef, useEffect } from "react";
 
@@ -21,7 +21,7 @@ function AdminOrders() {
     const getOrders = async (page = 1) => {
         try {
             setIsLoading(true);
-            const res = await axios.get(`/v2/api/${process.env.REACT_APP_API_PATH}/orders?page=${page}`);
+            const res = await axios.get(`/v2/api/${process.env.REACT_APP_API_PATH}/admin/orders?page=${page}`);
             setOrderData(res.data.orders);
             setPagination(res.data.pagination);
             setIsLoading(false);
@@ -29,6 +29,19 @@ function AdminOrders() {
             console.log(error);
             setIsLoading(false);
             handleErrorMessage(dispatch, error);
+        }
+    }
+
+    const deleteOrder = async(id) => {
+        try {
+            setIsLoading(true);
+            const res = await axios.delete(`/v2/api/${process.env.REACT_APP_API_PATH}/admin/order/${id}`);
+            await getOrders();
+            handleSuccessMessage(dispatch, res);
+            setIsLoading(false);
+        } catch (error) {
+            console.log(error);
+            handleErrorMessage(dispatch, error)
         }
     }
 
@@ -66,7 +79,8 @@ function AdminOrders() {
                             <th scope='col'>總金額</th>
                             <th scope='col'>訂購日期</th>
                             <th scope='col'>付款狀態</th>
-                            <th scope='col'>明細</th>
+                            <th scope='col'>編輯 / 刪除</th>
+
                         </tr>
                     </thead>
                     <tbody>
@@ -85,6 +99,11 @@ function AdminOrders() {
                                         <button className="btn"
                                             onClick={() => openOrderModal(order)}
                                         ><i className="fs-5 bi bi-file-earmark-plus"></i>
+                                        </button>
+                                        /
+                                        <button className="btn"
+                                            onClick={() => deleteOrder(order.id)}
+                                        ><i className="bi bi-trash fs-5"></i>
                                         </button>
                                     </td>
                                 </tr>

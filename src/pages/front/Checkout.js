@@ -10,7 +10,7 @@ import { useEffect } from "react";
 import Stepper from "../../components/Stepper";
 
 function Checkout() {
-  const { cartData } = useOutletContext();
+  const { cartData, getCart } = useOutletContext();
   const navigate = useNavigate();
   const [, dispatch] = useContext(MessageContext);
   const [isLoading, setIsLoading] = useState(true);
@@ -40,8 +40,9 @@ function Checkout() {
         }
       }
       
-      const res = await axios.post(`/v2/api/${process.env.REACT_APP_API_PATH}/order`, form)
-      navigate(`/success/${res.data.orderId}`)
+      const res = await axios.post(`/v2/api/${process.env.REACT_APP_API_PATH}/order`, form);
+      await getCart();
+      navigate(`/success/${res.data.orderId}`);
       setIsLoading(false);
 
     } catch (error) {

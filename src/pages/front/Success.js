@@ -67,7 +67,19 @@ function Success() {
                             </li>
                             <li className="d-flex">
                                 <p className="w-25">處理狀態</p>
-                                <p className="w-75 fw-bold">處理中</p>
+                                {!orderData.status && (
+                                            <p className="w-75 fw-bold">未確認</p>
+                                        )}
+                                        
+                                        {!!(orderData.status === 1) && (
+                                            <p className="w-75 fw-bold">已確認</p>
+                                        )}
+                                        {!!(orderData.status === 2) && (
+                                            <p className="w-75 fw-bold">處理中</p>
+                                        )}
+                                        {!!(orderData.status === 3) && (
+                                            <p className="w-75 fw-bold">已送達</p>
+                                        )}
                             </li>
                         </ul>
                     </div>
@@ -90,6 +102,10 @@ function Success() {
                             <li className="d-flex">
                                 <p className="w-25">運送地址</p>
                                 <p className="w-75 fw-bold">{orderData.user?.address}</p>
+                            </li>
+                            <li className="d-flex">
+                                <p className="w-25">留言</p>
+                                <p className="w-75 fw-bold">{orderData.message}</p>
                             </li>
                         </ul>
                     </div>
