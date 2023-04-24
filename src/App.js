@@ -14,6 +14,7 @@ import UserOrders from "./pages/front/UserOrders";
 import AutoScrollToTop from "./components/AutoScrollToTop";
 import AdminOrders from "./pages/admin/AdminOrders";
 import Search from "./pages/front/Search";
+import FrequencelyAskedQuestions from "./pages/front/FrequencelyAskedQuestions";
 
 function App() {
 
@@ -32,6 +33,7 @@ function App() {
             <Route path="user/orders" element={<UserOrders />}></Route>
             <Route path="/login" element={<Login />}></Route>
             <Route path="/search/:keyword" element={<Search />}></Route>
+            <Route path="/frequencely_asked_questions" element={<FrequencelyAskedQuestions />}></Route>
           </Route>
           
           <Route path="/admin" element={<Dashboard />}>

@@ -36,7 +36,9 @@ function Navbar({ cartData }) {
   //清空input欄位
   useEffect(() => {
     setKeyword('');
-    closeSearchCollapse();
+    if(searchCollapse) {
+      closeSearchCollapse();
+    }
   }, [path])
 
 
@@ -63,6 +65,13 @@ function Navbar({ cartData }) {
                 <NavLink className="nav-link" to="/products"
                   onClick={() => closeCollapse()}
                 >本店商品</NavLink>
+                
+              </li>
+              <li className="nav-item">
+                <NavLink className="nav-link" to="/frequencely_asked_questions"
+                  onClick={() => closeCollapse()}
+                >常見問題</NavLink>
+                
               </li>
             </ul>
             <div className="expand-bottom" onClick={closeCollapse}></div>

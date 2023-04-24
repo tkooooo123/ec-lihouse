@@ -13,7 +13,7 @@ function GoTopButton() {
         $(window).on('scroll', () => {
 
             const scrollTop = $(window).scrollTop();
-            if (scrollTop > height / 2) {
+            if (scrollTop > height / 3) {
                 $('.go-top').css('opacity', '0.9');
             } else {
                 $('.go-top').css('opacity', '0');
