@@ -15,6 +15,7 @@ import AutoScrollToTop from "./components/AutoScrollToTop";
 import AdminOrders from "./pages/admin/AdminOrders";
 import Search from "./pages/front/Search";
 import FrequencelyAskedQuestions from "./pages/front/FrequencelyAskedQuestions";
+import AdminArticles from "./pages/admin/AdminArticles";
 
 function App() {
 
@@ -38,9 +39,9 @@ function App() {
           
           <Route path="/admin" element={<Dashboard />}>
             <Route path='products' element={<AdminProducts />}></Route>
-
             <Route path='coupons' element={<AdminCoupons />}></Route>
             <Route path="orders" element={<AdminOrders />}></Route>
+            <Route path="articles" element={<AdminArticles />}></Route>
           </Route>
         </Routes>
 
