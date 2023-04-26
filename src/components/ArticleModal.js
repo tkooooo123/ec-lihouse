@@ -16,7 +16,7 @@ function ArticleModal({ getArticles, closeArticleModal, tempArticle, type }) {
     const [tempTag, setTempTag] = useState('');
     const [, dispatch] = useContext(MessageContext);
 
-    
+
 
     const handleChange = (e) => {
         const { name, value } = e.target;
@@ -35,14 +35,34 @@ function ArticleModal({ getArticles, closeArticleModal, tempArticle, type }) {
             });
 
         }
-
+    }
+    const tagChange = (e, i) => {
+        const { name, value } = e.target;
+        const arr = tempData.tag
+        arr.splice(i, 1, value);
+        setTempData({
+            ...tempData,
+            [name]: arr,
+        });
     }
     const addClick = () => {
-        tempData.tag.push(tempTag);
+        const arr = tempData.tag || []
+        arr.push(tempTag);
+        setTempData({
+            ...tempData,
+            tag: arr,
+        });
+
     }
     const submit = async () => {
         try {
-        
+            //清除空白標籤
+            if (tempData.tag.includes('')) {
+                while (tempData.tag.includes('')) {
+                    const i = tempData.tag.indexOf('')
+                    tempData.tag.splice(i, 1)
+                }
+            }
             let api = `/v2/api/${process.env.REACT_APP_API_PATH}/admin/article`;
             let method = 'post';
             if (type === 'edit') {
@@ -58,7 +78,7 @@ function ArticleModal({ getArticles, closeArticleModal, tempArticle, type }) {
             closeArticleModal();
             getArticles();
             handleSuccessMessage(dispatch, res)
-            
+
         } catch (error) {
             console.log(error);
             handleErrorMessage(dispatch, error)
@@ -66,7 +86,7 @@ function ArticleModal({ getArticles, closeArticleModal, tempArticle, type }) {
     }
 
     useEffect(() => {
-        if(type === 'create') {
+        if (type === 'create') {
             setTempData({
                 title: '',
                 author: '',
@@ -77,8 +97,8 @@ function ArticleModal({ getArticles, closeArticleModal, tempArticle, type }) {
                 content: '',
                 create_at: ''
             });
-        } else if( type === 'edit') {
-            setTempData(tempArticle)  
+        } else if (type === 'edit') {
+            setTempData(tempArticle)
         }
     }, [type, tempArticle]);
 
@@ -99,7 +119,7 @@ function ArticleModal({ getArticles, closeArticleModal, tempArticle, type }) {
                                         {tempData.image && (
                                             <img src={tempData.image} alt="" style={{ height: '250px', width: '250px', objectFit: 'contain' }} />
                                         )}
-                                        
+
                                     </div>
                                     <label className='w-100' htmlFor='image'>
                                         輸入圖片網址
@@ -142,7 +162,7 @@ function ArticleModal({ getArticles, closeArticleModal, tempArticle, type }) {
                                     </label>
                                 </div>
                                 <div className='row'>
-                                    
+
                                     <div className='form-group mb-2 col-md-6'>
                                         <label className='w-100' htmlFor='author'>
                                             作者
@@ -158,7 +178,7 @@ function ArticleModal({ getArticles, closeArticleModal, tempArticle, type }) {
                                         </label>
                                     </div>
                                     <div className='form-group mb-2 col-md-6'>
-                                        <label className='w-100' htmlFor='unit'>
+                                        <label className='w-75' htmlFor='tag'>
                                             標籤
                                             <input
                                                 type='text'
@@ -170,10 +190,34 @@ function ArticleModal({ getArticles, closeArticleModal, tempArticle, type }) {
                                                 value={tempTag}
                                             />
                                         </label>
-                                        <button type="button" className="btn"
+                                        <button type="button" className={`btn btn-outline-dark w-25 ${tempTag.length < 1 ? 'disabled' : ''}`}
                                             onClick={addClick}
-                                        >新增標籤</button>
+                                            
+                                        >新增</button>
                                     </div>
+                                </div>
+                                <hr/>
+                                <div className="row">
+                                    {tempData?.tag?.map((item, i) => {
+                                        return (
+                                            <div className="form-group w-25" key={i}>
+                                                <label htmlFor="tag">
+                                                    標籤#{i + 1}
+                                                    <input type="text"
+                                                        className="form-control"
+                                                        placeholder="請輸入標籤"
+                                                        value={tempData.tag[i]}
+                                                        name="tag"
+                                                        id="tag"
+                                                        onChange={(e) => tagChange(e, i)}
+                                                    />
+                                                </label>
+                                            </div>
+
+                                        )
+                                    })}
+
+
                                 </div>
 
                                 <hr />
