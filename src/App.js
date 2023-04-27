@@ -18,6 +18,7 @@ import FrequencelyAskedQuestions from "./pages/front/FrequencelyAskedQuestions";
 import AdminArticles from "./pages/admin/AdminArticles";
 import Articles from "./pages/front/Articles";
 import ArticleDetail from "./pages/front/ArticleDetail";
+import NotFound from "./pages/NotFound";
 
 function App() {
 
@@ -47,6 +48,7 @@ function App() {
             <Route path="orders" element={<AdminOrders />}></Route>
             <Route path="articles" element={<AdminArticles />}></Route>
           </Route>
+          <Route path="*" element={<NotFound />}></Route>
         </Routes>
 
       </AutoScrollToTop>
