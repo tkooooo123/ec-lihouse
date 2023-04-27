@@ -16,6 +16,8 @@ import AdminOrders from "./pages/admin/AdminOrders";
 import Search from "./pages/front/Search";
 import FrequencelyAskedQuestions from "./pages/front/FrequencelyAskedQuestions";
 import AdminArticles from "./pages/admin/AdminArticles";
+import Articles from "./pages/front/Articles";
+import ArticleDetail from "./pages/front/ArticleDetail";
 
 function App() {
 
@@ -35,6 +37,8 @@ function App() {
             <Route path="/login" element={<Login />}></Route>
             <Route path="/search/:keyword" element={<Search />}></Route>
             <Route path="/frequencely_asked_questions" element={<FrequencelyAskedQuestions />}></Route>
+            <Route path="/articles" element={<Articles />}></Route>
+            <Route path="/article/:id" element={<ArticleDetail />}></Route>
           </Route>
           
           <Route path="/admin" element={<Dashboard />}>

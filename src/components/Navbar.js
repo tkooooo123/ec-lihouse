@@ -65,13 +65,16 @@ function Navbar({ cartData }) {
                 <NavLink className="nav-link" to="/products"
                   onClick={() => closeCollapse()}
                 >本店商品</NavLink>
-                
               </li>
               <li className="nav-item">
                 <NavLink className="nav-link" to="/frequencely_asked_questions"
                   onClick={() => closeCollapse()}
                 >常見問題</NavLink>
-                
+              </li>
+              <li className="nav-item">
+                <NavLink className="nav-link" to="/articles"
+                  onClick={() => closeCollapse()}
+                >最新消息</NavLink>
               </li>
             </ul>
             <div className="expand-bottom" onClick={closeCollapse}></div>
