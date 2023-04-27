@@ -108,7 +108,7 @@ function FrequencelyAskedQuestions() {
             <div className="container">
                 <div className="row mt-5">
                     <div className="col-lg-3">
-                        <h4 className="bg-light p-3 border-start border-primary border-5">常見問題</h4>
+                        <h4 className="fw-bold bg-light p-3 border-start border-primary border-5">常見問題</h4>
                         <ul className="mt-3 px-2 d-none d-lg-block">
                             {data.map((item, i) => {
                                 return (

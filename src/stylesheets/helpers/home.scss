@@ -1,0 +1,12 @@
+.about-wrapper {
+    p {
+        width: 100%;
+        top: 3rem;
+        @media (min-width: 768px) {
+            width: 80%;
+        }
+        @media (min-width: 992px) {
+            width: 70%;
+        }
+    }
+}

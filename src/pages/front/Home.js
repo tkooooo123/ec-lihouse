@@ -5,6 +5,8 @@ import { MessageContext, handleSuccessMessage, handleErrorMessage } from "../../
 import copy from "copy-to-clipboard";
 import SwiperBanner from "../../components/SwiperBanner";
 import Loading from "../../components/Loading";
+import Aos from "aos";
+import 'aos/dist/aos.css';
 
 function Home() {
   const [products, setProducts] = useState([]);
@@ -74,19 +76,32 @@ function Home() {
     setFeedback([...dummyData]);
     setIsLoading(false)
   }
+
+
   useEffect(() => {
     getProducts();
     getFeedback();
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    Aos.init();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
   return (
     <>
+      <Loading isLoading={isLoading} />
+      <SwiperBanner></SwiperBanner>
       <div className="container mt-3">
-        
-        <Loading isLoading={isLoading}/>
-        
-        <SwiperBanner></SwiperBanner>
-        <div className="row coupon">
+        <div className="about-wrapper" data-aos="fade-left">
+          <div className="d-md-flex justify-content-around  bg-light p-5">
+            <div className="col-md-6  pt-3 pt-lg-0">
+              <h2 className="fw-bold text-primary ms-lg-5">《關於我們》</h2>
+              <div className="text-wrapper">
+                <p className="about-text fw-bold fs-5 p-lg-5 p-3">Li House 成立於2023年4月，旨在提供高品質的寵物用品與食品，完善毛孩們的健康與生活環境，並致力於成立流浪動物之家，為浪浪們提供一個溫暖的家。</p>
+              </div>
+            </div>
+            <div className="about-image col-md-6" style={{backgroundImage: 'url("https://animal.coa.gov.tw/public/upload/PublicShelterImage/191204121214235943VUWRS.jpg")', height: '350px', backgroundPosition:'50%',backgroundSize: 'cover'}}>    
+            </div>
+          </div>
+        </div>
+        <div className="row coupon" data-aos="fade-right">
           <div className="col-lg-6">
             <h2 className="fw-bold mt-5 border-start border-primary border-5 ps-3">歡慶開幕</h2>
             <hr />
@@ -116,7 +131,7 @@ function Home() {
             </div>
           </div>
         </div>
-        <div className="new ">
+        <div className="new" data-aos="fade-up">
           <h2 className="fw-bold mt-5 border-start border-primary border-5 ps-3">最新商品
             <Link to="/products">
               <span className="fs-5 mx-3">more +</span>
@@ -151,7 +166,6 @@ function Home() {
                           onClick={(e) => {
                             e.preventDefault();
                             addToCart(product.id);
-
                           }}
                         >加入購物車</button>
                       </div>
@@ -162,7 +176,7 @@ function Home() {
             })}
           </div>
         </div>
-        <div className=" mt-5">
+        <div className=" mt-5" data-aos="fade-up">
           <h2 className="fw-bold mt-5 border-start border-primary border-5 ps-3">購買心得</h2>
           <div className="">
             <div className="d-flex justify-content-between row">
@@ -182,27 +196,24 @@ function Home() {
                   </div>
                 )
               })}
-
             </div>
           </div>
         </div>
       </div>
-      <div className=" py-7 mt-5 ">  
-          <div className="d-flex justify-content-center" style={{ backgroundImage: 'url("https://images.chinatimes.com/newsphoto/2021-06-18/656/20210618001436.jpg")', backgroundPosition: '50%', backgroundSize: 'cover' }}>
-            <div className="text-center mt-3">
-              <h3>Subscribe</h3>
-              <p className="text-muted fw-bold">訂閱我們，隨時收到最新優惠通知！</p>
-              <div className="input-group mb-5">
-                <input className="form-control" type="email" placeholder="請輸入 Email..." />
-                <div className="input-group-append">
-                  <button className="btn btn-primary rounded-0">訂閱</button>
-                </div>
+      <div className=" py-7 mt-5 ">
+        <div className="d-flex justify-content-center" style={{ backgroundImage: 'url("https://images.chinatimes.com/newsphoto/2021-06-18/656/20210618001436.jpg")', backgroundPosition: '50%', backgroundSize: 'cover' }}>
+          <div className="text-center mt-3">
+            <h3>Subscribe</h3>
+            <p className="text-muted fw-bold">訂閱我們，隨時收到最新優惠通知！</p>
+            <div className="input-group mb-5">
+              <input className="form-control" type="email" placeholder="請輸入 Email..." />
+              <div className="input-group-append">
+                <button className="btn btn-primary rounded-0">訂閱</button>
               </div>
             </div>
           </div>
+        </div>
       </div>
-    
-      
     </>
   )
 }
