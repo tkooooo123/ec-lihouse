@@ -85,7 +85,7 @@ function ProductDetail() {
         <div className="container product-container mt-3 w-100">
             <Loading isLoading={isLoading}/>
             <div className="row justify-content-center px-3">
-                <div className="">
+                <div >
                     <div className="row">
                         <div className="col-lg-5 text-center">
                             <img className="bg-light px-4 w-100 h-100  " src={product.imageUrl} alt="..." style={{ height: '400px', objectFit: 'cover' }} />

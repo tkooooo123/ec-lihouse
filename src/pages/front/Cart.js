@@ -138,7 +138,7 @@ function Cart() {
                                     <td className="align-middle">
                                         <div className="item-quantity mt-3 ">
                                             <div className="input-group align-items-center" style={{ width: '80px' }}>
-                                                <select name="" className="form-select" id=""
+                                                <select  className="form-select" id=""
                                                     value={item.qty}
                                                     disabled={loadingItems.includes(item.id)}
                                                     onChange={

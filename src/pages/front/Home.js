@@ -181,7 +181,7 @@ function Home() {
         </div>
         <div className=" mt-5" data-aos="fade-up">
           <h2 className="fw-bold mt-5 border-start border-primary border-5 ps-3">購買心得</h2>
-          <div className="">
+          <div>
             <div className="d-flex justify-content-between row">
               {feedback.map((content) => {
                 return (
