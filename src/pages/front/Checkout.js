@@ -162,7 +162,7 @@ function Checkout() {
               <h4 className='mb-4'>購買內容</h4>
               {cartData?.carts?.map((item) => {
                 return (
-                  <div className='d-flex py-2 border-bottom' key="item.id">
+                  <div className='d-flex py-2 border-bottom' key={item.id}>
                     <img
                       src={item.product.imageUrl}
                       alt='商品圖片'
