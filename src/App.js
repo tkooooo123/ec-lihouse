@@ -36,7 +36,7 @@ function App() {
             <Route path="success/:orderId" element={<Success />}></Route>
             <Route path="user/orders" element={<UserOrders />}></Route>
             <Route path="/login" element={<Login />}></Route>
-            <Route path="/search/:keyword" element={<Search />}></Route>
+            <Route path="/search" element={<Search />}></Route>
             <Route path="/frequencely_asked_questions" element={<FrequencelyAskedQuestions />}></Route>
             <Route path="/articles" element={<Articles />}></Route>
             <Route path="/article/:id" element={<ArticleDetail />}></Route>
