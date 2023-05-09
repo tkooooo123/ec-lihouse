@@ -97,7 +97,9 @@ function Home() {
                 <p className="about-text fw-bold fs-5 p-lg-5 p-3">Li House 成立於2023年4月，旨在提供高品質的寵物用品與食品，完善毛孩們的健康與生活環境，並致力於成立流浪動物之家，為浪浪們提供一個溫暖的家。</p>
               </div>
             </div>
-            <div className="about-image col-md-6" style={{backgroundImage: 'url("https://animal.coa.gov.tw/public/upload/PublicShelterImage/191204121214235943VUWRS.jpg")', height: '350px', backgroundPosition:'50%',backgroundSize: 'cover'}}>    
+            <div className="about-image col-md-6 text-center" >    
+            <img src="https://animal.coa.gov.tw/public/upload/PublicShelterImage/191204121214235943VUWRS.jpg" alt="動物之家" 
+            />
             </div>
           </div>
         </div>
@@ -151,7 +153,7 @@ function Home() {
                       <div className="img-wrapper">
                         <img src={product.imageUrl}
                           className="card-img-top rounded-0"
-                          alt="..." />
+                          alt="商品圖片" />
                         <div className="deatil-icon fs-5 fw-bold text-primary">
                           <i className="bi bi-search"></i> 查看更多
                         </div>

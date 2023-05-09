@@ -117,7 +117,7 @@ function ArticleModal({ getArticles, closeArticleModal, tempArticle, type }) {
                                 <div className='form-group mb-2'>
                                     <div className="text-center bg-light mb-2" style={{ height: '250px' }}>
                                         {tempData.image && (
-                                            <img src={tempData.image} alt="" style={{ height: '250px', width: '250px', objectFit: 'contain' }} />
+                                            <img src={tempData.image} alt="文章圖片" style={{ height: '250px', width: '250px', objectFit: 'contain' }} />
                                         )}
 
                                     </div>

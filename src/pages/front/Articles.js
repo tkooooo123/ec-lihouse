@@ -35,7 +35,7 @@ function Articles() {
                         <div className="col-md-6 col-xl-4">
                             <Link to={`/article/${article.id}`} style={{textDecoration: 'none'}}>
                                 <div className="card mb-3" key={article.id} >
-                                    <img src={article.image} className="card-img-top bg-light" alt="..."
+                                    <img src={article.image} className="card-img-top bg-light" alt="文章圖片"
                                         style={{ height: '15rem', objectFit: 'contain' }}
                                     />
                                     <div className="card-body">

@@ -133,7 +133,7 @@ function FrequencelyAskedQuestions() {
                         
                     </div>
                     <div className="col-lg-9">
-                        <img src="https://doggiepet.com/wp-content/uploads/2016/05/FAQ-r1.png" alt="" style={{ width: '100%', objectFit: 'contain' }} />
+                        <img src="https://doggiepet.com/wp-content/uploads/2016/05/FAQ-r1.png" alt="Q&A" style={{ width: '100%', objectFit: 'contain' }} />
                         <ul>
                             {tempData?.selectData?.questions.map((question, i) => {
                                 return (

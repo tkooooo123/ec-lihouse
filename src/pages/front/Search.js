@@ -134,7 +134,7 @@ function Search() {
                                                 <div className="img-wrapper">
                                                     <img src={product.imageUrl}
                                                         className="card-img-top rounded-0"
-                                                        alt="..." />
+                                                        alt="商品圖片" />
                                                     <div className="deatil-icon fs-5 fw-bold text-primary">
                                                         <i className="bi bi-search"></i> 查看更多
                                                     </div>

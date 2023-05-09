@@ -103,7 +103,7 @@ function ProductModal({ closeProductModal, getProducts, type, tempProduct }) {
                             <div className='col-lg-4'>
                                 <div className='form-group mb-2'>
                                     <div className="text-center bg-light mb-2"style={{height: '250px'}}>
-                                    <img src={tempData.imageUrl} alt="" style={{height: '250px', objectFit:'cover'}} />
+                                    <img src={tempData.imageUrl} alt="商品圖片" style={{height: '250px', objectFit:'cover'}} />
                                     </div>
                                     
                                     <label className='w-100' htmlFor='image'>

@@ -129,7 +129,7 @@ function Cart() {
                             return (
                                 <tr key={item.id}>
                                     <td className="py-2">
-                                        <img src={item.product.imageUrl} alt="..." style={{ width: '100px', height: '100px', objectFit: 'cover' }} />
+                                        <img src={item.product.imageUrl} alt="商品圖片" style={{ width: '100px', height: '100px', objectFit: 'cover' }} />
                                         <div className="d-inline-block  align-middle">
                                             <h5 className="fw-bold" >{item.product.title}</h5>
                                             <p className="fs-8 text-muted">{item.product.category}</p>

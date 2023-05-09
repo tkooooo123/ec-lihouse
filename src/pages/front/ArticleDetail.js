@@ -62,7 +62,7 @@ function ArticleDetail() {
                             <span className="bg-secondary badge text-dark p-1 m-1 " key={i}><i className="bi bi-tag"></i>{tag}</span>
                         )
                     })}
-                    <img src={article.image} className="card-img-top mt-3 bg-light" alt="..."
+                    <img src={article.image} className="card-img-top mt-3 bg-light" alt="文章圖片"
                         style={{ height: '25rem', objectFit: 'contain' }}
                     />
                     <p className="card-text fw-bold text-muted mt-3">{article.description}</p>

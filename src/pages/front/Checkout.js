@@ -165,7 +165,7 @@ function Checkout() {
                   <div className='d-flex py-2 border-bottom' key="item.id">
                     <img
                       src={item.product.imageUrl}
-                      alt=''
+                      alt='商品圖片'
                       className='me-2'
                       style={{ width: '48px', height: '48px', objectFit: 'cover' }}
                     />

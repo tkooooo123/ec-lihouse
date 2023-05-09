@@ -88,7 +88,7 @@ function ProductDetail() {
                 <div >
                     <div className="row">
                         <div className="col-lg-5 text-center">
-                            <img className="bg-light px-4 w-100 h-100  " src={product.imageUrl} alt="..." style={{ height: '400px', objectFit: 'cover' }} />
+                            <img className="bg-light px-4 w-100 h-100  " src={product.imageUrl} alt="商品圖片" style={{ height: '400px', objectFit: 'cover' }} />
                         </div>
                         <div className="col-lg-7 px-4 px-lg-5 mt-4 mt-lg-0">
                             <h1 className="fw-bolder">{product.title}</h1>
@@ -149,7 +149,7 @@ function ProductDetail() {
                                     <div className="img-wrapper">
                                         <img src={item.imageUrl}
                                             className="card-img-top rounded-0"
-                                            alt="..." />
+                                            alt="商品圖片" />
                                         <div className="deatil-icon fs-5 fw-bold text-primary">
                                             <i className="bi bi-search"></i> 查看更多
                                         </div>
