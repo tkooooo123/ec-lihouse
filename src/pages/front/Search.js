@@ -1,10 +1,10 @@
 import axios from "axios";
 import { useContext, useEffect, useState } from "react";
-import { Link, useOutletContext } from "react-router-dom";
+import { Link, useOutletContext, useSearchParams } from "react-router-dom";
 import Pagination from "../../components/Pagination";
 import { MessageContext, handleErrorMessage, handleSuccessMessage } from "../../store/messageStore";
 import Loading from "../../components/Loading";
-import { useParams } from "react-router-dom";
+
 
 function Search() {
     const [products, setProducts] = useState([]);
@@ -14,7 +14,8 @@ function Search() {
     const [isLoading, setIsLoading] = useState(false);
     const [, dispatch] = useContext(MessageContext);
     const { getCart } = useOutletContext();
-    const { keyword } = useParams();
+    const [searchParams] = useSearchParams();
+    const keyword = searchParams.get('keyword')
 
     const getCategories = async () => {
         setIsLoading(true);
@@ -85,7 +86,6 @@ function Search() {
     }
     
     useEffect(() => {
-        
         getCategories();
         getProductsAll();
         
@@ -97,7 +97,6 @@ function Search() {
         getProductsAll();
         
     }, [currentCategory]);
-
 
     return (
         <>

@@ -1,4 +1,4 @@
-import { NavLink, Link, useLocation, useNavigate } from "react-router-dom"
+import { NavLink, Link, useLocation, useNavigate, useSearchParams } from "react-router-dom"
 import { Collapse } from "bootstrap";
 import { useEffect, useState } from "react";
 
@@ -8,6 +8,7 @@ function Navbar({ cartData }) {
   const searchCollapse = document.querySelector('.search-collapse');
   const path = useLocation();
   const navigate = useNavigate();
+  const [searchParams, setSearchParams] = useSearchParams();
 
   const closeCollapse = () => {
     let navCollapse = new Collapse('#navbarNav');
@@ -26,7 +27,8 @@ function Navbar({ cartData }) {
   //搜尋欄Enter功能
   const keyDownEnter = (e) => {
     if (e.key === 'Enter') {
-      navigate(`/search/${keyword}`);
+      setSearchParams({ keyword: e.target.value })
+      navigate(`/search?keyword=${e.target.value}`);
       closeSearchCollapse();
     }
   }
@@ -36,7 +38,7 @@ function Navbar({ cartData }) {
   //清空input欄位
   useEffect(() => {
     setKeyword('');
-    if(searchCollapse) {
+    if (searchCollapse) {
       closeSearchCollapse();
     }
   }, [path])
@@ -83,7 +85,7 @@ function Navbar({ cartData }) {
             <input type="text" className="form-control rounded-0" value={keyword} placeholder="找產品..." onChange={handleChange}
               onKeyDown={keyDownEnter}
             />
-            <Link className={`nav-link ${keyword ? '1' : 'disabled'}`} to={`/search/${keyword}`}>
+            <Link className={`nav-link ${keyword ? '1' : 'disabled'}`} to={`/search?keyword=${keyword}`}>
               <button type="button" className="form-control btn btn-outline-light rounded-0 bg-dark text-white">搜尋</button>
             </Link>
           </div>
@@ -92,7 +94,7 @@ function Navbar({ cartData }) {
               <div className="search-bar form-group d-flex  mx-3">
                 <input type="text" className="form-control rounded-0" value={keyword} placeholder="找產品..." onChange={handleChange}
                   onKeyDown={keyDownEnter} />
-                <Link className={`nav-link ${keyword ? '1' : 'disabled'}`} to={`/search/${keyword}`} onClick={closeSearchCollapse}>
+                <Link className={`nav-link ${keyword ? '1' : 'disabled'}`} to={`/search?query=${keyword}`} onClick={closeSearchCollapse}>
                   <button type="button" className="btn btn-outline-light rounded-0 bg-dark text-white">搜尋</button>
                 </Link>
               </div>
