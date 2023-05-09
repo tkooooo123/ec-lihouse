@@ -116,6 +116,9 @@ function Home() {
                 onClick={() => {
                   copy(copyRef.current.innerText);
                   setIsCopy(true);
+                  setTimeout(()=> {
+                    setIsCopy(false);
+                  },2000)
                 }}>
                 <span>
                   {isCopy ? <i className="bi bi-clipboard-check me-2"></i> : <i className="bi bi-clipboard me-2"></i>}
