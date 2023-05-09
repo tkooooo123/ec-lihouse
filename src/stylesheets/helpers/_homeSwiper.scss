@@ -16,7 +16,7 @@
         p {
             font-size: 2.5rem;
         }
-        @media (min-width:992px) {
+        @include media-breakpoint-up(lg) {
             width: 300px;
             p {
                 font-size:4rem;
@@ -44,7 +44,7 @@
         p {
             font-size: 2.5rem;
         }
-        @media (min-width:992px) {
+        @include media-breakpoint-up(lg){
             width: 300px;
             p {
                 font-size:4rem;

@@ -11,7 +11,7 @@
         position: absolute;
         left: 80px;
 
-        @media (min-width: 992px) {
+        @include media-breakpoint-up(lg) {
             position: static;
             transition: all 0.9s ease-in;
 
@@ -59,7 +59,7 @@
         left: 0;
         transition: all 0.15s ease-out;
 
-        @media (min-width: 992px) {
+        @include media-breakpoint-up(lg) {
             position: static;
             display: flex;
         }
@@ -75,7 +75,7 @@
             .nav-link {
                 color: #000;
 
-                @media (min-width: 992px) {
+                @include media-breakpoint-up(lg) {
                     &:hover {
                         background-color: #fff;
                     }
@@ -83,7 +83,7 @@
 
             }
 
-            @media (min-width: 992px) {
+            @include media-breakpoint-up(lg) {
                 padding-top: 0;
                 height: 48px;
                 width: 300px;
@@ -110,13 +110,13 @@
                         color: #fff;
                         width: 100%;
                         text-align: center;
-                        @media (min-width: 992px) {
+                        @include media-breakpoint-up(lg) {
                             color: $primary;
                         }
                     }
                 }
 
-                @media (min-width: 992px) {
+                @include media-breakpoint-up(lg) {
                     display: flex;
                     justify-content: center;
                 }
@@ -129,7 +129,7 @@
                 width: 40px;
                 text-align: center;
 
-                @media (min-width: 992px) {
+                @include media-breakpoint-up(lg) {
                     display: none;
                 }
 
@@ -148,7 +148,7 @@
             background: #747373;
             opacity: 0.5;
 
-            @media (min-width: 992px) {
+            @include media-breakpoint-up(lg) {
                 display: none;
             }
         }
@@ -172,7 +172,7 @@
         font-size: 24px;
         z-index: 1;
 
-        @media (min-width: 992px) {
+        @include media-breakpoint-up(lg) {
             width: 110px;
         }
     }

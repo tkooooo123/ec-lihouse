@@ -4,7 +4,7 @@
     .ticket-dash {
         border-left: 1px dashed white;
     }
-    @media(min-width:992px) {
+    @include media-breakpoint-up(lg) {
         width: 50%;
     }
 }

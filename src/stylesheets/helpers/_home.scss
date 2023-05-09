@@ -2,10 +2,10 @@
     p {
         width: 100%;
         top: 3rem;
-        @media (min-width: 768px) {
+        @include media-breakpoint-up(md) {
             width: 80%;
         }
-        @media (min-width: 992px) {
+        @include media-breakpoint-up(lg){
             width: 70%;
         }
     }
