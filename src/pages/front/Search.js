@@ -89,14 +89,9 @@ function Search() {
         getCategories();
         getProductsAll();
         
-    }, [keyword]);
+    }, [keyword, currentCategory]);
     
-    useEffect(() => {
-        
-        getCategories();
-        getProductsAll();
-        
-    }, [currentCategory]);
+  
 
     return (
         <>

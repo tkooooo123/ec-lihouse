@@ -26,7 +26,7 @@ function Products() {
                 setCategories(categoryList)
             }
         });
-        setIsLoading(false);
+        await getProductsAll();
     }
     const getProductsAll = async (page = 1) => {
         try {
@@ -80,12 +80,9 @@ function Products() {
             handleErrorMessage(dispatch, error)
         }
     }
+   
     useEffect(() => {
         getCategories();
-
-    }, []);
-    useEffect(() => {
-        getProductsAll();
     }, [currentCategory]);
 
     return (
