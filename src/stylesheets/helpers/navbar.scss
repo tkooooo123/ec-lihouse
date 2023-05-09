@@ -104,10 +104,12 @@
 
                 &:hover {
                     background-color: $primary;
+                    
 
                     .nav-link {
                         color: #fff;
-
+                        width: 100%;
+                        text-align: center;
                         @media (min-width: 992px) {
                             color: $primary;
                         }
