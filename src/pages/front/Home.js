@@ -132,7 +132,7 @@ function Home() {
             <div className="ticket mt-3 text-center text-white bg-primary py-3 fs-5">
               <span className="ticket-text fs-4">優惠碼</span>
               <span className="ticket-dash  mx-2" ></span>
-              <span className="ticket-code fs-4" ref={copyRef}>PET8888</span>
+              <span className="ticket-code fs-4" ref={copyRef}>PET888</span>
             </div>
           </div>
         </div>
