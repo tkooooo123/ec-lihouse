@@ -50,7 +50,7 @@ function ArticleDetail() {
     return (
         <div className="container">
             <Loading isLoading={isLoading} />
-            <div className="row  d-flex justify-content-center">
+            <div className="row justify-content-center">
                 <div className="col-md-9 mt-5">
                     <h1 className="article-title">《{article.title}》</h1>
                     <div>
@@ -67,7 +67,7 @@ function ArticleDetail() {
                     />
                     <p className="card-text fw-bold text-muted mt-3">{article.description}</p>
                     <p className="card-text fw-bold mt-3">{article.content}</p>
-                    <div className="row d-flex my-5">
+                    <div className="row my-5">
                         {!!prevArticle && (
                             <Link className="col-6" to={`/article/${prevArticle.id}`} style={{ textDecoration: 'none' }}>
                                 <div className="border-bottom border-primary border-4 ps-3">
