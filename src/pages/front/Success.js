@@ -63,7 +63,7 @@ function Success() {
                         <ul className="mt-3">
                             <li className="d-flex">
                                 <p className="w-25">訂購時間</p>
-                                <p className="w-75 fw-bold">{orderData.create_at}</p>
+                                <p className="w-75 fw-bold">{new Date(orderData.create_at * 1000).toLocaleDateString()}</p>
                             </li>
                             <li className="d-flex">
                                 <p className="w-25">處理狀態</p>
