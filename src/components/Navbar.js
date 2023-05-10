@@ -1,14 +1,14 @@
 import { NavLink, Link, useLocation, useNavigate, useSearchParams } from "react-router-dom"
 import { Collapse } from "bootstrap";
-import { useEffect, useState, useCallback } from "react";
+import { useEffect, useState, useCallback, useRef } from "react";
 
 
 function Navbar({ cartData }) {
   const [keyword, setKeyword] = useState('');
-  const searchCollapse = document.querySelector('.search-collapse');
   const path = useLocation();
   const navigate = useNavigate();
   const [searchParams, setSearchParams] = useSearchParams();
+  const searchRef = useRef(null);
 
   const closeCollapse = () => {
     let navCollapse = new Collapse('#navbarNav');
@@ -16,13 +16,13 @@ function Navbar({ cartData }) {
 
   }
   const openSearchCollapse = () => {
-    searchCollapse.style.opacity = 0.9;
-    searchCollapse.style.display = 'block'
+    searchRef.current.style.opacity = 0.9;
+    searchRef.current.style.display = 'block'
   }
   const closeSearchCollapse = useCallback(() => {
-    searchCollapse.style.opacity = 0;
-    searchCollapse.style.display = 'none'
-  },[searchCollapse.style])
+    searchRef.current.style.opacity = 0;
+    searchRef.current.style.display = 'none'
+  },[searchRef])
 
   //搜尋欄Enter功能
   const keyDownEnter = (e) => {
@@ -38,10 +38,10 @@ function Navbar({ cartData }) {
   //清空input欄位
   useEffect(() => {
     setKeyword('');
-    if (searchCollapse) {
+    if (searchRef) {
       closeSearchCollapse();
     }
-  }, [closeSearchCollapse, path, searchCollapse])
+  }, [closeSearchCollapse, path, searchRef])
 
 
   return (
@@ -89,12 +89,12 @@ function Navbar({ cartData }) {
               <button type="button" className="form-control btn btn-outline-light rounded-0 bg-dark text-white">搜尋</button>
             </Link>
           </div>
-          <div className="search-collapse">
+          <div className="search-collapse"  ref={searchRef}>
             <div className="d-flex justify-content-center align-items-center h-100">
               <div className="search-bar form-group d-flex  mx-3">
                 <input type="text" className="form-control rounded-0" value={keyword} placeholder="找產品..." onChange={handleChange}
                   onKeyDown={keyDownEnter} />
-                <Link className={`nav-link ${keyword ? '1' : 'disabled'}`} to={`/search?query=${keyword}`} onClick={closeSearchCollapse}>
+                <Link className={`nav-link ${keyword ? '1' : 'disabled'}`} to={`/search?keyword=${keyword}`} onClick={closeSearchCollapse}>
                   <button type="button" className="btn btn-outline-light rounded-0 bg-dark text-white">搜尋</button>
                 </Link>
               </div>
