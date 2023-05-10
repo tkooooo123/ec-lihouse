@@ -47,7 +47,8 @@ function ArticleModal({ getArticles, closeArticleModal, tempArticle, type }) {
     }
     const addClick = () => {
         const arr = tempData.tag || []
-        arr.push(tempTag);
+        arr.push(tempTag.trim());
+        console.log('tag', tempTag.trim())
         setTempData({
             ...tempData,
             tag: arr,
@@ -56,8 +57,13 @@ function ArticleModal({ getArticles, closeArticleModal, tempArticle, type }) {
     }
     const submit = async () => {
         try {
-            //清除空白標籤
-            if (tempData.tag.includes('')) {
+            if (tempData.tag) {
+                //先移除頭尾多個空格
+                for(let i = 0; i < tempData.tag.length; i++) {
+                    const value = tempData.tag[i].trim()
+                    tempData.tag.splice(i, 1, value)     
+                }
+                //清除空白標籤
                 while (tempData.tag.includes('')) {
                     const i = tempData.tag.indexOf('')
                     tempData.tag.splice(i, 1)
@@ -190,7 +196,7 @@ function ArticleModal({ getArticles, closeArticleModal, tempArticle, type }) {
                                                 value={tempTag}
                                             />
                                         </label>
-                                        <button type="button" className={`btn btn-outline-dark w-25 ${tempTag.length < 1 ? 'disabled' : ''}`}
+                                        <button type="button" className={`btn btn-outline-dark w-25 ${tempTag.trim().length < 1 ? 'disabled' : ''}`}
                                             onClick={addClick}
                                             
                                         >新增</button>
