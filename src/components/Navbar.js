@@ -1,6 +1,6 @@
 import { NavLink, Link, useLocation, useNavigate, useSearchParams } from "react-router-dom"
 import { Collapse } from "bootstrap";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
 
 
 function Navbar({ cartData }) {
@@ -19,10 +19,10 @@ function Navbar({ cartData }) {
     searchCollapse.style.opacity = 0.9;
     searchCollapse.style.display = 'block'
   }
-  const closeSearchCollapse = () => {
+  const closeSearchCollapse = useCallback(() => {
     searchCollapse.style.opacity = 0;
     searchCollapse.style.display = 'none'
-  }
+  },[searchCollapse.style])
 
   //搜尋欄Enter功能
   const keyDownEnter = (e) => {
@@ -41,7 +41,7 @@ function Navbar({ cartData }) {
     if (searchCollapse) {
       closeSearchCollapse();
     }
-  }, [path])
+  }, [closeSearchCollapse, path, searchCollapse])
 
 
   return (
