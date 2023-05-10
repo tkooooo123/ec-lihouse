@@ -1,12 +1,14 @@
 import { Link, useOutletContext } from "react-router-dom";
 import { useContext, useEffect, useRef, useState } from "react";
 import axios from "axios";
-import { MessageContext, handleSuccessMessage, handleErrorMessage } from "../../store/messageStore";
+import { MessageContext, handleSuccessMessage, handleErrorMessage, handleSubscribeMessage } from "../../store/messageStore";
 import copy from "copy-to-clipboard";
 import SwiperBanner from "../../components/SwiperBanner";
 import Loading from "../../components/Loading";
 import Aos from "aos";
 import 'aos/dist/aos.css';
+import { useForm } from "react-hook-form";
+import { Input } from "../../components/FormElements";
 
 function Home() {
   const [products, setProducts] = useState([]);
@@ -16,6 +18,15 @@ function Home() {
   const [, dispatch] = useContext(MessageContext);
   const { getCart } = useOutletContext();
   const copyRef = useRef(null);
+  const {
+    register,
+    handleSubmit,
+    formState: { errors }
+  } = useForm({
+    mode: 'onTouched',
+  });
+
+
   const getProducts = async () => {
     try {
       setIsLoading(true)
@@ -77,6 +88,11 @@ function Home() {
     setIsLoading(false)
   }
 
+  const onSubmit = (data) => {
+    const { email } = data
+
+    handleSubscribeMessage(dispatch)
+  }
 
   useEffect(() => {
     getProducts();
@@ -97,9 +113,9 @@ function Home() {
                 <p className="about-text fw-bold fs-5 p-lg-5 p-3">Li House 成立於2023年4月，旨在提供高品質的寵物用品與食品，完善毛孩們的健康與生活環境，並致力於成立流浪動物之家，為浪浪們提供一個溫暖的家。</p>
               </div>
             </div>
-            <div className="about-image col-md-6 text-center" >    
-            <img src="https://animal.coa.gov.tw/public/upload/PublicShelterImage/191204121214235943VUWRS.jpg" alt="動物之家" 
-            />
+            <div className="about-image col-md-6 text-center" >
+              <img src="https://animal.coa.gov.tw/public/upload/PublicShelterImage/191204121214235943VUWRS.jpg" alt="動物之家"
+              />
             </div>
           </div>
         </div>
@@ -118,9 +134,9 @@ function Home() {
                 onClick={() => {
                   copy(copyRef.current.innerText);
                   setIsCopy(true);
-                  setTimeout(()=> {
+                  setTimeout(() => {
                     setIsCopy(false);
-                  },2000)
+                  }, 2000)
                 }}>
                 <span>
                   {isCopy ? <i className="bi bi-clipboard-check me-2"></i> : <i className="bi bi-clipboard me-2"></i>}
@@ -205,17 +221,37 @@ function Home() {
           </div>
         </div>
       </div>
-      <div className=" py-7 mt-5 ">
+      <div className="subscribe-wrapper py-7 mt-5 ">
         <div className="d-flex justify-content-center" style={{ backgroundImage: 'url("https://images.chinatimes.com/newsphoto/2021-06-18/656/20210618001436.jpg")', backgroundPosition: '50%', backgroundSize: 'cover' }}>
-          <div className="text-center mt-3">
-            <h3>Subscribe</h3>
-            <p className="text-muted fw-bold">訂閱我們，隨時收到最新優惠通知！</p>
-            <div className="input-group mb-5">
-              <input className="form-control" type="email" placeholder="請輸入 Email..." />
-              <div className="input-group-append">
-                <button className="btn btn-primary rounded-0">訂閱</button>
+          <div className="text-center mt-3 position-relative d-flex" style={{flexFlow: 'column wrap'}}>
+            <div className="subscribe-bottom"></div>
+            <h3 className="mt-3 fw-bold">Subscribe</h3>
+            <p className="text-primary fw-bold p-1 m-0">訂閱我們，隨時收到最新優惠通知！</p>
+            <form className="p-1" onSubmit={handleSubmit(onSubmit)}>
+              <div className="mb-5 position-relative w-75"
+                style={{ height: '80px' }}
+              >
+                <Input
+                  id='email'
+                  type='email'
+                  errors={errors}
+                  labelText=''
+                  register={register}
+                  rules={{
+                    required: 'Email 為必填',
+                    pattern: {
+                      value: /^\S+@\S+$/i,
+                      message: 'Email 格式不正確'
+                    },
+                  }}
+                >
+                </Input>
+                <button className="btn btn-primary rounded-0 position-absolute"
+                  type="submit"
+                  style={{ top: '24px', left: '100%', transform: '', width: '30%' }}
+                >訂閱</button>
               </div>
-            </div>
+            </form>
           </div>
         </div>
       </div>

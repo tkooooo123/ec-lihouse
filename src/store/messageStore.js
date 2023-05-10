@@ -64,3 +64,19 @@ export function handleErrorMessage(dispatch, error) {
         })
     }, 3000)   
 }
+
+export function handleSubscribeMessage(dispatch) {
+    dispatch({
+        type: 'POST_MESSAGE',
+        payload: {
+            type: 'success',
+            title: '訂閱成功',
+            text: '感謝您的訂閱！'
+        }
+    });
+    setTimeout(() => {
+        dispatch({
+            type: 'CLEAR_MESSAGE'
+        })
+    }, 3000)   
+}

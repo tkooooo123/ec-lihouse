@@ -16,5 +16,19 @@
             width: 100%;
             object-fit: cover;
         }
+    }  
+}
+.subscribe-wrapper {
+    .subscribe-bottom {
+        position: absolute;
+        top: 0;
+         width: 100%;
+         background-color: #fff;
+         height: 100%;
+         opacity: 0.8;
+     }
+     h3,p {
+        z-index: 10;
     }
+
 }
