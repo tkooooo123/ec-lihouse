@@ -179,10 +179,8 @@ function ArticleModal({ getArticles, closeArticleModal, tempArticle, type }) {
                                             type='file'
                                             id='customFile'
                                             className='form-control'
-        
                                             ref={fileRef}
-                                            onChange={uploadImg}
-                                            
+                                            onChange={uploadImg}   
                                         />
                                     </label>
                                 </div>

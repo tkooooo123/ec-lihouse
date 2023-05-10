@@ -1,5 +1,5 @@
 import axios from "axios";
-import { useContext, useEffect, useState } from "react"
+import { useContext, useEffect, useState, useRef } from "react"
 import { MessageContext } from "../store/messageStore";
 import { handleSuccessMessage, handleErrorMessage } from "../store/messageStore";
 
@@ -14,10 +14,65 @@ function ProductModal({ closeProductModal, getProducts, type, tempProduct }) {
         content: "",
         is_enabled: 1,
         imageUrl: "",
-
     });
 
-    const [, dispatch] = useContext(MessageContext)
+    const [, dispatch] = useContext(MessageContext);
+    const fileRef = useRef(null);
+    const imagesRef = useRef(null);
+    
+
+    const uploadImg = async () => {
+        try {
+            const file = fileRef.current.files[0]
+            const formData = new FormData();
+            formData.append('image', file)
+            const res = await axios.post(`/v2/api/${process.env.REACT_APP_API_PATH}/admin/upload`,
+                formData);
+            setTempData({
+                ...tempData,
+                imageUrl: res.data.imageUrl
+            });
+        } catch (error) {
+            console.log(error)
+        }
+
+    }
+    const handleRemove = () => {
+        fileRef.current.value = ''
+    }
+    const uploadImgs = async () => {
+        try {
+            const imgs = []
+            const files = [...imagesRef.current.files]
+             files.forEach(async (file) => {
+                const formData = new FormData();
+                formData.append('image', file)
+                const res = await axios.post(`/v2/api/${process.env.REACT_APP_API_PATH}/admin/upload`,
+                    formData);
+                imgs.push(
+                    res.data.imageUrl
+                )
+                setTempData({
+                    ...tempData,
+                    imagesUrl: [...tempData.imagesUrl, ...imgs]
+                })
+              
+            })
+            imagesRef.current.value = ''
+
+        } catch (error) {
+            console.log(error)
+        }
+    }
+    const imageRemove = (i) => {
+        const arr = tempData.imagesUrl
+        arr.splice(i, 1)
+        setTempData({
+            ...tempData,
+            imagesUrl: [...arr]
+        })
+       
+    }
 
     useEffect(() => {
         if (type === 'create') {
@@ -35,7 +90,7 @@ function ProductModal({ closeProductModal, getProducts, type, tempProduct }) {
 
         } else if (type === 'edit') {
             setTempData(tempProduct)
-
+          
         }
         console.log(type, tempProduct)
 
@@ -76,6 +131,7 @@ function ProductModal({ closeProductModal, getProducts, type, tempProduct }) {
                 data: tempData
             })
             console.log(res)
+            handleRemove();
             handleSuccessMessage(dispatch, res);
             closeProductModal()
             getProducts()
@@ -102,10 +158,10 @@ function ProductModal({ closeProductModal, getProducts, type, tempProduct }) {
                         <div className='row'>
                             <div className='col-lg-4'>
                                 <div className='form-group mb-2'>
-                                    <div className="text-center bg-light mb-2"style={{height: '250px'}}>
-                                    <img src={tempData.imageUrl} alt="商品圖片" style={{height: '250px', objectFit:'cover'}} />
+                                    <div className="text-center bg-light mb-2" style={{ height: '250px', width: '250px' }}>
+                                        <img src={tempData.imageUrl} alt="商品圖片" style={{ height: '250px', width: '250px', objectFit: 'cover' }} />
                                     </div>
-                                    
+
                                     <label className='w-100' htmlFor='image'>
                                         輸入圖片網址
                                         <input
@@ -126,6 +182,8 @@ function ProductModal({ closeProductModal, getProducts, type, tempProduct }) {
                                             type='file'
                                             id='customFile'
                                             className='form-control'
+                                            ref={fileRef}
+                                            onChange={uploadImg}
                                         />
                                     </label>
                                 </div>
@@ -254,6 +312,36 @@ function ProductModal({ closeProductModal, getProducts, type, tempProduct }) {
                                         </label>
                                     </div>
                                 </div>
+                            </div>
+                        </div>
+                        <hr />
+                        <div>
+                            <label className='w-100' htmlFor='customFile'>
+                                <button type="button" className="btn btn-outline-primary d-flex align-items-center"
+                                    onClick={() => imagesRef.current.click()} ><i className="bi bi-cloud-arrow-up fs-4 me-1"></i>上傳其他圖片</button>
+                                <input
+                                    type='file'
+                                    id='customFile'
+                                    className='form-control d-none'
+                                    ref={imagesRef}
+                                    onChange={uploadImgs}
+                                    multiple
+                                />
+                            </label>
+                            <div className="d-flex" style={{ flexFlow: 'row wrap' }}>
+                                {tempData.imagesUrl?.map((item, i) => {
+                                    return (
+                                        <div className="d-flex align-items-center mt-3 mx-1" key={i}>
+                                            <div className="position-relative m-auto">
+                                                <img style={{ height: '135px', width: '135px', objectFit: 'cover' }} src={item} alt="商品圖片" />
+                                                <button type="button" className="btn btn-dark fw-bold rounded-circle position-absolute d-flex align-items-center justify-content-center" style={{ top: '0', right: '0', height: '2rem', width: '2rem' }}
+                                                    onClick={() => imageRemove(i)}
+                                                ><i className="bi bi-x fs-4"></i></button>
+                                            </div>
+                                            
+                                        </div>
+                                    )
+                                })}
                             </div>
                         </div>
                     </div>
