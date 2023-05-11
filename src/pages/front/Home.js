@@ -101,12 +101,12 @@ function Home() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
   return (
-    <>
-      
-      <div className="container mt-2">
+    <div className="mt-5 pt-4">
       <Loading isLoading={isLoading} />
       <SwiperBanner></SwiperBanner>
-        <div className="about-wrapper" data-aos="fade-left">
+      <div className="container mt-2">
+      
+        <div className="about-wrapper" data-aos="fade-top">
           <div className="d-md-flex justify-content-around  bg-light p-5">
             <div className="col-md-6  pt-3 pt-lg-0">
               <h2 className="fw-bold text-primary ms-lg-5">《關於我們》</h2>
@@ -120,7 +120,7 @@ function Home() {
             </div>
           </div>
         </div>
-        <div className="row coupon" data-aos="fade-right">
+        <div className="row coupon mt-5" data-aos="fade-right">
           <div className="col-lg-6">
             <h2 className="fw-bold mt-5 border-start border-primary border-5 ps-3">歡慶開幕</h2>
             <hr />
@@ -153,7 +153,7 @@ function Home() {
             </div>
           </div>
         </div>
-        <div className="new" data-aos="fade-up">
+        <div className="new py-4" data-aos="fade-up">
           <h2 className="fw-bold mt-5 border-start border-primary border-5 ps-3">最新商品
             <Link to="/products">
               <span className="fs-5 mx-3">more +</span>
@@ -198,7 +198,7 @@ function Home() {
             })}
           </div>
         </div>
-        <div className=" mt-5" data-aos="fade-up">
+        <div className="pb-5" data-aos="fade-up">
           <h2 className="fw-bold mt-5 border-start border-primary border-5 ps-3">購買心得</h2>
           <div>
             <div className="justify-content-between row">
@@ -256,7 +256,7 @@ function Home() {
           </div>
         </div>
       </div>
-    </>
+    </div>
   )
 }
 
