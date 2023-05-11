@@ -181,7 +181,7 @@ function Home() {
                         </h4>
                         <span className="bg-secondary badge text-dark text-align py-1 "
                         ><i className="bi bi-tag-fill"></i> {product.category}</span>
-                        <h6 className="text-primary align-center mt-2">NT$ {product.price}</h6>
+                        <h6 className="text-primary align-center mt-3">NT$ {product.price}</h6>
 
                         <button type="button" className="btn btn-primary text-white"
                           style={{ position: 'absolute', bottom: '1rem', right: '1rem' }}
