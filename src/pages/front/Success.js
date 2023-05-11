@@ -1,6 +1,6 @@
 import axios from "axios";
 import { useEffect, useState, useContext } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, Link } from "react-router-dom";
 import { MessageContext, handleErrorMessage, handleSuccessMessage } from "../../store/messageStore";
 import Loading from "../../components/Loading";
 import Stepper from "../../components/Stepper";
@@ -10,7 +10,7 @@ function Success() {
     const [orderData, setOrderData] = useState({});
     const [isLoading, setIsLoading] = useState(true);
     const [, dispatch] = useContext(MessageContext);
-    const [stepper, setStepper] = useState(3)
+    const [stepper, setStepper] = useState(3);
     const getOrder = async (orderId) => {
         try {
             const res = await axios.get(`/v2/api/${process.env.REACT_APP_API_PATH}/order/${orderId}`)
@@ -22,7 +22,7 @@ function Success() {
             handleErrorMessage(dispatch, error);
         }
     }
-    const payOrder = async(orderId) => {
+    const payOrder = async (orderId) => {
         try {
             setIsLoading(true);
             const data = {
@@ -38,14 +38,14 @@ function Success() {
             handleErrorMessage(dispatch, error);
         }
     }
-   
+
     useEffect(() => {
         getOrder(orderId);
     }, [orderId])
     return (
         <div className="container">
-            <Loading  isLoading={isLoading}/>
-            <Stepper stepper={stepper}/>
+            <Loading isLoading={isLoading} />
+            <Stepper stepper={stepper} />
             <div className='d-flex justify-content-center align-items-center mt-3'>
                 <p className='fs-1 mx-2'>
                     <i className="bi bi-check-circle-fill text-success"></i>
@@ -68,18 +68,18 @@ function Success() {
                             <li className="d-flex">
                                 <p className="w-25">處理狀態</p>
                                 {!orderData.status && (
-                                            <p className="w-75 fw-bold">未確認</p>
-                                        )}
-                                        
-                                        {!!(orderData.status === 1) && (
-                                            <p className="w-75 fw-bold">已確認</p>
-                                        )}
-                                        {!!(orderData.status === 2) && (
-                                            <p className="w-75 fw-bold">處理中</p>
-                                        )}
-                                        {!!(orderData.status === 3) && (
-                                            <p className="w-75 fw-bold">已送達</p>
-                                        )}
+                                    <p className="w-75 fw-bold">未確認</p>
+                                )}
+
+                                {!!(orderData.status === 1) && (
+                                    <p className="w-75 fw-bold">已確認</p>
+                                )}
+                                {!!(orderData.status === 2) && (
+                                    <p className="w-75 fw-bold">處理中</p>
+                                )}
+                                {!!(orderData.status === 3) && (
+                                    <p className="w-75 fw-bold">已送達</p>
+                                )}
                             </li>
                         </ul>
                     </div>
@@ -135,26 +135,32 @@ function Success() {
                         </li>
                     </div>
                     <div className="mt-4">
-                    <h5 className="fw-bold">付款狀態</h5>
-                    <ul className="mt-2 px-0 py-3 bg-light">
-                        <li className="d-flex mt-2">
-                            <p>付款方式 /</p>
-                            <p className="mx-1">信用卡</p>
-                        </li>
-                        <li className="d-flex align-items-center mt-2">
-                            <p>付款狀態 / </p>
-                            <p className={`${orderData.is_paid ? 'bg-success' : 'bg-danger'} rounded fw-bold text-white p-1 mx-1`}>{orderData.is_paid ? '已付款' : '未付款'}</p>
-                        </li>
-                    </ul>
+                        <h5 className="fw-bold">付款狀態</h5>
+                        <ul className="mt-2 px-0 py-3 bg-light">
+                            <li className="d-flex mt-2">
+                                <p>付款方式 /</p>
+                                <p className="mx-1">信用卡</p>
+                            </li>
+                            <li className="d-flex align-items-center mt-2">
+                                <p>付款狀態 / </p>
+                                <p className={`${orderData.is_paid ? 'bg-success' : 'bg-danger'} rounded fw-bold text-white p-1 mx-1`}>{orderData.is_paid ? '已付款' : '未付款'}</p>
+                            </li>
+                        </ul>
 
                     </div>
-                    <div className={`my-4 text-end`}>
-                        <button type="button" className={`btn btn-dark rounded-0 py-3 px-5 ${orderData.is_paid ? 'disabled' : ''}`} 
-                        onClick={() => payOrder(orderId)}
-                        
-                        >付款</button>
-                    </div>
+
                 </div>
+            </div>
+            <div className={`d-flex justify-content-between my-5 ${orderData.is_paid ? 'd-none' : ''}`}>
+                <Link to="/" className="btn btn-outline-danger rounded-0 py-3 px-5 fs-5 fw-bold"><i className="bi bi-arrow-left"></i> 繼續購物 </Link>
+               
+                <Link to="" className="btn btn-dark rounded-0 py-3 px-5 fs-5 fw-bold"
+                 onClick={() => payOrder(orderId)}
+                 >前往付款 <i className="bi bi-arrow-right"></i></Link>
+            </div>
+            <div className={`d-flex justify-content-between my-5 ${orderData.is_paid ? '' : 'd-none'}`}>
+                <Link to="/" className="btn btn-outline-danger rounded-0 py-3 px-5 fs-5 fw-bold"><i className="bi bi-arrow-left"></i> 返回首頁</Link>
+                <Link to="/products" className="btn btn-dark rounded-0 py-3 px-5 fs-5 fw-bold">繼續購物 <i className="bi bi-arrow-right"></i></Link>
             </div>
 
 
