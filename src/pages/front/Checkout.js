@@ -1,4 +1,4 @@
-import { useForm } from "react-hook-form";
+import { useForm, useWatch } from "react-hook-form";
 import { Link, useNavigate, useOutletContext } from "react-router-dom";
 import { Input, Textarea } from "../../components/FormElements";
 import axios from "axios";
@@ -15,14 +15,37 @@ function Checkout() {
   const [, dispatch] = useContext(MessageContext);
   const [isLoading, setIsLoading] = useState(true);
   const [stepper, setStepper] = useState(2);
+  const [isDisabled, setIsdisabled] = useState(true);
+  const [isErrored, setIsErrored] = useState(false)
 
   const {
     register,
     handleSubmit,
+    control,
     formState: { errors }
   } = useForm({
     mode: 'onTouched',
   });
+  const errorArr = Object.entries(errors)
+  const watchForm = useWatch({
+    control,
+    errors
+  })
+
+  useEffect(() => {
+    const arr =Object.values(watchForm).slice(0, 4).map((item) => {
+      return item.trim()
+    })
+    if( arr.length > 0 && !arr.includes('')) {
+      setIsdisabled(false)
+    }
+    if(errorArr.length > 0) {
+      setIsErrored(true)
+    } else {
+      setIsErrored(false)
+    }
+  },[watchForm, errorArr])
+
 
   const onSubmit = async (data) => {
     try {
@@ -151,7 +174,7 @@ function Checkout() {
               </Link>
               <button
                 type='submit'
-                className='btn btn-dark py-3 px-7 '
+                className={`checkout-btn btn btn-dark py-3 px-7 ${ (isDisabled || isErrored) ? 'disable' : ''}`}
               >
                 確定購買
               </button>
