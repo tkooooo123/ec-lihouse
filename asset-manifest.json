@@ -1,17 +1,17 @@
 {
   "files": {
-    "main.css": "/ec-lihouse/static/css/main.2617141b.css",
-    "main.js": "/ec-lihouse/static/js/main.6a007180.js",
+    "main.css": "/ec-lihouse/static/css/main.2460dc4d.css",
+    "main.js": "/ec-lihouse/static/js/main.98952b05.js",
     "static/js/787.6653abfd.chunk.js": "/ec-lihouse/static/js/787.6653abfd.chunk.js",
     "static/media/bootstrap-icons.woff?": "/ec-lihouse/static/media/bootstrap-icons.4753c5ba57962b4d7bf8.woff",
     "static/media/bootstrap-icons.woff2?": "/ec-lihouse/static/media/bootstrap-icons.6d63d0501e5ed7b79dab.woff2",
     "index.html": "/ec-lihouse/index.html",
-    "main.2617141b.css.map": "/ec-lihouse/static/css/main.2617141b.css.map",
-    "main.6a007180.js.map": "/ec-lihouse/static/js/main.6a007180.js.map",
+    "main.2460dc4d.css.map": "/ec-lihouse/static/css/main.2460dc4d.css.map",
+    "main.98952b05.js.map": "/ec-lihouse/static/js/main.98952b05.js.map",
     "787.6653abfd.chunk.js.map": "/ec-lihouse/static/js/787.6653abfd.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.2617141b.css",
-    "static/js/main.6a007180.js"
+    "static/css/main.2460dc4d.css",
+    "static/js/main.98952b05.js"
   ]
 }
