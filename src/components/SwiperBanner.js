@@ -5,7 +5,6 @@ import { Link } from 'react-router-dom';
 import 'swiper/css/pagination';
 import 'swiper/css/navigation';
 import 'swiper/css/scrollbar';
-import { left } from '@popperjs/core';
 
 function SwiperBanner() {
     SwiperCore.use([Autoplay])

@@ -4,6 +4,7 @@ import { useOutletContext, useParams } from "react-router-dom";
 import { MessageContext, handleErrorMessage, handleSuccessMessage } from "../../store/messageStore";
 import { Link } from "react-router-dom";
 import Loading from "../../components/Loading";
+import FsLightbox from "fslightbox-react";
 
 function ProductDetail() {
     const [product, setProduct] = useState({});
@@ -12,20 +13,33 @@ function ProductDetail() {
     const [isLoading, setIsLoading] = useState(false)
     const { id } = useParams();
     const { getCart } = useOutletContext()
-    const [, dispatch] = useContext(MessageContext)
+    const [, dispatch] = useContext(MessageContext);
+    const [mainImage, setMainImage] = useState();
+    const [tempImages, setTempImages] =useState([]);
+    const [toggler, setToggler] = useState(false);
 
     const getProduct = async (id) => {
         try {
             setIsLoading(true);
             const productRes = await axios.get(`/v2/api/${process.env.REACT_APP_API_PATH}/product/${id}`);
             setProduct(productRes.data.product);
+            setMainImage(productRes.data.product.imageUrl);
+            setTempImages([productRes.data.product.imageUrl])
+            if(productRes.data.product.imagesUrl) {
+                setTempImages([
+                    productRes.data.product.imageUrl,
+                    ...productRes.data.product.imagesUrl
+                ])
+
+            }
+            
             setIsLoading(false);
         } catch (error) {
             console.log(error);
             setIsLoading(false);
             handleErrorMessage(dispatch, error);
         }
-       
+
     }
 
     const getRandomProducts = async (id) => {
@@ -64,7 +78,7 @@ function ProductDetail() {
             setIsLoading(true);
             const res = await axios.post(`/v2/api/${process.env.REACT_APP_API_PATH}/cart`,
                 data);
-            
+
             await getCart();
             setIsLoading(false);
             handleSuccessMessage(dispatch, res);
@@ -74,7 +88,11 @@ function ProductDetail() {
             handleErrorMessage(dispatch, error);
         }
     }
-   
+
+    const changeMainImage = (image) => {
+        setMainImage(image);     
+    }
+
     useEffect(() => {
         getProduct(id);
         getRandomProducts(id);
@@ -83,12 +101,39 @@ function ProductDetail() {
 
     return (
         <div className="container product-container mt-3 w-100">
-            <Loading isLoading={isLoading}/>
+            <Loading isLoading={isLoading} />
+            <div>
+			<FsLightbox
+				toggler={toggler}
+				sources={[
+					...tempImages
+				]}
+                types={[
+                    ...new Array(tempImages.length).fill('image')
+                ]}
+			/></div>
             <div className="row justify-content-center px-3">
                 <div >
                     <div className="row">
-                        <div className="col-lg-5 text-center">
-                            <img className="bg-light px-4 w-100 h-100  " src={product.imageUrl} alt="商品圖片" style={{ height: '400px', objectFit: 'cover' }} />
+                        <div className="product-detail col-lg-5 text-center ">
+                            <div style={{height: '400px'}}
+                            onClick={() => setToggler(!toggler)}> 
+                                <img className="bg-light px-4 w-100 h-100  " src={mainImage} alt="商品圖片" style={{ height: '550px', objectFit: 'cover' }} />
+                            </div>
+                            <div className="d-flex text-nowrap overflow-scroll mt-3">
+                                {tempImages?.map((img, i) => {
+                                    return (
+                                        <div className="bg-warning m-1 " key={i} >
+                                            <img src={img} alt="產品其他圖片"
+                                                style={{ width: '80px', height: '80px', objectFit: 'contain' }}
+                                                onClick={() => changeMainImage(img)}
+                                            />
+                                        </div>
+
+                                    )
+                                })}
+
+                            </div>
                         </div>
                         <div className="col-lg-7 px-4 px-lg-5 mt-4 mt-lg-0">
                             <h1 className="fw-bolder">{product.title}</h1>
@@ -120,7 +165,12 @@ function ProductDetail() {
                                     onClick={() => addToCart()}
                                     disabled={isLoading}
                                 >加入購物車</button>
-
+                            </div>
+                            <hr/>
+                            <div>
+                                <p className="text-danger fs-5 fw-bold"><i className="bi bi-exclamation-circle"></i> 購物須知</p>
+                                <p className="m-0 fw-bold">1.單筆滿$699免運費 (限台灣本島、離島)</p>
+                                <p className="mt-1 fw-bold">2.收件後如發現有破損情形，請立即拍照，並立即聯絡我們，會盡速處理</p>
                             </div>
 
                         </div>
@@ -141,7 +191,7 @@ function ProductDetail() {
                 <h2 className="fw-bold text-start text-primary mt-5 bs-light">其他產品</h2>
                 {randomProducts.map((item) => {
                     return (
-                        <div className="col-md-6 col-xl-3 mt-3" key={item.id}>
+                        <div className="col-md-6 col-xl-3 my-3" key={item.id}>
                             <Link to={`/product/${item.id}`}
                                 style={{ textDecoration: 'none' }}
                             >

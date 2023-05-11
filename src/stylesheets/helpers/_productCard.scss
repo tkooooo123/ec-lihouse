@@ -40,3 +40,10 @@ li:hover {
     color: $primary;
     cursor: pointer;
 }
+
+.product-detail{ 
+    img:hover {
+        cursor: pointer;
+        opacity: 0.9;
+    }
+}
