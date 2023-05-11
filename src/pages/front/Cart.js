@@ -1,10 +1,12 @@
 import axios from "axios";
-import { useContext, useState } from "react";
+import { useContext, useRef, useState } from "react";
 import { Link, useOutletContext } from "react-router-dom";
 import { MessageContext, handleErrorMessage, handleSuccessMessage } from "../../store/messageStore";
 import Loading from "../../components/Loading";
 import { useEffect } from "react";
 import Stepper from "../../components/Stepper";
+import DeleteModal from "../../components/DeleteModal"
+import { Modal } from "bootstrap";
 
 function Cart() {
     const { cartData, getCart } = useOutletContext();
@@ -13,6 +15,7 @@ function Cart() {
     const [isLoading, setIsLoading] = useState(true);
     const [, dispatch] = useContext(MessageContext);
     const [stepper] = useState(1);
+    const deleteModal = useRef(null);
  
 
     const removeCartItem = async (id) => {
@@ -33,6 +36,7 @@ function Cart() {
             const res = await axios.delete(`/v2/api/${process.env.REACT_APP_API_PATH}/carts`,);
             console.log(res)
             await getCart();
+            closeDeleteModal()
             setIsLoading(false);
         } catch (error) {
             handleErrorMessage(dispatch, error);
@@ -84,16 +88,27 @@ function Cart() {
         }
     }
 
+    const openDeleteModal = () => {
+        deleteModal.current.show();
+    }
+    const closeDeleteModal = () => {
+        deleteModal.current.hide();
+    }
+
     useEffect(() => {
         (async function refreshView() {
             await getCart();
             setIsLoading(false);
         }())
+        deleteModal.current = new Modal('#deleteModal', {
+            backdrop: 'static'
+        });
     }, [])
 
     return (
         <div className="container">
             <Loading isLoading={isLoading} />
+            <DeleteModal close={closeDeleteModal} handleDelete={removeCart} text={'購物車中所有商品'}/>
             <Stepper stepper={stepper} />
             {!cartData?.carts?.length && (
                 <div className="cart-alert text-center pt-5 mt-5" style={{ flexGrow: '1' }}>
@@ -110,7 +125,7 @@ function Cart() {
                     <div className="row cart-wrapper p-3 mt-3">
                         <div className="d-flex justify-content-end mt-2">
                             <button type="button" className="btn btn-outline-dark remove-all"
-                                onClick={() => removeCart()}
+                                onClick={() => openDeleteModal()}
                             >刪除全部</button>
                         </div>
 
