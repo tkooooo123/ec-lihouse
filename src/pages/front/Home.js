@@ -102,9 +102,10 @@ function Home() {
   }, [])
   return (
     <>
+      
+      <div className="container mt-2">
       <Loading isLoading={isLoading} />
       <SwiperBanner></SwiperBanner>
-      <div className="container mt-3">
         <div className="about-wrapper" data-aos="fade-left">
           <div className="d-md-flex justify-content-around  bg-light p-5">
             <div className="col-md-6  pt-3 pt-lg-0">

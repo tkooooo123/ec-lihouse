@@ -187,7 +187,7 @@ function Cart() {
                     </div>
                     <div className="text-end border-bottom mt-4">
                         <div className="mb-4">
-                            套用中優惠碼：{cartData.carts[0].coupon.code}
+                            套用中優惠碼：{cartData.carts[0].coupon?.code}
                         </div>
                         <div className="mb-4">
                             小計： NT$  {cartData.total}
