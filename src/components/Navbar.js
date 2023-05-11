@@ -106,9 +106,12 @@ function Navbar({ cartData }) {
             <NavLink className="nav-link" to="/login"><i className="bi bi-gear-fill text-white"></i></NavLink>
             <NavLink className="nav-link" to="/user/orders"><i className="bi bi-person-circle text-white"></i></NavLink>
             <NavLink className="nav-link position-relative" to="/cart"><i className="bi bi-bag-fill text-white"></i>
+            {!!cartData?.carts?.length && (
               <span className="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
-                {cartData?.carts?.length}
-              </span>
+              {cartData?.carts?.length}
+            </span>
+            )}
+              
             </NavLink>
           </div>
         </nav>
