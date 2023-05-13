@@ -102,7 +102,7 @@ function AdminArticles() {
             handleDelete={deleteArticle}
             id={tempArticle.id}
         />
-        <h3>產品列表</h3>
+        <h3>文章列表</h3>
         <hr />
         <div className='text-end'>
             <button type='button' className='btn btn-primary btn-sm'
