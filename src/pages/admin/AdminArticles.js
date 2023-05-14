@@ -7,6 +7,7 @@ import { Modal } from "bootstrap";
 import axios from "axios";
 import { MessageContext, handleErrorMessage, handleSuccessMessage } from "../../store/messageStore";
 
+
 function AdminArticles() {
     const [articles, setArticles] = useState([]);
     const [isLoading, setIsLoading] = useState(false);
@@ -26,7 +27,6 @@ function AdminArticles() {
             setIsLoading(false);
 
         } catch (error) {
-            console.log(error);
             handleErrorMessage(dispatch, error);
         }
     }
@@ -36,7 +36,6 @@ function AdminArticles() {
             const res = await axios.get(`/v2/api/${process.env.REACT_APP_API_PATH}/admin/article/${id}`);
             setTempArticle(res.data.article);
         } catch (error) {
-            console.log(error);
             handleErrorMessage(dispatch, error);   
         }
     }
@@ -52,9 +51,6 @@ function AdminArticles() {
         
     // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
-    useEffect(() => {
-        console.log('111', tempArticle)
-    }, [tempArticle])
 
     const deleteArticle = async(id) => {
         try {
@@ -65,7 +61,6 @@ function AdminArticles() {
             }
             handleSuccessMessage(dispatch, res);
         } catch (error) {
-            console.log(error);
             handleErrorMessage(dispatch, error);
         }
     }

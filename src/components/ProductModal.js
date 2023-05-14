@@ -1,8 +1,9 @@
 import axios from "axios";
 import { useContext, useEffect, useState, useRef } from "react"
 import { handleSuccessMessage, handleErrorMessage, MessageContext } from "../store/messageStore";
-import { useForm } from "react-hook-form";
+import { useForm, useWatch } from "react-hook-form";
 import { CheckboxRadio, Input, Textarea } from "./FormElements";
+import Loading from "../../src/components/Loading"
 
 function ProductModal({ closeProductModal, getProducts, type, tempProduct }) {
     const [tempData, setTempData] = useState({
@@ -20,20 +21,45 @@ function ProductModal({ closeProductModal, getProducts, type, tempProduct }) {
     const [, dispatch] = useContext(MessageContext);
     const fileRef = useRef(null);
     const imagesRef = useRef(null);
-    const [state, setState] = useState(true)
+    const [state, setState] = useState(true);
+    const [isDisabled, setIsdisabled] = useState(true);
+    const [isErrored, setIsErrored] = useState(false);
+    const [isLoading, setIsLoading] = useState(false);
     const {
         register,
         handleSubmit,
         setValue,
         getValues,
         clearErrors,
+        control,
         formState: { errors }
     } = useForm({
         mode: 'all',
     });
+    const errorArr = Object.entries(errors)
+    const watchForm = useWatch({
+        control,
+        errors
+    })
+
+    useEffect(() => {
+        setIsdisabled(true)
+        const arr = Object.values(watchForm).map((item) => {
+            return item.typeof === String ? item.trim() : item
+        })
+        if (arr.length > 0 && !arr.includes('')) {
+            setIsdisabled(false)
+        }
+        if (errorArr.length > 0) {
+            setIsErrored(true)
+        } else {
+            setIsErrored(false)
+        }
+    }, [watchForm, errorArr])
 
     const uploadImg = async () => {
         try {
+            setIsLoading(true);
             const file = fileRef.current.files[0]
             const formData = new FormData();
             formData.append('image', file)
@@ -43,8 +69,15 @@ function ProductModal({ closeProductModal, getProducts, type, tempProduct }) {
                 ...tempData,
                 imageUrl: res.data.imageUrl
             });
+            setValue('imageUrl', res.data.imageUrl)
+            if (errors['imageUrl']) {
+                clearErrors('imageUrl')
+            }
+            setTimeout(() => {
+                setIsLoading(false)
+            },500)
         } catch (error) {
-            console.log(error)
+            handleErrorMessage(dispatch, error)
         }
 
     }
@@ -53,23 +86,28 @@ function ProductModal({ closeProductModal, getProducts, type, tempProduct }) {
     }
     const uploadImgs = async () => {
         try {
-            const imgs = []
+            setIsLoading(true);
+            const imgs = tempData?.imagesUrl ? [...tempData.imagesUrl] : []
             const files = [...imagesRef.current.files]
-            files.forEach(async (file) => {
+            for (let i = 0; i < files.length; i++) {
                 const formData = new FormData();
-                formData.append('image', file)
+                formData.append('image', files[i])
                 const res = await axios.post(`/v2/api/${process.env.REACT_APP_API_PATH}/admin/upload`,
                     formData);
                 imgs.push(
                     res.data.imageUrl
                 )
+            }
+            if (imgs.length === files.length) {
                 setTempData({
                     ...tempData,
-                    imagesUrl: [...tempData.imagesUrl, ...imgs]
+                    imagesUrl: [...imgs]
                 })
-            })
+                setTimeout(() => {
+                    setIsLoading(false)
+                }, 500)
+            }
             imagesRef.current.value = ''
-
         } catch (error) {
             handleErrorMessage(dispatch, error)
         }
@@ -101,6 +139,9 @@ function ProductModal({ closeProductModal, getProducts, type, tempProduct }) {
             const data = getValues()
             for (let key in data) {
                 setValue(key, '')
+                if (key === 'is_enabled') {
+                    setValue(key, false)
+                }
             }
         } else if (type === 'edit') {
             setValue('title', tempProduct.title);
@@ -133,7 +174,7 @@ function ProductModal({ closeProductModal, getProducts, type, tempProduct }) {
                     content,
                     imageUrl,
                     imagesUrl: tempData.imagesUrl,
-                    is_enabled
+                    is_enabled,
                 }
             }
             let api = `/v2/api/${process.env.REACT_APP_API_PATH}/admin/product`
@@ -143,17 +184,18 @@ function ProductModal({ closeProductModal, getProducts, type, tempProduct }) {
                 method = 'put'
             }
             const res = await axios[method](api, form)
-                handleRemove();
-                handleSuccessMessage(dispatch, res);
-                closeProductModal();
-                getProducts();
+            handleRemove();
+            handleSuccessMessage(dispatch, res);
+            closeProductModal();
+            getProducts();
         } catch (error) {
-            handleErrorMessage(dispatch,error)
+            handleErrorMessage(dispatch, error)
         }
     }
 
 
     return (<div className="modal fade" id="productModal" tabIndex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <Loading isLoading={isLoading} />
         <div className="modal-dialog modal-lg">
             <div className="modal-content">
                 <div className="modal-header">
@@ -161,9 +203,10 @@ function ProductModal({ closeProductModal, getProducts, type, tempProduct }) {
                         {type === 'create' ? '建立新商品' : `編輯 ${tempProduct.title}`}
                     </h5>
                     <button type="button" className="btn-close" data-bs-dismiss="modal" onClick={() => {
-                                closeProductModal()
-                                setState(false)
-                            }}></button>
+                        closeProductModal();
+                        handleRemove();
+                        setState(false);
+                    }}></button>
                 </div>
                 <form onSubmit={handleSubmit(onSubmit)}>
                     <div className="modal-body">
@@ -172,9 +215,9 @@ function ProductModal({ closeProductModal, getProducts, type, tempProduct }) {
                                 <div className='col-lg-4'>
                                     <div className='form-group mb-2'>
                                         <div className="text-center bg-light mb-2" style={{ height: '250px', width: '230px' }}>
-                                           {tempData.imageUrl !== '' && (
-                                             <img src={tempData.imageUrl} alt="商品圖片" style={{ height: '250px', width: '100%', objectFit: 'cover' }} />
-                                           )}
+                                            {tempData.imageUrl !== '' && (
+                                                <img src={tempData.imageUrl} alt="商品圖片" style={{ height: '250px', width: '100%', objectFit: 'cover' }} />
+                                            )}
                                         </div>
                                         <Input
                                             id='imageUrl'
@@ -337,7 +380,7 @@ function ProductModal({ closeProductModal, getProducts, type, tempProduct }) {
                                     />
                                 </label>
                                 <div className="d-flex" style={{ flexFlow: 'row wrap' }}>
-                                    {tempData.imagesUrl?.map((item, i) => {
+                                    {tempData?.imagesUrl?.map((item, i) => {
                                         return (
                                             <div className="d-flex align-items-center mt-3 mx-1" key={i}>
                                                 <div className="position-relative m-auto">
@@ -356,10 +399,11 @@ function ProductModal({ closeProductModal, getProducts, type, tempProduct }) {
                     <div className="modal-footer">
                         <button type="button" className="btn btn-outline-dark"
                             onClick={() => {
-                                closeProductModal()
-                                setState(false)
+                                closeProductModal();
+                                handleRemove();
+                                setState(false);
                             }}>Close</button>
-                        <button type="submit" className="btn btn-primary">儲存</button>
+                        <button type="submit" className={`form-submit-btn btn btn-primary ${(isDisabled || isErrored) ? 'disable' : ''}`}>儲存</button>
                     </div>
                 </form>
             </div>

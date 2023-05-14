@@ -17,9 +17,12 @@ function ArticleModal({ getArticles, closeArticleModal, tempArticle, type }) {
         create_at: ''
     });
     const [tempTag, setTempTag] = useState('');
+    const [state, setState] = useState(false)
     const [, dispatch] = useContext(MessageContext);
     const fileRef = useRef(null);
     const [isLoading, setIsLoading] = useState(false);
+    const [isDisabled, setIsdisabled] = useState(true);
+    const [isErrored, setIsErrored] = useState(false);
     const {
         register,
         unregister,
@@ -33,9 +36,28 @@ function ArticleModal({ getArticles, closeArticleModal, tempArticle, type }) {
         mode: 'all',
     });
 
+    const errorArr = Object.entries(errors)
     const watchForm = useWatch({
-        control
+        control,
+        errors
     })
+
+    useEffect(() => {
+        setIsdisabled(true)
+        const tagIndex = Object.keys(watchForm).indexOf('addTag')
+        const arr = Object.values(watchForm).map((item) => {
+            return item?.typeof === String ? item.trim() : item
+        })
+        arr.splice(tagIndex, 1)
+        if (arr.length > 0 && !arr.includes('')) {
+            setIsdisabled(false)
+        }
+        if (errorArr.length > 0) {
+            setIsErrored(true)
+        } else {
+            setIsErrored(false)
+        }
+    }, [watchForm, errorArr])
 
     const uploadImg = async (e) => {
         try {
@@ -50,7 +72,13 @@ function ArticleModal({ getArticles, closeArticleModal, tempArticle, type }) {
                 ...tempData,
                 image: res.data.imageUrl
             });
+
+            if(errors['image']) {
+                clearErrors('image')    
+            }
+           setTimeout(() => {
             setIsLoading(false);
+           }, 500)
 
         } catch (error) {
             setIsLoading(false);
@@ -62,7 +90,7 @@ function ArticleModal({ getArticles, closeArticleModal, tempArticle, type }) {
     useEffect(() => {
         const tagValue = getValues('addTag')
         setTempTag(tagValue)
-    }, [watchForm])
+    }, [watchForm]);
 
 
     //新增Tag標籤
@@ -112,7 +140,8 @@ function ArticleModal({ getArticles, closeArticleModal, tempArticle, type }) {
                     content,
                     image,
                     isPublic: is_public,
-                    tag: tagArr
+                    tag: tagArr,
+                    create_at: tempData.create_at
                 }
             }
             let api = `/v2/api/${process.env.REACT_APP_API_PATH}/admin/article`;
@@ -120,8 +149,6 @@ function ArticleModal({ getArticles, closeArticleModal, tempArticle, type }) {
             if (type === 'edit') {
                 api = `/v2/api/${process.env.REACT_APP_API_PATH}/admin/article/${tempArticle.id}`
                 method = 'put';
-            } else {
-                tempData.create_at = Date.now();
             }
 
             const res = await axios[method](api, form);
@@ -132,7 +159,8 @@ function ArticleModal({ getArticles, closeArticleModal, tempArticle, type }) {
 
         } catch (error) {
             handleErrorMessage(dispatch, error);
-
+         
+        }
     }
 
     const handleRemove = () => {
@@ -141,6 +169,7 @@ function ArticleModal({ getArticles, closeArticleModal, tempArticle, type }) {
     }
 
     useEffect(() => {
+        setState(true)
         if (type === 'create') {
             setTempData({
                 title: '',
@@ -150,31 +179,37 @@ function ArticleModal({ getArticles, closeArticleModal, tempArticle, type }) {
                 description: '',
                 isPublic: false,
                 content: '',
-                create_at: ''
+                create_at: Date.now()
             })
+            const data = getValues()
+            for (let key in data) {
+                setValue(key, '')
+                if( key ==='is_public') {
+                    setValue(key, false)
+                }
+            }
         }
         if (type === 'edit') {
-            setValue('title', tempArticle.title)
-            setValue('author', tempArticle.author)
-            setValue('tag', tempArticle.tag)
-            setValue('description', tempArticle.description)
-            setValue('content', tempArticle.content)
-            setValue('is_public', tempArticle.isPublic)
-            setValue('image', tempArticle.image)
-            setTempData({ ...tempArticle })
+            setValue('title', tempArticle.title);
+            setValue('author', tempArticle.author);
+            setValue('tag', tempArticle.tag);
+            setValue('description', tempArticle.description);
+            setValue('content', tempArticle.content);
+            setValue('is_public', tempArticle.isPublic);
+            setValue('image', tempArticle.image);
+            setTempData({ ...tempArticle });
 
-            getTagValue()
+            getTagValue();
         }
-
-    }, [type, tempArticle]);
-
-    useEffect(() => {
-        getTagValue()
-    }, [tempData])
-
-    useEffect(() => {
         clearErrors();
-    }, [closeArticleModal])
+
+    }, [type, tempArticle, state]);
+
+    useEffect(() => {
+        getTagValue();
+    }, [tempData]);
+
+
 
 
     return (
@@ -185,7 +220,12 @@ function ArticleModal({ getArticles, closeArticleModal, tempArticle, type }) {
                     <div className="modal-header">
                         <h1 className="modal-title fs-5" id="staticBackdropLabel">
                             {type === 'create' ? '建立' : '編輯'}新文章</h1>
-                        <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"
+                        onClick={() => {
+                            closeArticleModal();
+                            handleRemove();
+                            setState(false);
+                        }}></button>
                     </div>
                     <form onSubmit={handleSubmit(onSubmit)}>
                         <div className="modal-body">
@@ -249,7 +289,6 @@ function ArticleModal({ getArticles, closeArticleModal, tempArticle, type }) {
                                                 placeholder='請輸入作者'
                                                 rules={{
                                                     required: '作者為必填'
-
                                                 }}
                                             >
                                             </Input>
@@ -265,7 +304,6 @@ function ArticleModal({ getArticles, closeArticleModal, tempArticle, type }) {
                                                     placeholder='請輸入標籤'
                                                 >
                                                 </Input>
-
                                             </div>
                                             <button type="button" className={`btn btn-outline-dark w-25  ${tempTag.trim().length < 1 ? 'disabled' : ''}`}
                                                 onClick={addClick}
@@ -320,6 +358,7 @@ function ArticleModal({ getArticles, closeArticleModal, tempArticle, type }) {
                                             labelText='說明內容'
                                             register={register}
                                             placeholder='請輸入文章內容'
+                                            rows="5"
                                             rules={{
                                                 required: '文章內容為必填',
                                             }}
@@ -344,8 +383,13 @@ function ArticleModal({ getArticles, closeArticleModal, tempArticle, type }) {
                         </div>
                         <div className="modal-footer">
                             <button type="button" className="btn btn-secondary" data-bs-dismiss="modal"
+                            onClick={() => {
+                                closeArticleModal();
+                                handleRemove();
+                                setState(false);
+                            }}
                             >Close</button>
-                            <button type="submit" className="btn btn-primary" >儲存</button>
+                            <button type="submit" className={`form-submit-btn btn btn-primary ${(isDisabled || isErrored) ? 'disable' : ''}`} >儲存</button>
                         </div>
                     </form>
                 </div>

@@ -40,7 +40,6 @@ function AdminProducts() {
             setPagination(productRes.data.pagination);
             setIsLoading(false);
         } catch (error) {
-            console.log(error);
             setIsLoading(false);
             handleErrorMessage(dispatch, error)
         }
@@ -74,7 +73,6 @@ function AdminProducts() {
             }
             setIsLoading(false);
         } catch (error) {
-            console.log(error);
             setIsLoading(false);
             handleErrorMessage(dispatch, error);
         }

@@ -1,40 +1,75 @@
 import axios from "axios";
-import { useContext, useEffect } from "react"
+import { useContext, useEffect, useState } from "react"
 import { MessageContext, handleErrorMessage, handleSuccessMessage, handleUpdateMessage } from "../store/messageStore";
-import { useForm } from "react-hook-form";
+import { useForm, useWatch } from "react-hook-form";
 import { Input, CheckboxRadio } from "./FormElements";
+
 
 function CouponModal({ closeCouponModal, getCoupons, type, tempCoupon }) {
 
     const [, dispatch] = useContext(MessageContext);
+    const [state, setState] = useState(false);
+    const [isDisabled, setIsdisabled] = useState(true);
+    const [isErrored, setIsErrored] = useState(false);
     const {
         register,
         handleSubmit,
+        getValues,
         setValue,
         clearErrors,
+        control,
         formState: { errors }
     } = useForm({
         mode: 'onTouched',
     });
+    const errorArr = Object.entries(errors)
+    const watchForm = useWatch({
+        control,
+        errors
+    })
+    useEffect(() => {
+        setIsdisabled(true)
+        const arr = Object.values(watchForm).map((item) => {
+            return item?.typeof === String ? item.trim() : item
+        })
+        if (arr.length > 0 && !arr.includes('')) {
+            setIsdisabled(false)
+        }
+        if (errorArr.length > 0) {
+            setIsErrored(true)
+        } else {
+            setIsErrored(false)
+        }
+    }, [watchForm, errorArr])
    
     useEffect(() => {
-        setValue('title', tempCoupon.title)
-        setValue('code', tempCoupon.code)
-        setValue('percent', tempCoupon.percent)
-        setValue('due_date', `${new Date(tempCoupon.due_date).getFullYear().toString()}-${(
-            new Date(tempCoupon.due_date).getMonth() + 1
-        )
-            .toString()
-            .padStart(2, 0)}-${new Date(tempCoupon.due_date)
-                .getDate()
+        setState(true);
+        if( type === 'create') {
+            const data = getValues()
+            for (let key in data) {
+                setValue(key, '')
+                if( key === 'is_enabled') {
+                   setValue(key, false)
+                }
+            }
+        } else if(type === 'edit') {
+            setValue('title', tempCoupon.title)
+            setValue('code', tempCoupon.code)
+            setValue('percent', tempCoupon.percent)
+            setValue('due_date', `${new Date(tempCoupon.due_date).getFullYear().toString()}-${(
+                new Date(tempCoupon.due_date).getMonth() + 1
+            )
                 .toString()
-                .padStart(2, 0)}`)
-        setValue('is_enabled', tempCoupon.is_enabled)
-    }, [type, tempCoupon])
-
-    useEffect(() => {
+                .padStart(2, 0)}-${new Date(tempCoupon.due_date)
+                    .getDate()
+                    .toString()
+                    .padStart(2, 0)}`)
+            setValue('is_enabled', tempCoupon.is_enabled)
+        }
         clearErrors()
-    }, [closeCouponModal])
+    }, [type, tempCoupon, state])
+
+ 
 
     const onSubmit = async (data) => {
         try {
@@ -76,7 +111,10 @@ function CouponModal({ closeCouponModal, getCoupons, type, tempCoupon }) {
                     <h5 className="modal-title" id="exampleModalLabel">
                         {type === 'create' ? '建立新優惠券' : `編輯 ${tempCoupon.title}`}
                     </h5>
-                    <button type="button" className="btn-close" data-bs-dismiss="modal" onClick={closeCouponModal}></button>
+                    <button type="button" className="btn-close" data-bs-dismiss="modal" onClick={() => {
+                            closeCouponModal()
+                            setState(false)
+                        }}></button>
                 </div>
                 <form onSubmit={handleSubmit(onSubmit)}>
                     <div className='modal-body'>
@@ -158,9 +196,9 @@ function CouponModal({ closeCouponModal, getCoupons, type, tempCoupon }) {
                     <div className="modal-footer">
                         <button type="button" className="btn btn-secondary" onClick={() => {
                             closeCouponModal()
-
+                            setState(false)
                         }}>Close</button>
-                        <button type="submit" className="btn btn-primary">儲存</button>
+                        <button type="submit" className={`form-submit-btn btn btn-primary ${(isDisabled || isErrored) ? 'disable' : ''}`}>儲存</button>
                     </div>
                 </form>
             </div>
