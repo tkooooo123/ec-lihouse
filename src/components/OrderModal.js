@@ -210,9 +210,9 @@ function OrderModal({ tempOrder, closeOrderModal, getOrders, isAdmin }) {
                 </div>
                 <div className="modal-footer">
                     {!isAdmin && (
-                        <button type="button" className={`btn btn-outline-dark rounded-0 px-5 ${tempOrder.is_paid ? 'disabled' : ''}`}
+                        <button type="button" className={`btn btn-dark rounded-0 px-5 ${tempOrder.is_paid ? 'd-none' : ''}`}
                             onClick={() => payOrder(tempOrder.id)}
-                        >付款</button>
+                        >前往付款</button>
                     )}
                     <button type="button" className="btn btn-outline-danger" onClick={() => closeOrderModal()}>Close</button>
                     {!!isAdmin && (
