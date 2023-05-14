@@ -57,7 +57,6 @@ function Search() {
 
             setIsLoading(false);
         } catch (error) {
-            console.log(error);
             setIsLoading(false);
             handleErrorMessage(dispatch, error);
         }
@@ -74,12 +73,10 @@ function Search() {
             setIsLoading(true)
             const res = await axios.post(`/v2/api/${process.env.REACT_APP_API_PATH}/cart`,
                 data)
-            console.log(res)
             await getCart()
             setIsLoading(false)
             handleSuccessMessage(dispatch, res)
         } catch (error) {
-            console.log(error);
             setIsLoading(false);
             handleErrorMessage(dispatch, error)
         }

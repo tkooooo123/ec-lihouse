@@ -42,10 +42,8 @@ function AdminCoupons() {
             setPagination(CouponRes.data.pagination);
             setIsLoading(false);
         } catch (error) {
-            console.log(error);
             handleErrorMessage(dispatch, error);
             setIsLoading(false);
-
         }
 
 
@@ -79,7 +77,6 @@ function AdminCoupons() {
             }
             setIsLoading(false);
         } catch (error) {
-            console.log(error);
             setIsLoading(false);
             handleErrorMessage(dispatch, error);
         }

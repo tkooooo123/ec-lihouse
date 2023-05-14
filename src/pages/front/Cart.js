@@ -21,27 +21,24 @@ function Cart() {
     const removeCartItem = async (id) => {
         try {
             setIsLoading(true);
-            const res = await axios.delete(`/v2/api/${process.env.REACT_APP_API_PATH}/cart/${id}`,);
-            console.log(res)
+            await axios.delete(`/v2/api/${process.env.REACT_APP_API_PATH}/cart/${id}`,);
             await getCart();
             setIsLoading(false);
         } catch (error) {
+            setIsLoading(false);
             handleErrorMessage(dispatch, error);
-            console.log(error)
         }
     }
     const removeCart = async (id) => {
         try {
             setIsLoading(true);
-            const res = await axios.delete(`/v2/api/${process.env.REACT_APP_API_PATH}/carts`,);
-            console.log(res)
+            await axios.delete(`/v2/api/${process.env.REACT_APP_API_PATH}/carts`,);
             await getCart();
             closeDeleteModal()
             setIsLoading(false);
         } catch (error) {
-            handleErrorMessage(dispatch, error);
             setIsLoading(false);
-            console.log(error);
+            handleErrorMessage(dispatch, error);
         }
     }
     const updateCartItem = async (item, quantity) => {
@@ -53,19 +50,17 @@ function Cart() {
                     qty: quantity
                 }
             }
-            setLoadingItem([...loadingItems, item.id])
-            const res = await axios.put(`/v2/api/${process.env.REACT_APP_API_PATH}/cart/${item.id}`,
+            setLoadingItem([...loadingItems, item.id]);
+            await axios.put(`/v2/api/${process.env.REACT_APP_API_PATH}/cart/${item.id}`,
                 data);
-            console.log(res)
             setLoadingItem(
                 loadingItems.filter((loadingObject) => loadingObject !== item.id),
             );
             await getCart();
             setIsLoading(false);
         } catch (error) {
-            handleErrorMessage(dispatch, error);
             setIsLoading(false);
-            console.log(error);
+            handleErrorMessage(dispatch, error);
         }
     }
     const applyCoupon = async (e) => {
@@ -84,7 +79,6 @@ function Cart() {
         } catch (error) {
             handleErrorMessage(dispatch, error);
             setIsLoading(false);
-            console.log(error);
         }
     }
 

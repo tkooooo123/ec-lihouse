@@ -26,7 +26,6 @@ function AdminOrders() {
             setPagination(res.data.pagination);
             setIsLoading(false);
         } catch (error) {
-            console.log(error);
             setIsLoading(false);
             handleErrorMessage(dispatch, error);
         }
@@ -40,7 +39,6 @@ function AdminOrders() {
             handleSuccessMessage(dispatch, res);
             setIsLoading(false);
         } catch (error) {
-            console.log(error);
             handleErrorMessage(dispatch, error)
         }
     }

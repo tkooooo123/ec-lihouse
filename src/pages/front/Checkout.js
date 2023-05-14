@@ -69,7 +69,6 @@ function Checkout() {
       setIsLoading(false);
 
     } catch (error) {
-      console.log(error)
       handleErrorMessage(dispatch, error);
       setIsLoading(false);
     }

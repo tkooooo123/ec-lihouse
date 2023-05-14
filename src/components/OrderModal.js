@@ -23,12 +23,11 @@ function OrderModal({ tempOrder, closeOrderModal, getOrders, isAdmin }) {
                 order: tempOrder,
             }
             const res = await axios.post(`/v2/api/${process.env.REACT_APP_API_PATH}/pay/${tempOrder.id}`, data)
-            console.log(res)
+            handleSuccessMessage(dispatch, res)
             closeOrderModal()
             getOrders()
         } catch (error) {
             handleErrorMessage(dispatch, error)
-            console.log(error)
         }
     }
     
@@ -62,7 +61,6 @@ function OrderModal({ tempOrder, closeOrderModal, getOrders, isAdmin }) {
             handleSuccessMessage(dispatch, res);        
            
         } catch (error) {
-            console.log(error);
             handleErrorMessage(dispatch, error);
             setIsLoading(false);
         }

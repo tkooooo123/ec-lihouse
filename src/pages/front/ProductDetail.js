@@ -35,7 +35,6 @@ function ProductDetail() {
             
             setIsLoading(false);
         } catch (error) {
-            console.log(error);
             setIsLoading(false);
             handleErrorMessage(dispatch, error);
         }
@@ -61,7 +60,6 @@ function ProductDetail() {
             setIsLoading(false);
 
         } catch (error) {
-            console.log(error);
             setIsLoading(false);
             handleErrorMessage(dispatch, error);
         }
@@ -83,7 +81,6 @@ function ProductDetail() {
             setIsLoading(false);
             handleSuccessMessage(dispatch, res);
         } catch (error) {
-            console.log(error);
             setIsLoading(false);
             handleErrorMessage(dispatch, error);
         }

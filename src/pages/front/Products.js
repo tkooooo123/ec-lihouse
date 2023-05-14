@@ -54,7 +54,6 @@ function Products() {
             }
             setIsLoading(false);
         } catch (error) {
-            console.log(error);
             setIsLoading(false);
             handleErrorMessage(dispatch, error);
         }
@@ -75,7 +74,6 @@ function Products() {
             setIsLoading(false)
             handleSuccessMessage(dispatch, res)
         } catch (error) {
-            console.log(error);
             setIsLoading(false);
             handleErrorMessage(dispatch, error)
         }

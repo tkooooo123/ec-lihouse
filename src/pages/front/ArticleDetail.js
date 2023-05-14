@@ -21,7 +21,6 @@ function ArticleDetail() {
             await getArticles();
             setIsLoading(false);
         } catch (error) {
-            console.log(error);
             setIsLoading(false);
             handleErrorMessage(dispatch, error);
         }
@@ -38,7 +37,6 @@ function ArticleDetail() {
                 }
             })
         } catch (error) {
-            console.log(error);
             handleErrorMessage(dispatch, error);
         }
     }
