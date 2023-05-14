@@ -80,3 +80,19 @@ export function handleSubscribeMessage(dispatch) {
         })
     }, 3000)   
 }
+
+export function handleUpdateMessage(dispatch, res) {
+    dispatch({
+        type: 'POST_MESSAGE',
+        payload: {
+            type: 'danger',
+            title: '更新失敗',
+            text: res.data.message
+        }
+    });
+    setTimeout(() => {
+        dispatch({
+            type: 'CLEAR_MESSAGE'
+        })
+    }, 3000)   
+}

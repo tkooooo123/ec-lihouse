@@ -1,92 +1,73 @@
 import axios from "axios";
-import { useContext, useEffect, useState } from "react"
-import { MessageContext, handleErrorMessage, handleSuccessMessage } from "../store/messageStore";
-
+import { useContext, useEffect } from "react"
+import { MessageContext, handleErrorMessage, handleSuccessMessage, handleUpdateMessage } from "../store/messageStore";
+import { useForm } from "react-hook-form";
+import { Input, CheckboxRadio } from "./FormElements";
 
 function CouponModal({ closeCouponModal, getCoupons, type, tempCoupon }) {
-    const [tempData, setTempData] = useState({
-        title: "",
-        is_enabled: 1,
-        percent: 80,
-        due_date: 1555459200,
-        code: "testcode",
 
+    const [, dispatch] = useContext(MessageContext);
+    const {
+        register,
+        handleSubmit,
+        setValue,
+        clearErrors,
+        formState: { errors }
+    } = useForm({
+        mode: 'onTouched',
     });
-    const [date, setDate] = useState(new Date());
-    const [, dispatch] = useContext(MessageContext)
-
+   
     useEffect(() => {
-        if (type === 'create') {
-            setTempData({
-                title: "",
-                is_enabled: 1,
-                percent: 80,
-                due_date: 1555459200,
-                code: "testcode",
-            })
-            setDate(new Date())
-
-        } else if (type === 'edit') {
-            setTempData(tempCoupon)
-            setDate(new Date(tempCoupon.due_date))
-
-        }
-        console.log(type, tempCoupon)
-
+        setValue('title', tempCoupon.title)
+        setValue('code', tempCoupon.code)
+        setValue('percent', tempCoupon.percent)
+        setValue('due_date', `${new Date(tempCoupon.due_date).getFullYear().toString()}-${(
+            new Date(tempCoupon.due_date).getMonth() + 1
+        )
+            .toString()
+            .padStart(2, 0)}-${new Date(tempCoupon.due_date)
+                .getDate()
+                .toString()
+                .padStart(2, 0)}`)
+        setValue('is_enabled', tempCoupon.is_enabled)
     }, [type, tempCoupon])
 
-    const handleChange = (e) => {
-        console.log(e)
-        const { name, value } = e.target
+    useEffect(() => {
+        clearErrors()
+    }, [closeCouponModal])
 
-        if (['price', 'origin_price'].includes(name)) {
-            setTempData({
-                ...tempData,
-                [name]: Number(value),
-            })
-
-        } else if (name === 'is_enabled') {
-            setTempData({
-                ...tempData,
-                [name]: +e.target.checked,
-            })
-
-        } else {
-            setTempData({
-                ...tempData,
-                [name]: value,
-            })
-        }
-    }
-    const submit = async () => {
+    const onSubmit = async (data) => {
         try {
+            const { title, percent, due_date, code, is_enabled } = data
+            const form = {
+                data: {
+                    title: title.trim(),
+                    percent: Number(percent),
+                    due_date: new Date(due_date).getTime(),
+                    code,
+                    is_enabled: Number(is_enabled === true)
+                }
+            }
             let api = `/v2/api/${process.env.REACT_APP_API_PATH}/admin/coupon`
             let method = 'post'
             if (type === 'edit') {
                 api = `/v2/api/${process.env.REACT_APP_API_PATH}/admin/coupon/${tempCoupon.id}`
                 method = 'put'
             }
-
-            const res = await axios[method](api, {
-                data: {
-                    ...tempData,
-                    due_date: date.getTime(),  //轉換成 unit timestamp
-                    percent: Number(tempData.percent)
-
-                }
-            })
-            console.log(res)
-            handleSuccessMessage(dispatch, res)
-            closeCouponModal()
-            getCoupons()
-
-
+            const res = await axios[method](api, form
+            )
+            if (res.data.success === false) {
+                handleUpdateMessage(dispatch, res);
+            } else {
+                handleSuccessMessage(dispatch, res);
+                closeCouponModal();
+                getCoupons();
+            }
         } catch (error) {
-            handleErrorMessage(dispatch, error)
-            console.log(error)
+            handleErrorMessage(dispatch, error);
         }
-    }
 
+    }
 
     return (<div className="modal fade" id="productModal" tabIndex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div className="modal-dialog modal-lg">
@@ -97,90 +78,91 @@ function CouponModal({ closeCouponModal, getCoupons, type, tempCoupon }) {
                     </h5>
                     <button type="button" className="btn-close" data-bs-dismiss="modal" onClick={closeCouponModal}></button>
                 </div>
-                <div className='modal-body'>
-                    <div className='mb-2'>
-                        <label className='w-100' htmlFor='title'>
-                            標題
-                            <input
-                                type='text'
+                <form onSubmit={handleSubmit(onSubmit)}>
+                    <div className='modal-body'>
+                        <div className="mb-2">
+                            <Input
                                 id='title'
+                                type='text'
+                                errors={errors}
+                                labelText='標題'
+                                register={register}
                                 placeholder='請輸入標題'
-                                name='title'
-                                className='form-control mt-1'
-                                value={tempData.title}
-                                onChange={handleChange}
-                            />
-                        </label>
+                                rules={{
+                                    required: '標題為必填',
+                                }}
+                            >
+                            </Input>
+                        </div>
+                        <div className="row">
+                            <div className="col-md-6 mb-2">
+                                <div className="mb-2">
+                                    <Input
+                                        id='percent'
+                                        type='number'
+                                        errors={errors}
+                                        labelText='折扣（%）'
+                                        register={register}
+                                        placeholder="請輸入折扣"
+                                        rules={{
+                                            required: '折扣為必填',
+                                        }}
+                                    >
+                                    </Input>
+                                </div>
+                            </div>
+                            <div className="col-md-6 mb-2">
+                                <div className="mb-2">
+                                    <Input
+                                        id='due_date'
+                                        type='date'
+                                        errors={errors}
+                                        labelText='到期日'
+                                        register={register}
+                                        rules={{
+                                            required: '到期日為必填',
+                                        }}
+                                    >
+                                    </Input>
+                                </div>
+                            </div>
+                            <div className="col-md-6 mb-2">
+                                <div className="mb-2">
+                                    <Input
+                                        id='code'
+                                        type='text'
+                                        errors={errors}
+                                        labelText='優惠碼'
+                                        register={register}
+                                        placeholder="請輸入優惠碼"
+                                        rules={{
+                                            required: '優惠碼為必填',
+                                        }}
+                                    >
+                                    </Input>
+                                </div>
+                            </div>
+                            <div>
+                                <CheckboxRadio
+                                    id="is_enabled"
+                                    type="checkbox"
+                                    name="is_enabled"
+                                    register={register}
+                                    errors={errors}
+                                    labelText="是否啟用"
+                                >
+                                </CheckboxRadio>
+                            </div>
+                        </div>
                     </div>
-                    <div className='row'>
-                        <div className='col-md-6 mb-2'>
-                            <label className='w-100' htmlFor='percent'>
-                                折扣（%）
-                                <input
-                                    type='text'
-                                    name='percent'
-                                    id='percent'
-                                    placeholder='請輸入折扣（%）'
-                                    className='form-control mt-1'
-                                    value={tempData.percent}
-                                    onChange={handleChange}
-                                />
-                            </label>
-                        </div>
-                        <div className='col-md-6 mb-2'>
-                            <label className='w-100' htmlFor='due_date'>
-                                到期日
-                                <input
-                                    type='date'
-                                    id='due_date'
-                                    name='due_date'
-                                    placeholder='請輸入到期日'
-                                    className='form-control mt-1'
-                                    value={`${date.getFullYear().toString()}-${(
-                                        date.getMonth() + 1
-                                    )
-                                        .toString()
-                                        .padStart(2, 0)}-${date
-                                        .getDate()
-                                        .toString()
-                                        .padStart(2, 0)}`}
-                                    onChange={(e) => {
-                                        setDate(new Date(e.target.value));
-                                    }}
-                                />
-                            </label>
-                        </div>
-                        <div className='col-md-6 mb-2'>
-                            <label className='w-100' htmlFor='code'>
-                                優惠碼
-                                <input
-                                    type='text'
-                                    id='code'
-                                    name='code'
-                                    placeholder='請輸入優惠碼'
-                                    className='form-control mt-1'
-                                    value={tempData.code}
-                                    onChange={handleChange}
-                                />
-                            </label>
-                        </div>
+                    <div className="modal-footer">
+                        <button type="button" className="btn btn-secondary" onClick={() => {
+                            closeCouponModal()
+
+                        }}>Close</button>
+                        <button type="submit" className="btn btn-primary">儲存</button>
                     </div>
-                    <label className='form-check-label' htmlFor='is_enabled'>
-                        <input
-                            className='form-check-input me-2'
-                            type='checkbox'
-                            id='is_enabled'
-                            name='is_enabled'
-                            checked={!!tempData.is_enabled}
-                            onChange={handleChange}
-                        />
-                        是否啟用
-                    </label>
-                </div>
-                <div className="modal-footer">
-                    <button type="button" className="btn btn-secondary" onClick={closeCouponModal}>Close</button>
-                    <button type="button" className="btn btn-primary" onClick={submit}>儲存</button>
-                </div>
+                </form>
             </div>
         </div>
     </div>)

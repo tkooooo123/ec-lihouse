@@ -30,7 +30,7 @@ export const CheckboxRadio = ({
       </>
     );
   };
-  export const Input = ({ id, labelText, register, type, errors, rules }) => {
+  export const Input = ({ id, labelText, register, type, errors, rules, placeholder, value }) => {
     return (
       <>
         <label htmlFor={id} className='form-label'>
@@ -39,6 +39,8 @@ export const CheckboxRadio = ({
         <input
           id={id}
           type={type}
+          placeholder={placeholder}
+          value={value}
           className={`form-control ${errors[id] && 'is-invalid'}`}
           {...register(id, rules)}
         />
