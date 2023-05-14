@@ -89,7 +89,9 @@ function ProductModal({ closeProductModal, getProducts, type, tempProduct }) {
             setIsLoading(true);
             const imgs = tempData?.imagesUrl ? [...tempData.imagesUrl] : []
             const files = [...imagesRef.current.files]
+            let  index = 0
             for (let i = 0; i < files.length; i++) {
+                index += 1
                 const formData = new FormData();
                 formData.append('image', files[i])
                 const res = await axios.post(`/v2/api/${process.env.REACT_APP_API_PATH}/admin/upload`,
@@ -98,7 +100,7 @@ function ProductModal({ closeProductModal, getProducts, type, tempProduct }) {
                     res.data.imageUrl
                 )
             }
-            if (imgs.length === files.length) {
+            if (index === files.length) {
                 setTempData({
                     ...tempData,
                     imagesUrl: [...imgs]
@@ -109,6 +111,7 @@ function ProductModal({ closeProductModal, getProducts, type, tempProduct }) {
             }
             imagesRef.current.value = ''
         } catch (error) {
+            console.log(error)
             handleErrorMessage(dispatch, error)
         }
     }
