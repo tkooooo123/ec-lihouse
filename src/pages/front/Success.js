@@ -150,15 +150,15 @@ function Success() {
                 </div>
             </div>
             <div className={`d-flex justify-content-between my-5 ${orderData.is_paid ? 'd-none' : ''}`}>
-                <Link to="/" className="btn btn-outline-danger rounded-0 py-3 px-5 fs-5 fw-bold"><i className="bi bi-arrow-left"></i> 繼續購物 </Link>
+                <Link to="/" className="btn btn-outline-danger rounded-0 py-md-3 px-md-5 p-3 fs-md-5 fw-bold"><i className="bi bi-arrow-left"></i> 繼續購物 </Link>
                
-                <Link to="" className="btn btn-dark rounded-0 py-3 px-5 fs-5 fw-bold"
+                <Link to="" className="btn btn-dark rounded-0 py-md-3 px-md-5 p-3 fs-md-5 fw-bold"
                  onClick={() => payOrder(orderId)}
                  >前往付款 <i className="bi bi-arrow-right"></i></Link>
             </div>
             <div className={`d-flex justify-content-between my-5 ${orderData.is_paid ? '' : 'd-none'}`}>
-                <Link to="/" className="btn btn-outline-danger rounded-0 py-3 px-5 fs-5 fw-bold"><i className="bi bi-arrow-left"></i> 返回首頁</Link>
-                <Link to="/products" className="btn btn-dark rounded-0 py-3 px-5 fs-5 fw-bold">繼續購物 <i className="bi bi-arrow-right"></i></Link>
+                <Link to="/" className="btn btn-outline-danger rounded-0 py-md-3 px-md-5 p-3 fs-md-5 fw-bold"><i className="bi bi-arrow-left"></i> 返回首頁</Link>
+                <Link to="/products" className="btn btn-dark rounded-0 py-md-3 px-md-5 p-3 fs-md-5 fw-bold">繼續購物 <i className="bi bi-arrow-right"></i></Link>
             </div>
 
 
