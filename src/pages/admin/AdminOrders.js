@@ -1,5 +1,6 @@
 import { useState } from "react";
 import OrderModal from "../../components/OrderModal";
+import DeleteModal from "../../components/DeleteModal";
 import Pagination from "../../components/Pagination";
 import Loading from "../../components/Loading";
 import axios from "axios";
@@ -15,8 +16,10 @@ function AdminOrders() {
     const [tempOrder, setTempOrder] = useState({})
     const [, dispatch] = useContext(MessageContext);
     const [isAdmin, setIsAdmin] = useState(true);
+    const [selectedOrder, setSelectedOrder] = useState({});
 
     const orderModal = useRef(null);
+    const deleteModal = useRef(null);
 
     const getOrders = async (page = 1) => {
         try {
@@ -31,10 +34,11 @@ function AdminOrders() {
         }
     }
 
-    const deleteOrder = async(id) => {
+    const deleteOrder = async() => {
         try {
             setIsLoading(true);
-            const res = await axios.delete(`/v2/api/${process.env.REACT_APP_API_PATH}/admin/order/${id}`);
+            const res = await axios.delete(`/v2/api/${process.env.REACT_APP_API_PATH}/admin/order/${selectedOrder.id}`);
+            closeDeleteModal();
             await getOrders();
             handleSuccessMessage(dispatch, res);
             setIsLoading(false);
@@ -50,9 +54,19 @@ function AdminOrders() {
     const closeOrderModal = () => {
         orderModal.current.hide()
     }
+    const openDeleteModal = () => {
+        deleteModal.current.show();
+    }
+    const closeDeleteModal = () => {
+        deleteModal.current.hide();
+    }
+
 
     useEffect(() => {
         orderModal.current = new Modal('#orderModal', {
+            backdrop: 'static'
+        });
+        deleteModal.current = new Modal('#deleteModal', {
             backdrop: 'static'
         });
         getOrders();
@@ -66,10 +80,13 @@ function AdminOrders() {
             <Loading isLoading={isLoading} />
             <div className='p-3'>
                 <Loading isLoading={isLoading} />
+                <DeleteModal close={closeDeleteModal} handleDelete={deleteOrder}
+                text={`訂單編號 ${selectedOrder.id}`}
+                />
                 <OrderModal closeOrderModal={closeOrderModal} getOrders={getOrders}
                     tempOrder={tempOrder} isAdmin={isAdmin}
                 />
-                <h3>產品列表</h3>
+                <h3>訂單列表</h3>
                 <hr />
                 <table className='table'>
                     <thead>
@@ -101,7 +118,9 @@ function AdminOrders() {
                                         </button>
                                         /
                                         <button className="btn"
-                                            onClick={() => deleteOrder(order.id)}
+                                            onClick={() => {
+                                                setSelectedOrder(order)
+                                                openDeleteModal(order.id)}}
                                         ><i className="bi bi-trash fs-5"></i>
                                         </button>
                                     </td>
