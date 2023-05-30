@@ -149,7 +149,6 @@ function FrequencelyAskedQuestions() {
                             <div>
                                 <h6 className="fw-bold" id="question-1">Q1.購物流程說明 </h6>
                                 <p>選擇商品＞＞加入購物車＞＞前往結帳＞＞填寫收件資訊＞＞完成購物</p>
-                                <p></p>
                                 <p className="text-danger">※ 提醒您，商品加入購物車但未結帳前，並無保留商品庫存功能，商品庫存分配將以結帳順序為依據。</p>
 
 
@@ -158,14 +157,11 @@ function FrequencelyAskedQuestions() {
                             <div>
                                 <h6 className="fw-bold" id="question-2">Q2.如何查詢目前訂單的處理情況?</h6>
                                 <p>請您先「會員中心」後至「訂單紀錄」，即可查詢該訂單的處理狀態。</p>
-                                <p></p>
-
                             </div>
                             <hr />
                             <div>
                                 <h6 className="fw-bold" id="question-3">Q3.如何修改、加訂或合併訂單？</h6>
                                 <p>為避免影響商品庫存及避免帳務錯誤，請恕我們無法為您再將訂單『修改』或『加購』或『合併』訂單商品。</p>
-                                <p></p>
                                 <p className="text-danger">※提醒您，如遇訂單狀態已完成出貨無法攔截時，請恕無法協助取消訂單。</p>
                             </div>
                         </div>
@@ -175,7 +171,6 @@ function FrequencelyAskedQuestions() {
                             <div>
                                 <h6 className="fw-bold" id="question-1">Q1.可選擇的配送方式有那些？ </h6>
                                 <p>全店商品將以『黑貓宅急便』宅配方式寄出，宅配範圍目前限於台灣本島地區；外島地區將以郵局配送。</p>
-                                <p></p>
                                 <p className="text-danger">※ 其他提醒：當商品出貨後，若未於通知期限內完成取貨或拒收，將會產生未取件記錄，如達3次以上(含)，未來將無法再使用該付款方式下單。</p>
 
 
