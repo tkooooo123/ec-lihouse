@@ -132,6 +132,10 @@ function Checkout() {
                   register={register}
                   rules={{
                     required: '電話為必填',
+                    minLength: {
+                      value: 7,
+                      message: '電話長度不少於7碼'
+                    },
                     maxLength: {
                       value: 12,
                       message: '電話長度不超過12碼'
@@ -173,7 +177,8 @@ function Checkout() {
               </Link>
               <button
                 type='submit'
-                className={`checkout-btn btn btn-dark py-3 px-7 ${ (isDisabled || isErrored) ? 'disable' : ''}`}
+                className={`checkout-btn btn btn-dark py-3 px-7 ${ isErrored? 'disable' : ''} 
+                ${isDisabled ? 'disabled' : ''}`}
               >
                 確定購買
               </button>
