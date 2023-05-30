@@ -26,11 +26,11 @@ function GoTopButton() {
 
     return (
         <div className="fs-1">
-            <Link className="go-top text-primary d-flex justify-content-center align-items-center"><i className="bi bi-arrow-up-short fw-bolder" onClick={() => {
+            <div className="go-top text-primary d-flex justify-content-center align-items-center"><i className="bi bi-arrow-up-short fw-bolder" onClick={() => {
                               goToTop();
             }}></i>
 
-            </Link>
+            </div>
 
         </div>
 
