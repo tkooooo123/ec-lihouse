@@ -17,21 +17,23 @@ function Search() {
     const [searchParams] = useSearchParams();
     const keyword = searchParams.get('keyword')
 
-
+    const getCategories = async () => {
+        setIsLoading(true);
+        const res = await axios.get(`/v2/api/${process.env.REACT_APP_API_PATH}/products/all`);
+        const productsAll = res.data.products;
+        let categoryList = ['所有商品'];
+        productsAll.map((item) => {
+            if (!categoryList.includes(item.category)) {
+                categoryList.push(item.category)
+                setCategories(categoryList)
+            }
+        });
+    
+    }
     const getProductsAll = async (page = 1) => {
         try {
             setIsLoading(true);
             const res = await axios.get(`/v2/api/${process.env.REACT_APP_API_PATH}/products/all`);
-            //產品類別部分
-            const productsAll = res.data.products;
-            let categoryList = ['所有商品'];
-            productsAll.map((item) => {
-                if (!categoryList.includes(item.category)) {
-                    categoryList.push(item.category)
-                    setCategories(categoryList)
-                }
-            });
-            //產品部分
             const products = res.data.products.filter(item => item.title.includes(keyword));
             let filterProducts = []
                 //分頁功能
@@ -81,6 +83,7 @@ function Search() {
     }
     
     useEffect(() => {
+        getCategories();
         getProductsAll();
         
     }, [keyword, currentCategory]);
