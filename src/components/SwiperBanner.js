@@ -14,11 +14,12 @@ function SwiperBanner() {
             modules={[Pagination, Navigation, Scrollbar]}  // 引入module 
             spaceBetween={50} //Slide之間的距離 
             slidesPerView={1}  //一頁顯示幾個slide 
+            navigation
             autoplay={{
                 delay: 3000,
                 disableOnInteraction: false
             }}
-
+            style={{zIndex: '5'}}
         >
             <SwiperSlide>
                 <img src="https://cdn.hk01.com/di/media/images/dw/20220503/598221776203288576687042.jpeg/4-Da4DZToAxwkdfgnO9OG9P23Cdm5ealbUkTsG1JE7A?v=w1920r16_9" alt="全新開幕" />
