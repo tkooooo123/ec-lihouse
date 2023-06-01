@@ -10,16 +10,19 @@ function GoTopButton() {
         }, 200)
     }
     useEffect(() => {
-        $(window).on('scroll', () => {
-
+        const handleScroll = () => {
             const scrollTop = $(window).scrollTop();
             if (scrollTop > height / 3) {
                 $('.go-top').css('opacity', '0.9');
             } else {
                 $('.go-top').css('opacity', '0');
-            }
-            
-        });
+            }  
+        }
+        $(window).on('scroll', handleScroll);
+     
+      return () => {
+        $(window).off('scroll', handleScroll)
+      }
 
     }, [])
 
