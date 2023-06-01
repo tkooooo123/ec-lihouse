@@ -117,7 +117,7 @@ function ProductDetail() {
                             onClick={() => setToggler(!toggler)}> 
                                 <img className="bg-light px-4 w-100 h-100  " src={mainImage} alt="商品圖片" style={{ height: '550px', objectFit: 'cover' }} />
                             </div>
-                            <div className="d-flex text-nowrap overflow-scroll mt-3">
+                            <div className="d-flex text-nowrap overflow-hidden mt-3">
                                 {tempImages?.map((img, i) => {
                                     return (
                                         <div className="bg-warning m-1 " key={i} >
@@ -165,7 +165,7 @@ function ProductDetail() {
                             </div>
                             <hr/>
                             <div>
-                                <p className="text-danger fs-5 fw-bold"><i className="bi bi-exclamation-circle"></i> 購物須知</p>
+                                <p className="text-muted fs-5 fw-bold"><i className="bi bi-exclamation-circle"></i> 購物須知</p>
                                 <p className="m-0 fw-bold">1.單筆滿$699免運費 (限台灣本島、離島)</p>
                                 <p className="mt-1 fw-bold">2.收件後如發現有破損情形，請立即拍照，並立即聯絡我們，會盡速處理</p>
                             </div>
@@ -174,9 +174,9 @@ function ProductDetail() {
                     </div>
                     <div className="d-flex justify-content-center ">
                         <div className="row bg-light mt-5 w-100">
-                            <div className="col-lg-12 text-center mt-3 mx-lg-5">
+                            <div className="col-lg-12 text-center mt-3">
                                 <h2 className="fw-bold text-primary">商品描述</h2>
-                                <p className="text-start fw-bold fs-5" style={{ whiteSpace: 'pre-line', }} >{product.content}</p>
+                                <p className="text-start fw-bold" style={{ whiteSpace: 'pre-line', }} >{product.content}</p>
 
                             </div>
                         </div>

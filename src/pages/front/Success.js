@@ -58,7 +58,7 @@ function Success() {
                 <div className="col-md-6">
                     <div className="mb-5">
                         <h5 className="fw-bold">訂單資訊</h5>
-                        <ul className="mt-3">
+                        <ul className="mt-3 p-0">
                             <li className="d-flex">
                                 <p className="w-25">訂購時間</p>
                                 <p className="w-75 fw-bold">{new Date(orderData.create_at * 1000).toLocaleDateString()}</p>
@@ -84,7 +84,7 @@ function Success() {
                     <div>
                         <h5 className="fw-bold">聯絡資訊</h5>
 
-                        <ul className="mt-3">
+                        <ul className="mt-3 p-0">
                             <li className="d-flex">
                                 <p className="w-25">姓名</p>
                                 <p className="w-75 fw-bold">{orderData.user?.name}</p>

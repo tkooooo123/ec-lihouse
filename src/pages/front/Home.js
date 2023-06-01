@@ -21,6 +21,7 @@ function Home() {
   const {
     register,
     handleSubmit,
+    setValue,
     formState: { errors }
   } = useForm({
     mode: 'onTouched',
@@ -62,21 +63,21 @@ function Home() {
     const dummyData = [
       {
         id: 1,
-        avatar: 'https://w7.pngwing.com/pngs/754/2/png-transparent-samsung-galaxy-a8-a8-user-login-telephone-avatar-pawn-blue-angle-sphere-thumbnail.png',
+        avatar: 'https://e7.pngegg.com/pngimages/178/595/png-clipart-user-profile-computer-icons-login-user-avatars-monochrome-black.png',
         name: '林先生',
         product: '花漫四季-寵尚天綜合花草墊料',
         feedback: '發貨速度快，包裝完整、乾淨，貨物齊全且完好無缺'
       },
       {
         id: 2,
-        avatar: 'https://w7.pngwing.com/pngs/754/2/png-transparent-samsung-galaxy-a8-a8-user-login-telephone-avatar-pawn-blue-angle-sphere-thumbnail.png',
+        avatar: 'https://e7.pngegg.com/pngimages/178/595/png-clipart-user-profile-computer-icons-login-user-avatars-monochrome-black.png',
         name: '蔡小姐',
         product: '倉鼠飛盤跑輪',
         feedback: '家中的小倉鼠很喜歡，每天勤奮的跑'
       },
       {
         id: 3,
-        avatar: 'https://w7.pngwing.com/pngs/754/2/png-transparent-samsung-galaxy-a8-a8-user-login-telephone-avatar-pawn-blue-angle-sphere-thumbnail.png',
+        avatar: 'https://e7.pngegg.com/pngimages/178/595/png-clipart-user-profile-computer-icons-login-user-avatars-monochrome-black.png',
         name: '李小姐',
         product: '夢遊仙境-寵尚天綜合花草墊料',
         feedback: '味道好聞 能吃也能當裝飾品'
@@ -88,7 +89,7 @@ function Home() {
 
   const onSubmit = (data) => {
     const { email } = data
-
+    setValue('email', '')
     handleSubscribeMessage(dispatch)
   }
 
@@ -99,15 +100,14 @@ function Home() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
   return (
-    <div className="mt-5 pt-4">
+    <div className="">
       <Loading isLoading={isLoading} />
+      <div className="container p-sm-0 pt-0 px-3" style={{marginTop: '70px'}}>
       <SwiperBanner></SwiperBanner>
-      <div className="container mt-2">
-      
-        <div className="about-wrapper" data-aos="fade-top">
+        <div className="about-wrapper mt-5" data-aos="fade-top">
           <div className="d-md-flex justify-content-around  bg-light p-5">
             <div className="col-md-6  pt-3 pt-lg-0">
-              <h2 className="fw-bold text-primary ms-lg-5">《關於我們》</h2>
+              <h1 className="fw-bold text-primary ms-lg-5">《Li House》</h1>
               <div className="text-wrapper">
                 <p className="about-text fw-bold fs-5 p-lg-5 p-3">Li House 成立於2023年4月，旨在提供高品質的寵物用品與食品，完善毛孩們的健康與生活環境，並致力於成立流浪動物之家，為浪浪們提供一個溫暖的家。</p>
               </div>
@@ -129,7 +129,15 @@ function Home() {
                 <span className="fs-3">88</span>
                 折
               </p>
-              <button type="button" className="btn btn-primary rounded-0 p-3"
+            </div>
+          </div>
+          <div className="col-lg-6 d-md-flex justify-content-around align-items-center text-center mt-5">
+            <div className="ticket mt-3 mx-auto text-center text-white bg-primary py-3 fs-5">
+              <span className="ticket-text fs-4">優惠碼</span>
+              <span className="ticket-dash  mx-2" ></span>
+              <span className="ticket-code fs-4" ref={copyRef}>PET888</span>
+            </div>
+            <button type="button" className="btn btn-primary rounded-0 p-3 mt-3"
                 onClick={() => {
                   copy(copyRef.current.innerText);
                   setIsCopy(true);
@@ -141,23 +149,15 @@ function Home() {
                   {isCopy ? <i className="bi bi-clipboard-check me-2"></i> : <i className="bi bi-clipboard me-2"></i>}
                   {isCopy ? '複製成功！' : '複製優惠碼'}</span>
               </button>
-            </div>
-          </div>
-          <div className="col-lg-6 d-flex justify-content-center align-items-center mt-5">
-            <div className="ticket mt-3 text-center text-white bg-primary py-3 fs-5">
-              <span className="ticket-text fs-4">優惠碼</span>
-              <span className="ticket-dash  mx-2" ></span>
-              <span className="ticket-code fs-4" ref={copyRef}>PET888</span>
-            </div>
           </div>
         </div>
         <div className="new py-4" data-aos="fade-up">
           <h2 className="fw-bold mt-5 border-start border-primary border-5 ps-3">最新商品
             <Link to="/products">
-              <span className="fs-5 mx-3">more +</span>
+              <span className="fs-5 mx-3">查看更多</span>
             </Link>
           </h2>
-          <div className="row mx-5">
+          <div className="row mx-md-3">
             {products.map((product) => {
               return (
                 <div className="col-md-6 col-xl-3 mt-5" key={product.id}>
@@ -203,10 +203,10 @@ function Home() {
               {feedback.map((content) => {
                 return (
                   <div className="col-lg-4" key={content.id}>
-                    <div className="bg-light m-2 p-2">
+                    <div className="bg-light m-2 p-2 h-100">
                       <h4 className="fw-bold mt-3 text-primary">{content.product}</h4>
-                      <div className="d-flex align-items-center">
-                        <img src={content.avatar} alt="avatar" style={{ width: '60px', height: '60px' }} />
+                      <div className="d-flex">
+                        <img className="mt-3" src={content.avatar} alt="avatar" style={{ width: '60px', height: '60px' }} />
                         <div className="ms-2 mt-3">
                           <p className="fw-bold fs-5">{content.name}</p>
                           <p className="fw-bold fs-5 text-muted">{content.feedback}</p>
@@ -221,14 +221,15 @@ function Home() {
         </div>
       </div>
       <div className="subscribe-wrapper py-7 mt-5 ">
-        <div className="d-flex justify-content-center" style={{ backgroundImage: 'url("https://images.chinatimes.com/newsphoto/2021-06-18/656/20210618001436.jpg")', backgroundPosition: '50%', backgroundSize: 'cover' }}>
-          <div className="text-center mt-3 position-relative d-flex" style={{flexFlow: 'column wrap'}}>
-            <div className="subscribe-bottom"></div>
-            <h3 className="mt-3 fw-bold">Subscribe</h3>
-            <p className="text-primary fw-bold p-1 m-0">訂閱我們，隨時收到最新優惠通知！</p>
+        <div className="d-flex justify-content-center position-relative" style={{ backgroundImage: 'url("https://images.chinatimes.com/newsphoto/2021-06-18/656/20210618001436.jpg")', backgroundPosition: '50%', backgroundSize: 'cover' }}>
+        <div className="subscribe-bottom"></div>
+          <div className="text-center mt-3 d-flex" style={{flexFlow: 'column wrap'}}>
+            
+            <h3 className="mt-3 fw-bold">訂閱我們</h3>
+            <p className="text-primary fw-bold p-1 m-0">隨時收到最新優惠通知！</p>
             <form className="p-1" onSubmit={handleSubmit(onSubmit)}>
-              <div className="mb-5 position-relative w-75"
-                style={{ height: '80px' }}
+              <div className="mb-5 position-relative"
+                style={{ height: '60px' ,transform: 'translateX(-15%)'}}
               >
                 <Input
                   id='email'

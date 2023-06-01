@@ -1,7 +1,7 @@
 import axios from "axios"
 import { MessageContext, handleErrorMessage, handleSuccessMessage } from "../store/messageStore"
 import { useContext, useEffect, useState } from "react"
-import Loading from "./Loading";
+
 
 function OrderModal({ tempOrder, closeOrderModal, getOrders, isAdmin }) {
     const [, dispatch] = useContext(MessageContext);
@@ -10,6 +10,8 @@ function OrderModal({ tempOrder, closeOrderModal, getOrders, isAdmin }) {
         is_paid: '',
         status: 0
     });
+
+
     const dummyData = [
         '未確認',
         '已確認',
@@ -82,14 +84,21 @@ function OrderModal({ tempOrder, closeOrderModal, getOrders, isAdmin }) {
                     <h5 className="modal-title" id="exampleModalLabel">
                         訂單明細
                     </h5>
-                    <button type="button" className="btn-close" data-bs-dismiss="modal" ></button>
+                    <button type="button" className="btn-close" data-bs-dismiss="modal" 
+                    onClick={() => {
+                        setTempData({
+                           is_paid: tempOrder.is_paid,
+                           status: tempOrder.status || 0,
+                         });
+                       }}
+                    ></button>
                 </div>
                 <div className='modal-body'>
                     <div className='row mb-2'>
                         <div className="col-lg-6">
                             <div className="mb-5">
                                 <h5 className="fw-bold">訂單資訊</h5>
-                                <ul className="mt-3">
+                                <ul className="mt-3 p-0">
                                     <li className="d-flex">
                                         <p className="w-25">訂購時間</p>
                                         <p className="w-75 fw-bold">{new Date(tempOrder.create_at * 1000).toLocaleDateString()}</p>
@@ -117,7 +126,7 @@ function OrderModal({ tempOrder, closeOrderModal, getOrders, isAdmin }) {
                             <div>
                                 <h5 className="fw-bold">聯絡資訊</h5>
 
-                                <ul className="mt-3">
+                                <ul className="mt-3 p-0">
                                     <li className="d-flex">
                                         <p className="w-25">姓名</p>
                                         <p className="w-75 fw-bold">{tempOrder.user?.name}</p>
@@ -145,25 +154,28 @@ function OrderModal({ tempOrder, closeOrderModal, getOrders, isAdmin }) {
                         <div className="col-lg-6">
 
                             <h5 className="fw-bold">購買項目</h5>
-                            <div className='card-body px-1'>
+                            <ul className='card-body'>
                                 {Object.values(tempOrder?.products || {}).map((item) => {
                                     return (
                                         <li key={item.id}>
                                             <div className="d-flex justify-content-between border-bottom py-3">
                                                 <div className="d-flex">
                                                     <img src={item.product.imageUrl} alt="商品圖片" style={{ width: '50px', height: '50px', objectFit: 'cover' }} />
-                                                    <p className="mt-2 px-3">{item.product.title} x {item.qty}</p>
+                                                   <div className="d-flex justify-content-between">
+                                                   <p className="mt-2 px-3">{item.product.title} x {item.qty}</p>
+                                                    <p className="text-end mt-2 w-50">NT$ {item.final_total}</p>
+                                                   </div>
                                                 </div>
-                                                <p className="mt-2">NT$ {item.final_total}</p>
+                            
                                             </div>
                                         </li>
                                     )
                                 })}
-                            </div>
-                            <li className="d-flex justify-content-between px-1 mt-2">
+                            </ul>
+                            <div className="d-flex justify-content-between mt-2">
                                 <p className="h5 fw-bold">總計</p>
                                 <p className="h5 fw-bold">NT$ {tempOrder.total}</p>
-                            </li>
+                            </div>
 
                             <div className="mt-4">
                                 <h5 className="fw-bold">付款狀態</h5>
@@ -214,7 +226,13 @@ function OrderModal({ tempOrder, closeOrderModal, getOrders, isAdmin }) {
                             onClick={() => payOrder(tempOrder.id)}
                         >前往付款</button>
                     )}
-                    <button type="button" className="btn btn-outline-danger" onClick={() => closeOrderModal()}>Close</button>
+                    <button type="button" className="btn btn-outline-danger" onClick={() => {
+                         setTempData({
+                            is_paid: tempOrder.is_paid,
+                            status: tempOrder.status || 0,
+                          });
+                        closeOrderModal();
+                        }}>關閉</button>
                     {!!isAdmin && (
                         <button type="button" className="btn btn-outline-primary"
                         onClick={() => editOrder()}

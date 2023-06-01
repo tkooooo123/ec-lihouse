@@ -97,7 +97,7 @@ function Search() {
                 <div className="row mt-3">
                     <div className="col-lg-3">
                         <h4 className="d-none d-lg-block fw-bold bg-light p-lg-3 border-start border-primary border-5">產品類型</h4>
-                        <ul className="mt-3 px-2 d-flex d-lg-block justify-content-around">
+                        <ul className="mt-3 px-2 d-flex d-lg-block  justify-content-between" style={{flexFlow: 'row wrap'}}>
                             {categories.map((category, i) => {
                                 return (
                                     <li className={`fw-bold mb-3 p-2 ${currentCategory === category ? 'text-white bg-primary' : ''}`} key={i} onClick={() => setCurrentCategory(category)}

@@ -16,7 +16,7 @@ function Cart() {
     const [, dispatch] = useContext(MessageContext);
     const [stepper] = useState(1);
     const deleteModal = useRef(null);
- 
+
 
     const removeCartItem = async (id) => {
         try {
@@ -102,7 +102,7 @@ function Cart() {
     return (
         <div className="container">
             <Loading isLoading={isLoading} />
-            <DeleteModal close={closeDeleteModal} handleDelete={removeCart} text={'購物車中所有商品'}/>
+            <DeleteModal close={closeDeleteModal} handleDelete={removeCart} text={'購物車中所有商品'} />
             <Stepper stepper={stepper} />
             {!cartData?.carts?.length && (
                 <div className="cart-alert text-center pt-5 mt-5" style={{ flexGrow: '1' }}>
@@ -117,7 +117,7 @@ function Cart() {
 
                 <>
                     <div className="row cart-wrapper p-3 mt-3">
-                        <div className="d-flex justify-content-end mt-2">
+                        <div className="d-flex justify-content-end mt-2 p-0">
                             <button type="button" className="btn btn-outline-dark remove-all"
                                 onClick={() => openDeleteModal()}
                             >刪除全部</button>
@@ -129,7 +129,7 @@ function Cart() {
                                     <th scope="col" className="py-3 border-0 bg-light">名稱</th>
                                     <th scope="col" className="py-3 border-0 bg-light">數量</th>
                                     <th scope="col" className="py-3 border-0 bg-light">金額</th>
-                                    <th scope="col" className="py-3 border-0 bg-light">刪除</th>
+                                    <th scope="col" className="py-3 border-0 bg-light text-end pe-3">刪除</th>
 
                                 </tr>
                             </thead>
@@ -139,7 +139,7 @@ function Cart() {
                                         <tr key={item.id}>
                                             <td className="py-2">
                                                 <img src={item.product.imageUrl} alt="商品圖片" style={{ width: '100px', height: '100px', objectFit: 'cover' }} />
-                                                <div className="d-inline-block  align-middle">
+                                                <div className="d-inline-block  align-middle ms-md-3">
                                                     <h5 className="fw-bold" >{item.product.title}</h5>
                                                     <p className="fs-8 text-muted">{item.product.category}</p>
                                                 </div>
@@ -172,7 +172,7 @@ function Cart() {
                                                 <strong>NT$ {item.total}</strong>
 
                                             </td>
-                                            <td className="align-middle">
+                                            <td className="align-middle text-end p-0">
                                                 <button type="button" className="btn btn-outline-dark"
                                                     onClick={() => removeCartItem(item.id)}
                                                 ><i className="bi bi-trash fs-4"></i></button></td>
@@ -182,22 +182,24 @@ function Cart() {
 
                             </tbody>
                         </table>
-                        <div className="d-flex mt-2">
-                            <label htmlFor=""></label>
-                            <input type="text" value={couponCode} onChange={(e) => {
-                                setCouponCode(e.target.value)
-                            }} />
-                            <div>
-                                <button type="button" className={`btn btn-primary mx-3 ${couponCode ? '' : 'disabled' }`}
-                                    onClick={() => applyCoupon()}
-                                ><i className="bi bi-gift"></i> 優惠碼</button>
-                            </div>
-                        </div>
+
                     </div>
-                    <div className="text-end border-bottom mt-4">
-                        <div className="mb-4">
-                            套用中優惠碼：{cartData.carts[0].coupon ? cartData.carts[0].coupon.code : '無'}
+                    <div className="text-end border-bottom mt-3">
+                        <div className="mb-3 d-sm-flex justify-content-between align-items-center">
+                            <div className="d-flex mt-2 justify-content-between">
+                                <label htmlFor=""></label>
+                                <input type="text" value={couponCode} onChange={(e) => {
+                                    setCouponCode(e.target.value)
+                                }} />
+                                <div>
+                                    <button type="button" className={`btn btn-primary mx-3 ${couponCode ? '' : 'disabled'}`}
+                                        onClick={() => applyCoupon()}
+                                    ><i className="bi bi-gift"></i> 優惠碼</button>
+                                </div>
+                            </div>
+                            <p className="mt-3">套用中優惠碼：{cartData.carts[0].coupon ? cartData.carts[0].coupon.code : '無'}</p>
                         </div>
+                        <hr />
                         <div className="mb-4">
                             小計： NT$  {cartData.total}
                         </div>

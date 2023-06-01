@@ -10,4 +10,16 @@
     background-color: #fff;
     transition: all 0.2s ease-out;
     
+} 
+.w-10 {
+    width: 15%;
 }
+
+.w-20 {
+    width: 20%;
+}
+ .w-md-auto {
+    @include media-breakpoint-up(md) {
+        width: auto;
+    }
+ }
