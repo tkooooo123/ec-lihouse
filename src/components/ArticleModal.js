@@ -1,5 +1,5 @@
 import axios from "axios";
-import { useContext, useEffect, useState, useRef } from "react";
+import { useContext, useEffect, useState, useRef, useCallback } from "react";
 import { MessageContext, handleErrorMessage, handleSuccessMessage } from "../store/messageStore";
 import Loading from "./Loading";
 import { useForm, useWatch } from "react-hook-form";
@@ -90,7 +90,7 @@ function ArticleModal({ getArticles, closeArticleModal, tempArticle, type }) {
     useEffect(() => {
         const tagValue = getValues('addTag')
         setTempTag(tagValue)
-    }, [watchForm]);
+    }, [getValues, watchForm]);
 
 
     //新增Tag標籤
@@ -104,12 +104,13 @@ function ArticleModal({ getArticles, closeArticleModal, tempArticle, type }) {
         setValue('addTag', '')
     }
 
-    const getTagValue = () => {
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    const getTagValue = useCallback(() => {
         //載入標籤內容
         for (let i = 0; i < tempData.tag?.length; i++) {
             setValue(`tag${i + 1}`, tempData.tag[i])
         }
-    }
+    })
 
     const removeTag = (i) => {
         //將資料從陣列中移除
@@ -203,11 +204,11 @@ function ArticleModal({ getArticles, closeArticleModal, tempArticle, type }) {
         }
         clearErrors();
 
-    }, [type, tempArticle, state]);
+    }, [type, tempArticle, state, clearErrors, getValues, setValue, getTagValue]);
 
     useEffect(() => {
         getTagValue();
-    }, [tempData]);
+    }, [getTagValue, tempData]);
 
 
 

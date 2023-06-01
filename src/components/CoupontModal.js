@@ -67,7 +67,7 @@ function CouponModal({ closeCouponModal, getCoupons, type, tempCoupon }) {
             setValue('is_enabled', tempCoupon.is_enabled)
         }
         clearErrors()
-    }, [type, tempCoupon, state])
+    }, [type, tempCoupon, state, clearErrors, getValues, setValue])
 
  
 
