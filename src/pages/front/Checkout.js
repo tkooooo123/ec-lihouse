@@ -96,6 +96,7 @@ function Checkout() {
                   errors={errors}
                   labelText='Email'
                   register={register}
+                  placeholder={'e.g. example@gmail.com'}
                   rules={{
                     required: 'Email 為必填',
                     pattern: {
@@ -111,13 +112,14 @@ function Checkout() {
                   id='name'
                   type='text'
                   errors={errors}
-                  labelText='使用者名稱'
+                  labelText='姓名'
                   register={register}
+                  placeholder={'請輸入姓名'}
                   rules={{
-                    required: '使用者名稱為必填',
+                    required: '姓名為必填',
                     maxLength: {
-                      value: 10,
-                      message: '使用者長度不超過10'
+                      value: 20,
+                      message: '姓名長度不超過20'
                     },
                   }}
                 >
@@ -130,6 +132,7 @@ function Checkout() {
                   errors={errors}
                   labelText='電話'
                   register={register}
+                  placeholder={'e.g. 0900-000-000'}
                   rules={{
                     required: '電話為必填',
                     minLength: {
@@ -151,6 +154,7 @@ function Checkout() {
                   errors={errors}
                   labelText='地址'
                   register={register}
+                  placeholder={'請輸入地址'}
                   rules={{
                     required: '地址為必填',
 
