@@ -22,7 +22,7 @@ function Navbar({ cartData }) {
   const closeSearchCollapse = useCallback(() => {
     searchRef.current.style.opacity = 0;
     searchRef.current.style.display = 'none'
-  },[searchRef])
+  }, [searchRef])
 
   //搜尋欄Enter功能
   const keyDownEnter = (e) => {
@@ -47,7 +47,7 @@ function Navbar({ cartData }) {
   return (
     <>
       <div className="nav-container">
-        <nav className="navbar px-0 navbar-expand-lg navbar-light bg-primary px-3 px-lg-5">
+        <nav className="navbar container px-0 navbar-expand-lg navbar-light bg-primary px-3 px-lg-5">
           <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
             <span className="navbar-toggler-icon"></span>
           </button>
@@ -89,7 +89,7 @@ function Navbar({ cartData }) {
               <button type="button" className="form-control btn btn-outline-light rounded-0 bg-dark text-white">搜尋</button>
             </Link>
           </div>
-          <div className="search-collapse"  ref={searchRef}>
+          <div className="search-collapse" ref={searchRef}>
             <div className="d-flex justify-content-center align-items-center h-100">
               <div className="search-bar form-group d-flex  mx-3">
                 <input type="text" className="form-control rounded-0" value={keyword} placeholder="找產品..." onChange={handleChange}
@@ -103,15 +103,14 @@ function Navbar({ cartData }) {
           </div>
           <div className="d-flex justify-content-between nav-icons">
             <button type="button" className="btn fs-4 border-0 d-lg-none p-0" onClick={openSearchCollapse}><i className="bi bi-search text-white"></i></button>
-            <NavLink className="nav-link" to="/login"><i className="bi bi-gear-fill text-white"></i></NavLink>
             <NavLink className="nav-link" to="/user/orders"><i className="bi bi-person-circle text-white"></i></NavLink>
             <NavLink className="nav-link position-relative" to="/cart"><i className="bi bi-bag-fill text-white"></i>
-            {!!cartData?.carts?.length && (
-              <span className="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
-              {cartData?.carts?.length}
-            </span>
-            )}
-              
+              {!!cartData?.carts?.length && (
+                <span className="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+                  {cartData?.carts?.length}
+                </span>
+              )}
+
             </NavLink>
           </div>
         </nav>
