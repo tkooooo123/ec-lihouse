@@ -100,11 +100,13 @@ function Home() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
   return (
-    <div className="">
-      <Loading isLoading={isLoading} />
-      <div className="container p-sm-0 pt-0 px-3" style={{marginTop: '70px'}}>
+    <div>
+      <div className="container p-0" style={{marginTop: '70px', minHeight:'100%'}}>
       <SwiperBanner></SwiperBanner>
-        <div className="about-wrapper mt-5" data-aos="fade-top">
+      </div>
+      <Loading isLoading={isLoading} />
+      <div className="container">
+        <div className="about-wrapper" data-aos="fade-top">
           <div className="d-md-flex justify-content-around  bg-light p-5">
             <div className="col-md-6  pt-3 pt-lg-0">
               <h1 className="fw-bold text-primary ms-lg-5">《Li House》</h1>
@@ -202,7 +204,7 @@ function Home() {
             <div className="justify-content-between row">
               {feedback.map((content) => {
                 return (
-                  <div className="col-lg-4" key={content.id}>
+                  <div className="col-lg-4 mt-3" key={content.id}>
                     <div className="bg-light m-2 p-2 h-100">
                       <h4 className="fw-bold mt-3 text-primary">{content.product}</h4>
                       <div className="d-flex">

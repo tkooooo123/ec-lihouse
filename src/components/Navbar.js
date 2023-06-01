@@ -47,7 +47,7 @@ function Navbar({ cartData }) {
   return (
     <>
       <div className="nav-container">
-        <nav className="navbar container px-0 navbar-expand-lg navbar-light bg-primary px-3 px-lg-5">
+        <nav className="navbar container navbar-expand-lg navbar-light bg-primary px-3 px-lg-5">
           <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
             <span className="navbar-toggler-icon"></span>
           </button>

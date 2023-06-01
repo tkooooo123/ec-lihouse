@@ -34,7 +34,7 @@ function AdminOrders() {
         }
     }
 
-    const deleteOrder = async() => {
+    const deleteOrder = async () => {
         try {
             setIsLoading(true);
             const res = await axios.delete(`/v2/api/${process.env.REACT_APP_API_PATH}/admin/order/${selectedOrder.id}`);
@@ -71,67 +71,66 @@ function AdminOrders() {
         });
         getOrders();
     }, []);
-    
+
 
 
 
     return (
-        <div className="container">
+        <div className="container p-3">
             <Loading isLoading={isLoading} />
-            <div className='p-3'>
-                <Loading isLoading={isLoading} />
-                <DeleteModal close={closeDeleteModal} handleDelete={deleteOrder}
+            <Loading isLoading={isLoading} />
+            <DeleteModal close={closeDeleteModal} handleDelete={deleteOrder}
                 text={`訂單編號 ${selectedOrder.id}`}
-                />
-                <OrderModal closeOrderModal={closeOrderModal} getOrders={getOrders}
-                    tempOrder={tempOrder} isAdmin={isAdmin}
-                />
-                <h3>訂單列表</h3>
-                <hr />
-                <table className='table'>
-                    <thead>
-                        <tr className="text-center">
-                            <th scope='col'>訂單編號</th>
-                            <th scope='col'>總金額</th>
-                            <th scope='col'>訂購日期</th>
-                            <th scope='col'>付款狀態</th>
-                            <th scope='col'>編輯 / 刪除</th>
+            />
+            <OrderModal closeOrderModal={closeOrderModal} getOrders={getOrders}
+                tempOrder={tempOrder} isAdmin={isAdmin}
+            />
+            <h3>訂單列表</h3>
+            <hr />
+            <table className='table'>
+                <thead>
+                    <tr className="text-center">
+                        <th scope='col'>訂單編號</th>
+                        <th scope='col'>總金額</th>
+                        <th scope='col'>訂購日期</th>
+                        <th scope='col'>付款狀態</th>
+                        <th scope='col'>編輯 / 刪除</th>
 
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {orderData.map((order) => {
-                            return (
-                                <tr className="text-center" key={order.id}>
-                                    <td className="align-middle">{order.id}</td>
-                                    <td className="align-middle">
-                                        NT$ {order.total}
-                                    </td>
-                                    <td className="align-middle">{new Date(order.create_at * 1000).toLocaleDateString()}</td>
-                                    <td className="align-middle">
-                                        <p className={`${order.is_paid ? 'bg-success' : 'bg-danger'} rounded fw-bold text-white py-1 mt-3`}>{order.is_paid ? '已付款' : '未付款'}</p>
-                                    </td>
-                                    <td className="align-middle">
-                                        <button className="btn"
-                                            onClick={() => openOrderModal(order)}
-                                        ><i className="fs-5 bi bi-file-earmark-plus"></i>
-                                        </button>
-                                        /
-                                        <button className="btn"
-                                            onClick={() => {
-                                                setSelectedOrder(order)
-                                                openDeleteModal(order.id)}}
-                                        ><i className="bi bi-trash fs-5"></i>
-                                        </button>
-                                    </td>
-                                </tr>
-                            )
-                        })}
-                    </tbody>
-                </table>
-                <div className="d-flex justify-content-center">
-                    <Pagination pagination={pagination} changePage={getOrders} />
-                </div>
+                    </tr>
+                </thead>
+                <tbody>
+                    {orderData.map((order) => {
+                        return (
+                            <tr className="text-center" key={order.id}>
+                                <td className="align-middle">{order.id}</td>
+                                <td className="align-middle">
+                                    NT$ {order.total}
+                                </td>
+                                <td className="align-middle">{new Date(order.create_at * 1000).toLocaleDateString()}</td>
+                                <td className="align-middle">
+                                    <p className={`${order.is_paid ? 'bg-success' : 'bg-danger'} rounded fw-bold text-white py-1 mt-3`}>{order.is_paid ? '已付款' : '未付款'}</p>
+                                </td>
+                                <td className="align-middle">
+                                    <button className="btn"
+                                        onClick={() => openOrderModal(order)}
+                                    ><i className="fs-5 bi bi-file-earmark-plus"></i>
+                                    </button>
+                                    /
+                                    <button className="btn"
+                                        onClick={() => {
+                                            setSelectedOrder(order)
+                                            openDeleteModal(order.id)
+                                        }}
+                                    ><i className="bi bi-trash fs-5"></i>
+                                    </button>
+                                </td>
+                            </tr>
+                        )
+                    })}
+                </tbody>
+            </table>
+            <div className="d-flex justify-content-center">
+                <Pagination pagination={pagination} changePage={getOrders} />
             </div>
         </div>
     )

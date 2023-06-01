@@ -111,7 +111,6 @@ function ProductModal({ closeProductModal, getProducts, type, tempProduct }) {
             }
             imagesRef.current.value = ''
         } catch (error) {
-            console.log(error)
             handleErrorMessage(dispatch, error)
         }
     }
