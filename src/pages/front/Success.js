@@ -119,9 +119,11 @@ function Success() {
                                         <div className="d-flex justify-content-between border-bottom py-3">
                                             <div className="d-flex">
                                                 <img src={item.product.imageUrl} alt="..." style={{ width: '50px', height: '50px', objectFit: 'cover' }} />
-                                                <p className="mt-2 px-3">{item.product.title} x {item.qty}</p>
+                                                <div className="d-flex justify-content-between">
+                                                   <p className="mt-2 px-3">{item.product.title} x {item.qty}</p>
+                                                    <p className="text-end mt-2 w-50">NT$ {item.final_total}</p>
+                                                   </div>
                                             </div>
-                                            <p className="mt-2">NT$ {item.final_total}</p>
                                         </div>
                                     </li>
                                 )
